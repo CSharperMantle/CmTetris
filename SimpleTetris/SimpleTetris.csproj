@@ -79,6 +79,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Model\Area.cs" />
+    <Compile Include="Model\Block.cs" />
+    <Compile Include="Model\Direction.cs" />
+    <Compile Include="Model\Position.cs" />
+    <Compile Include="Model\Tetrimino.cs" />
+    <Compile Include="Model\TetriminoHelper.cs" />
+    <Compile Include="Model\TetriminoKind.cs" />
+    <Compile Include="Model\TetrisModel.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -123,7 +131,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\" />
     <Folder Include="ViewModel\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

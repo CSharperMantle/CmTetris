@@ -11,5 +11,6 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+        <Button Name="ButtonTemp" Grid.ColumnSpan="2" Content="Temp" VerticalAlignment="Center" HorizontalAlignment="Center" Height="100" Width="100" Click="ButtonTemp_Click"/>
     </Grid>
 </Window>
