@@ -54,5 +54,10 @@ namespace SimpleTetris.Model
         {
             return new Point(X, Y);
         }
+
+        public override string ToString()
+        {
+            return string.Format("<Position X:{0} Y:{1}>", X, Y);
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace SimpleTetris.Model
+﻿using System;
+
+namespace SimpleTetris.Model
 {
     /// <summary>
     /// Kinds of Tetrimino.
@@ -62,5 +64,14 @@
         /// <para>+++-</para>
         /// </summary>
         TShaped
+    }
+
+    public static class TetriminoKindHelper
+    {
+        public static TetriminoKind GetRandomTetriminoKind(Random random)
+        {
+            var randResult = random.Next(0, 7);
+            return (TetriminoKind)randResult;
+        }
     }
 }

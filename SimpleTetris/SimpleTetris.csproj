@@ -84,9 +84,11 @@
     <Compile Include="Model\Direction.cs" />
     <Compile Include="Model\Position.cs" />
     <Compile Include="Model\Tetrimino.cs" />
+    <Compile Include="Model\TetriminoChangedEventArgs.cs" />
     <Compile Include="Model\TetriminoHelper.cs" />
     <Compile Include="Model\TetriminoKind.cs" />
     <Compile Include="Model\TetrisModel.cs" />
+    <Compile Include="ViewModel\TetrisViewModel.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -130,8 +132,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

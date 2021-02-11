@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Threading.Tasks;
 
 namespace SimpleTetris.Model
 {
@@ -57,6 +53,11 @@ namespace SimpleTetris.Model
         public Size ToSize()
         {
             return new Size(Width, Height);
+        }
+
+        public override string ToString()
+        {
+            return string.Format("<Area Width:{0} Height:{1}>", Width, Height);
         }
     }
 }
