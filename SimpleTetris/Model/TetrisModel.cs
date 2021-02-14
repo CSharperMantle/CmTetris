@@ -69,7 +69,6 @@ namespace SimpleTetris.Model
         {
             GameOver = true;
             NextTetriminoKind = null;
-            OnGameLost();
         }
 
         /// <summary>
@@ -157,12 +156,33 @@ namespace SimpleTetris.Model
         /// </remarks>
         public void Update()
         {
-            MoveActiveTetrimino(MoveDirection.Down);
-            RemoveRowsFromFrozenBlocks();
-            // If frozen blocks touches the upper border, stop the game.
-            if (_frozenBlocks.Any(block => block.Position.Y < 0))
+            if (!GameOver)
             {
-                EndGame();
+                MoveActiveTetrimino(MoveDirection.Down);
+                RemoveRowsFromFrozenBlocks();
+                // If frozen blocks touches the upper border, stop the game.
+                // FIXME: TODO: Bugs here!
+                if (_frozenBlocks.Any(block => block.Position.Y <= 0))
+                {
+                    EndGame();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Refresh all <see cref="Block"/>s in <see cref="_activeTetrimino"/> and <see cref="_frozenBlocks"/>.
+        /// </summary>
+        /// <remarks>
+        /// Dim all blocks and then re-fire them.
+        /// </remarks>
+        public void UpdateAllBlocks()
+        {
+            UpdateActiveTetrimino(true);
+            UpdateActiveTetrimino(false);
+            foreach (var block in _frozenBlocks)
+            {
+                OnBlockChanged(block, true);
+                OnBlockChanged(block, false);
             }
         }
 
@@ -307,6 +327,7 @@ namespace SimpleTetris.Model
             NextTetriminoKind = TetriminoKindHelper.GetRandomTetriminoKind(_random);
             // Pushing newly-generated blocks to upper receiver
             UpdateActiveTetrimino(false);
+            OnNextTetriminoKindChanged();
         }
 
         /// <summary>
@@ -332,15 +353,12 @@ namespace SimpleTetris.Model
             blockChanged?.Invoke(this, new BlockChangedEventArgs(block, disappeared));
         }
 
-        /// <summary>
-        /// An event fired when the game loses.
-        /// </summary>
-        public event EventHandler GameLost;
-        
-        private void OnGameLost()
+        public event EventHandler NextTetriminoKindChanged;
+
+        private void OnNextTetriminoKindChanged()
         {
-            var gameLost = GameLost;
-            gameLost?.Invoke(this, new EventArgs());
+            var nextTetriminoKindChanged = NextTetriminoKindChanged;
+            nextTetriminoKindChanged?.Invoke(this, new EventArgs());
         }
     }
 }
