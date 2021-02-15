@@ -7,8 +7,6 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
@@ -75,7 +73,7 @@ namespace SimpleTetris.ViewModel
         public void StartGame()
         {
             Paused = false;
-            foreach (var block in _blocksByPosition.Values)
+            foreach (FrameworkElement block in _blocksByPosition.Values)
             {
                 _sprites.Remove(block);
             }
@@ -93,7 +91,7 @@ namespace SimpleTetris.ViewModel
                     Paused = !Paused;
                 }
                 return;
-                    
+
             }
 
             switch (key)
@@ -124,10 +122,10 @@ namespace SimpleTetris.ViewModel
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        
+
         private void OnPropertyChanged(string propertyName = null)
         {
-            var propertyChanged = PropertyChanged;
+            PropertyChangedEventHandler propertyChanged = PropertyChanged;
             propertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
@@ -138,7 +136,7 @@ namespace SimpleTetris.ViewModel
                 if (!_blocksByPosition.Keys.Contains(e.BlockUpdated.Position))
                 {
                     // Create a new BlockControl.
-                    var blockControl = TetrisControlHelper.BlockControlFactory(e.BlockUpdated, Scale);
+                    FrameworkElement blockControl = TetrisControlHelper.BlockControlFactory(e.BlockUpdated, Scale);
                     _blocksByPosition.Add(e.BlockUpdated.Position, blockControl);
                     _sprites.Add(blockControl);
                 }

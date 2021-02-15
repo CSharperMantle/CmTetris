@@ -31,24 +31,26 @@ namespace SimpleTetris.Model
         /// <returns>Whether the <see cref="TryMove"/> step succeeds</returns>
         public bool TryMove(MoveDirection direction, Func<Block, bool> collisionChecker)
         {
-            var position = Position;
+            Position position = Position;
             if (direction == MoveDirection.Down)
             {
-                var row = position.Y + 1;
+                int row = position.Y + 1;
                 position = new Position(position.X, row);
             }
             else
             {
-                var delta = (direction == MoveDirection.Right) ? 1 : -1;
-                var column = position.X + delta;
+                int delta = (direction == MoveDirection.Right) ? 1 : -1;
+                int column = position.X + delta;
                 position = new Position(column, position.Y);
             }
-            
-            var blocks = TetriminoHelper.CreateOffsetedBlocks(Kind, position, FacingDirection);
+
+            IReadOnlyList<Block> blocks = TetriminoHelper.CreateOffsetedBlocks(Kind, position, FacingDirection);
 
             if (blocks.Any(collisionChecker))
+            {
                 return false;
-            
+            }
+
             Position = position;
             Blocks = blocks;
             return true;
@@ -62,20 +64,27 @@ namespace SimpleTetris.Model
         /// <returns>Whether the <see cref="TryRotate"/> step succeeds</returns>
         public bool TryRotate(RotationDirection rotationDirection, Func<Block, bool> collisionChecker)
         {
-            var count = Enum.GetValues(typeof(Direction)).Length;
-            var delta = (rotationDirection == RotationDirection.Right) ? 1 : -1;
-            var direction = (int)this.FacingDirection + delta;
-            if (direction < 0) direction += count;
-            if (direction >= count) direction %= count;
-            
-            var adjustPattern = this.Kind == TetriminoKind.Linear
+            int count = Enum.GetValues(typeof(Direction)).Length;
+            int delta = (rotationDirection == RotationDirection.Right) ? 1 : -1;
+            int direction = (int)FacingDirection + delta;
+            if (direction < 0)
+            {
+                direction += count;
+            }
+
+            if (direction >= count)
+            {
+                direction %= count;
+            }
+
+            int[] adjustPattern = Kind == TetriminoKind.Linear
                                 ? new[] { 0, 1, -1, 2, -2 }
                                 : new[] { 0, 1, -1 };
-            foreach (var adjust in adjustPattern)
+            foreach (int adjust in adjustPattern)
             {
-                var position = new Position(Position.X + adjust, Position.Y);
-                var blocks = TetriminoHelper.CreateOffsetedBlocks(Kind, position, (Direction)direction);
-                
+                Position position = new Position(Position.X + adjust, Position.Y);
+                IReadOnlyList<Block> blocks = TetriminoHelper.CreateOffsetedBlocks(Kind, position, (Direction)direction);
+
                 if (!blocks.Any(collisionChecker))
                 {
                     FacingDirection = (Direction)direction;
@@ -84,7 +93,7 @@ namespace SimpleTetris.Model
                     return true;
                 }
             }
-           
+
             return false;
         }
 

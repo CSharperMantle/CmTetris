@@ -70,7 +70,7 @@ namespace SimpleTetris.Model
     {
         public static TetriminoKind GetRandomTetriminoKind(Random random)
         {
-            var randResult = random.Next(0, 7);
+            int randResult = random.Next(0, 7);
             return (TetriminoKind)randResult;
         }
     }

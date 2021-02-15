@@ -15,7 +15,7 @@ namespace SimpleTetris.Model
         /// <returns>A <see cref="Position"/> indicating the position</returns>
         public static Position GetInitialPositionByKind(TetriminoKind kind)
         {
-            var length = 0;
+            int length = 0;
             switch (kind)
             {
                 case TetriminoKind.Linear:
@@ -35,8 +35,8 @@ namespace SimpleTetris.Model
                     throw new ArgumentException(nameof(kind));
             }
 
-            var row = 0;
-            var column = (TetrisModel.PlayAreaSize.Width - length) / 2;
+            int row = 0;
+            int column = (TetrisModel.PlayAreaSize.Width - length) / 2;
             return new Position(column, row);
         }
 
@@ -308,10 +308,10 @@ namespace SimpleTetris.Model
                 throw new ArgumentException(nameof(kind));
             }
 
-            var offsetedBlocks = new List<Block>();
-            for (var nRow = 0; nRow < blockPattern.GetLength(0); nRow++)
+            List<Block> offsetedBlocks = new List<Block>();
+            for (int nRow = 0; nRow < blockPattern.GetLength(0); nRow++)
             {
-                for (var nCol = 0; nCol < blockPattern.GetLength(1); nCol++)
+                for (int nCol = 0; nCol < blockPattern.GetLength(1); nCol++)
                 {
                     if (blockPattern[nRow, nCol] != 0)
                     {

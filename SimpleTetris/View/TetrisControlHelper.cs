@@ -10,7 +10,7 @@ namespace SimpleTetris.View
     {
         public static FrameworkElement BlockControlFactory(Block block, double scale)
         {
-            var newBlockControl = new BlockControl();
+            BlockControl newBlockControl = new BlockControl();
             newBlockControl.SetFill(GetBlockColorByTetriminoKind(block.FilledBy));
             newBlockControl.Height = BlockControl.OriginalHeight * scale;
             newBlockControl.Width = BlockControl.OriginalWidth * scale;

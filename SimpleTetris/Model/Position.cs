@@ -14,17 +14,17 @@ namespace SimpleTetris.Model
             Y = y;
         }
 
-        public static bool operator== (Position pos1, Position pos2)
+        public static bool operator ==(Position pos1, Position pos2)
         {
             return Equals(pos1, pos2);
         }
 
-        public static bool operator!= (Position pos1, Position pos2)
+        public static bool operator !=(Position pos1, Position pos2)
         {
             return !(pos1 == pos2);
         }
 
-        public static bool Equals (Position pos1, Position pos2)
+        public static bool Equals(Position pos1, Position pos2)
         {
             return pos1.X == pos2.X && pos1.Y == pos2.Y;
         }
@@ -36,7 +36,7 @@ namespace SimpleTetris.Model
                 return false;
             }
 
-            var value = (Position)obj;
+            Position value = (Position)obj;
             return Equals(this, value);
         }
 

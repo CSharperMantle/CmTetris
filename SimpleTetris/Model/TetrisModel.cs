@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SimpleTetris.Model
 {
@@ -79,7 +77,7 @@ namespace SimpleTetris.Model
         public void StartGame()
         {
             // Clear frozen blocks
-            foreach (var block in _frozenBlocks)
+            foreach (Block block in _frozenBlocks)
             {
                 OnBlockChanged(block, true);
             }
@@ -182,7 +180,7 @@ namespace SimpleTetris.Model
         {
             UpdateActiveTetrimino(true);
             UpdateActiveTetrimino(false);
-            foreach (var block in _frozenBlocks)
+            foreach (Block block in _frozenBlocks)
             {
                 OnBlockChanged(block, true);
                 OnBlockChanged(block, false);
@@ -194,15 +192,15 @@ namespace SimpleTetris.Model
         /// </summary>
         private void RemoveRowsFromFrozenBlocks()
         {
-            var frozenBlocksCopy = _frozenBlocks.ToArray();
-            var rowsCleared = 0;
-            var rowsClearedYVal = new List<int>();
+            Block[] frozenBlocksCopy = _frozenBlocks.ToArray();
+            int rowsCleared = 0;
+            List<int> rowsClearedYVal = new List<int>();
             // Group blocks by row number (aka. Block.Position.Y), bottom-up
-            var rows = from block in frozenBlocksCopy
-                       group block by block.Position.Y into row
-                       orderby row.Key descending
-                       select row;
-            foreach (var row in rows)
+            IOrderedEnumerable<IGrouping<int, Block>> rows = from block in frozenBlocksCopy
+                                                             group block by block.Position.Y into row
+                                                             orderby row.Key descending
+                                                             select row;
+            foreach (IGrouping<int, Block> row in rows)
             {
                 // If elements in one row is more than Width, then it is well filled.
                 if (row.Count() >= PlayAreaSize.Width)
@@ -210,7 +208,7 @@ namespace SimpleTetris.Model
                     // Remove the entire line.
                     rowsCleared++;
                     rowsClearedYVal.Add(row.Key);
-                    foreach (var block in row)
+                    foreach (Block block in row)
                     {
                         _frozenBlocks.Remove(block);
                         OnBlockChanged(block, true);
@@ -244,32 +242,32 @@ namespace SimpleTetris.Model
                 // Get a fresh copy of all frozen blocks
                 frozenBlocksCopy = _frozenBlocks.ToArray();
                 // Move out first Y value as we are going to move down all rows above this
-                var currentClearedRowYVal = rowsClearedYVal[0];
+                int currentClearedRowYVal = rowsClearedYVal[0];
                 rowsClearedYVal.RemoveAt(0);
 
                 // Increase all remaining Y values by 1 in order to match the Y values after moving down
-                for (var idx = 0; idx < rowsClearedYVal.Count; idx++)
+                for (int idx = 0; idx < rowsClearedYVal.Count; idx++)
                 {
                     rowsClearedYVal[idx]++;
                 }
 
-                var blocksFalling = from block in frozenBlocksCopy
-                                    where block.Position.Y < currentClearedRowYVal
-                                    select block;
+                IEnumerable<Block> blocksFalling = from block in frozenBlocksCopy
+                                                   where block.Position.Y < currentClearedRowYVal
+                                                   select block;
 
-                foreach (var block in _frozenBlocks)
+                foreach (Block block in _frozenBlocks)
                 {
                     OnBlockChanged(block, true);
                 }
 
-                foreach (var block in blocksFalling)
+                foreach (Block block in blocksFalling)
                 {
                     _frozenBlocks.Remove(block);
-                    var newBlock = new Model.Block(block.FilledBy, new Position(block.Position.X, block.Position.Y + 1));
+                    Block newBlock = new Model.Block(block.FilledBy, new Position(block.Position.X, block.Position.Y + 1));
                     _frozenBlocks.Add(newBlock);
                 }
 
-                foreach (var block in _frozenBlocks)
+                foreach (Block block in _frozenBlocks)
                 {
                     OnBlockChanged(block, false);
                 }
@@ -284,7 +282,7 @@ namespace SimpleTetris.Model
         /// </summary>
         private void FreezeActiveTetrimino()
         {
-            foreach (var block in _activeTetrimino.Blocks)
+            foreach (Block block in _activeTetrimino.Blocks)
             {
                 _frozenBlocks.Add(block);
             }
@@ -350,7 +348,7 @@ namespace SimpleTetris.Model
         {
             if (_activeTetrimino != null)
             {
-                foreach (var block in _activeTetrimino.Blocks)
+                foreach (Block block in _activeTetrimino.Blocks)
                 {
                     OnBlockChanged(block, disappeared);
                 }
@@ -364,7 +362,7 @@ namespace SimpleTetris.Model
 
         private void OnBlockChanged(Block block, bool disappeared)
         {
-            var blockChanged = BlockChanged;
+            EventHandler<BlockChangedEventArgs> blockChanged = BlockChanged;
             blockChanged?.Invoke(this, new BlockChangedEventArgs(block, disappeared));
         }
 
@@ -372,7 +370,7 @@ namespace SimpleTetris.Model
 
         private void OnNextTetriminoKindChanged()
         {
-            var nextTetriminoKindChanged = NextTetriminoKindChanged;
+            EventHandler nextTetriminoKindChanged = NextTetriminoKindChanged;
             nextTetriminoKindChanged?.Invoke(this, new EventArgs());
         }
     }

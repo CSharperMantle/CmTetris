@@ -36,7 +36,7 @@ namespace SimpleTetris.Model
                 return false;
             }
 
-            var value = (Area)obj;
+            Area value = (Area)obj;
             return Equals(this, value);
         }
 

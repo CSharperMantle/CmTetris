@@ -11,7 +11,10 @@ namespace SimpleTetris.ViewModel
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is bool && (bool)value)
+            {
                 return Visibility.Visible;
+            }
+
             return Visibility.Hidden;
         }
 
