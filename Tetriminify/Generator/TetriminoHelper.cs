@@ -1,46 +1,10 @@
-﻿using SimpleTetris.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace SimpleTetris.Model
+namespace Tetriminify.Generator
 {
-    /// <summary>
-    /// Helper class for <see cref="Tetrimino"/> generation, placing and offset updating.
-    /// </summary>
     public static class TetriminoHelper
     {
-        /// <summary>
-        /// Get the possible initial position of a given <see cref="TetriminoKind"/> which is closest to the upper edge.
-        /// </summary>
-        /// <param name="kind">Kind of the Tetrimino</param>
-        /// <returns>A <see cref="Position"/> indicating the position</returns>
-        public static Position GetInitialPositionByKind(TetriminoKind kind)
-        {
-            int length = 0;
-            switch (kind)
-            {
-                case TetriminoKind.Linear:
-                    length = 4;
-                    break;
-                case TetriminoKind.Cubic:
-                    length = 2;
-                    break;
-                case TetriminoKind.LShapedCis:
-                case TetriminoKind.LShapedTrans:
-                case TetriminoKind.ZigZagTrans:
-                case TetriminoKind.ZigZagCis:
-                case TetriminoKind.TShaped:
-                    length = 3;
-                    break;
-                default:
-                    throw new ArgumentException(nameof(kind));
-            }
-
-            int row = 0;
-            int column = (TetrisConst.PlayAreaWidth - length) / 2;
-            return new Position(column, row);
-        }
-
         /// <summary>
         /// Get a list of <see cref="Block"/>s well positioned according to the offset.
         /// </summary>
@@ -336,4 +300,3 @@ namespace SimpleTetris.Model
              */
         }
     }
-}

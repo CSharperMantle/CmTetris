@@ -7,9 +7,6 @@ namespace SimpleTetris.Model
 {
     public class TetrisModel
     {
-        // -1 in order to prevent going out of boundery of canvas
-        public static readonly Area PlayAreaSize = new Area(TetrisConst.PlayAreaWidth, TetrisConst.PlayAreaHeight);
-
         /// <summary>
         /// "Frozen" or inactive blocks. They can not be moved by user.
         /// </summary>
@@ -203,7 +200,7 @@ namespace SimpleTetris.Model
             foreach (IGrouping<int, Block> row in rows)
             {
                 // If elements in one row is more than Width, then it is well filled.
-                if (row.Count() >= PlayAreaSize.Width)
+                if (row.Count() >= TetrisConst.PlayAreaWidth)
                 {
                     // Remove the entire line.
                     rowsCleared++;
@@ -297,12 +294,12 @@ namespace SimpleTetris.Model
         private bool CheckBlockCollision(Block block)
         {
             // Left or right border collision
-            if (block.Position.X < 0 || block.Position.X >= PlayAreaSize.Width)
+            if (block.Position.X < 0 || block.Position.X >= TetrisConst.PlayAreaWidth)
             {
                 return true;
             }
             // Bottom border collision
-            if (block.Position.Y >= PlayAreaSize.Height)
+            if (block.Position.Y >= TetrisConst.PlayAreaHeight)
             {
                 return true;
             }

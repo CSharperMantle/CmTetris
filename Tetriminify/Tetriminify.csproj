@@ -63,6 +63,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Generator\Block.cs" />
+    <Compile Include="Generator\Direction.cs" />
+    <Compile Include="Generator\Position.cs" />
+    <Compile Include="Generator\TetriminoHelper.cs" />
+    <Compile Include="Generator\TetriminoKind.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
