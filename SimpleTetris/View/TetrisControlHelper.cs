@@ -1,9 +1,5 @@
 ﻿using SimpleTetris.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -18,7 +14,10 @@ namespace SimpleTetris.View
             newBlockControl.SetFill(GetBlockColorByTetriminoKind(block.FilledBy));
             newBlockControl.Height = BlockControl.OriginalHeight * scale;
             newBlockControl.Width = BlockControl.OriginalWidth * scale;
-            SetCanvasLocation(newBlockControl, block.Position.X * BlockControl.OriginalHeight * scale, block.Position.Y * BlockControl.OriginalWidth * scale);
+            SetCanvasLocation(newBlockControl,
+                block.Position.X * BlockControl.OriginalHeight * scale,
+                block.Position.Y * BlockControl.OriginalWidth * scale
+            );
             Panel.SetZIndex(newBlockControl, 1);
             return newBlockControl;
         }

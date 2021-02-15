@@ -1,20 +1,8 @@
-﻿using SimpleTetris.Model;
+﻿using SimpleTetris.Common;
 using SimpleTetris.ViewModel;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SimpleTetris.View
 {
@@ -47,12 +35,12 @@ namespace SimpleTetris.View
 
         private void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-
+            UpdatePlayAreaSize(new Size(e.NewSize.Width, e.NewSize.Height - 160));
         }
 
         private void PlayArea_Loaded(object sender, RoutedEventArgs e)
         {
-
+            UpdatePlayAreaSize(PlayArea.RenderSize);
         }
 
         private void BeginButton_Click(object sender, RoutedEventArgs e)
@@ -62,7 +50,24 @@ namespace SimpleTetris.View
 
         private void UpdatePlayAreaSize(Size newSize)
         {
+            double targetWidth;
+            double targetHeight;
+            if (newSize.Width > newSize.Height)
+            {
+                targetWidth = newSize.Height * ((double)(TetrisConst.PlayAreaWidth + 1) / (double)(TetrisConst.PlayAreaHeight + 1));
+                targetHeight = newSize.Height;
+            }
+            else
+            {
+                targetHeight = newSize.Width * ((double)(TetrisConst.PlayAreaHeight + 1) / (double)(TetrisConst.PlayAreaWidth + 1));
+                targetWidth = newSize.Width;
+            }
+            //targetWidth *= ((double)TetrisConst.PlayAreaWidth + 1) / ((double)TetrisConst.PlayAreaWidth);
+            //targetHeight *= ((double)TetrisConst.PlayAreaHeight + 1) / ((double)TetrisConst.PlayAreaHeight);
 
+            PlayArea.Width = targetWidth;
+            PlayArea.Height = targetHeight;
+            _viewModel.PlayAreaSize = new Size(targetWidth, targetHeight);
         }
     }
 }

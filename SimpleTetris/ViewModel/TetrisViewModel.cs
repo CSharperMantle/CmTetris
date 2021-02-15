@@ -1,4 +1,5 @@
-﻿using SimpleTetris.Model;
+﻿using SimpleTetris.Common;
+using SimpleTetris.Model;
 using SimpleTetris.View;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,6 @@ namespace SimpleTetris.ViewModel
 {
     public class TetrisViewModel : INotifyPropertyChanged
     {
-        public static readonly int UpdateIntervalSeconds = 1;
-
         /// <summary>
         /// Scaling factor for proper positioning.
         /// </summary>
@@ -30,7 +29,7 @@ namespace SimpleTetris.ViewModel
         {
             set
             {
-                Scale = value.Width / TetrisModel.PlayAreaSize.Width;
+                Scale = value.Width / (TetrisConst.PlayAreaWidth + 1);
                 _model.UpdateAllBlocks();
             }
         }
@@ -52,7 +51,7 @@ namespace SimpleTetris.ViewModel
             _model.BlockChanged += ModelBlockChangedEventHandler;
             _model.NextTetriminoKindChanged += ModelNextTetriminoKindChanged;
 
-            _timer.Interval = TimeSpan.FromSeconds(UpdateIntervalSeconds);
+            _timer.Interval = TimeSpan.FromSeconds(TetrisConst.UpdateIntervalSeconds);
             _timer.Tick += TimerTickEventHandler;
 
             EndGame();
@@ -89,7 +88,12 @@ namespace SimpleTetris.ViewModel
         {
             if (Paused)
             {
+                if (key == Key.Escape)
+                {
+                    Paused = !Paused;
+                }
                 return;
+                    
             }
 
             switch (key)
@@ -102,6 +106,9 @@ namespace SimpleTetris.ViewModel
                     break;
                 case Key.D:
                     _model.MoveActiveTetrimino(MoveDirection.Right);
+                    break;
+                case Key.Space:
+                    _model.RotateActiveTetrimino(RotationDirection.Right);
                     break;
                 case Key.Escape:
                     Paused = !Paused;
@@ -168,8 +175,8 @@ namespace SimpleTetris.ViewModel
 
             if (RowsCleared != _model.RowsCleared)
             {
-                OnPropertyChanged(nameof(RowsCleared));
                 RowsCleared = _model.RowsCleared;
+                OnPropertyChanged(nameof(RowsCleared));
             }
 
             if (_model.GameOver)

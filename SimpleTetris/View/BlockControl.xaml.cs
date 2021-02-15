@@ -8,9 +8,9 @@ namespace SimpleTetris.View
     /// </summary>
     public partial class BlockControl : UserControl
     {
-        public static int OriginalHeight = 5;
+        public static int OriginalHeight = 1;
 
-        public static int OriginalWidth = 5;
+        public static int OriginalWidth = 1;
 
         public BlockControl()
         {
@@ -19,7 +19,7 @@ namespace SimpleTetris.View
 
         public void SetFill(SolidColorBrush solidColorBrush)
         {
-            StarPolygon.Fill = solidColorBrush;
+            BlockPolygon.Fill = solidColorBrush;
         }
     }
 }

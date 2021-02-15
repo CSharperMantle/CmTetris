@@ -71,6 +71,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\TetrisConst.cs" />
     <Compile Include="ViewModel\BoolVisibilityConverter.cs" />
     <Compile Include="View\TetrisControlHelper.cs" />
     <Page Include="View\BlockControl.xaml">

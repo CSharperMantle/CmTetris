@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SimpleTetris.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,8 @@ namespace SimpleTetris.Model
 {
     public class TetrisModel
     {
-        public static readonly Area PlayAreaSize = new Area(25, 60);
+        // -1 in order to prevent going out of boundery of canvas
+        public static readonly Area PlayAreaSize = new Area(TetrisConst.PlayAreaWidth, TetrisConst.PlayAreaHeight);
 
         /// <summary>
         /// "Frozen" or inactive blocks. They can not be moved by user.
@@ -143,8 +145,9 @@ namespace SimpleTetris.Model
             {
                 return;
             }
-
+            UpdateActiveTetrimino(true);
             _activeTetrimino.TryRotate(direction, CheckBlockCollision);
+            UpdateActiveTetrimino(false);
         }
 
         /// <summary>
@@ -253,13 +256,22 @@ namespace SimpleTetris.Model
                 var blocksFalling = from block in frozenBlocksCopy
                                     where block.Position.Y < currentClearedRowYVal
                                     select block;
-                foreach (var block in blocksFalling)
+
+                foreach (var block in _frozenBlocks)
                 {
                     OnBlockChanged(block, true);
+                }
+
+                foreach (var block in blocksFalling)
+                {
                     _frozenBlocks.Remove(block);
                     var newBlock = new Model.Block(block.FilledBy, new Position(block.Position.X, block.Position.Y + 1));
                     _frozenBlocks.Add(newBlock);
-                    OnBlockChanged(newBlock, false);
+                }
+
+                foreach (var block in _frozenBlocks)
+                {
+                    OnBlockChanged(block, false);
                 }
             }
 
@@ -336,9 +348,12 @@ namespace SimpleTetris.Model
         /// </summary>
         private void UpdateActiveTetrimino(bool disappeared)
         {
-            foreach (var block in _activeTetrimino.Blocks)
+            if (_activeTetrimino != null)
             {
-                OnBlockChanged(block, disappeared);
+                foreach (var block in _activeTetrimino.Blocks)
+                {
+                    OnBlockChanged(block, disappeared);
+                }
             }
         }
 
