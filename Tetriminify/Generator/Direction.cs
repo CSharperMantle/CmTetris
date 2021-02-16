@@ -34,17 +34,4 @@
         /// </summary>
         Down
     }
-
-    public enum RotationDirection
-    {
-        Left,
-        Right
-    }
-
-    public enum MoveDirection
-    {
-        Left,
-        Right,
-        Down
-    }
 }

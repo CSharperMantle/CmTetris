@@ -3,7 +3,10 @@
     /// <summary>
     /// Kinds of Tetrimino.
     /// <para>Legend:</para>
-    /// <para>+: Filled block  -: Unfilled block  ^,v,left_arrow,right_arrow: Way up  o: Center</para>
+    /// <para>+: Filled block</para>
+    /// <para>-: Unfilled block</para>
+    /// <para>^,v,left_arrow,right_arrow: Way up</para>
+    /// <para>o: Center</para>
     /// </summary>
     public enum TetriminoKind
     {
@@ -66,11 +69,11 @@
         /// <summary>
         /// Unfilled block.
         /// </summary>
-        Unsettled,
+        AvailableToFill,
 
         /// <summary>
         /// Blocks that are forbidden to fill.
         /// </summary>
-        Unavailable
+        UnavailableToFill
     }
 }
