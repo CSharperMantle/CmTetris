@@ -39,7 +39,7 @@ namespace Tetriminify.Generator
 
         public override string ToString()
         {
-            return string.Format("<Tetrimino Kind:{0} Position:{1}>", Kind, Position);
+            return string.Format("<Tetrimino Kind:{0} Position:{1} FirstBlock:{2}>", Kind, Position, FirstBlockPosition);
         }
 
         public static Tetrimino ByPosition(TetriminoKind kind, Position position, Direction facingDirection)

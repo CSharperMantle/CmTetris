@@ -2,8 +2,8 @@
 {
     public class Block
     {
-        public TetriminoKind FilledBy { get; }
-        public Position Position { get; }
+        public TetriminoKind FilledBy { get; set; }
+        public Position Position { get; set; }
 
         public Block(TetriminoKind filledBy, Position position)
         {

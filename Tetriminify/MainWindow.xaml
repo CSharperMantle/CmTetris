@@ -5,8 +5,30 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tetriminify"
         mc:Ignorable="d"
-        Title="Tetriminify GUI" Height="450" Width="800">
+        Title="Tetriminify GUI" Height="450" Width="800" ResizeMode="NoResize">
     <Grid>
-        
+        <GroupBox Header="Block" HorizontalAlignment="Left" Height="96" VerticalAlignment="Top" Width="358" Margin="10,10,0,0">
+            <Grid>
+                <Button x:Name="AddBlockButton" Content="Add to Row" Margin="0,0,10,10" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="110"/>
+                <TextBox x:Name="BlockYTextBox" Height="25" TextWrapping="Wrap" Text="0" VerticalAlignment="Bottom" Margin="0,0,182,42" HorizontalAlignment="Right" Width="120"/>
+                <Label Content="Y" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,328,42" Height="25"/>
+                <Label Content="Type" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,125,42" Height="25"/>
+                <ComboBox x:Name="TypeComboBox" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="120" Margin="0,0,0,42" Height="25">
+                    <ComboBoxItem Content="AvailableToFill" IsSelected="True"/>
+                    <ComboBoxItem Content="UnavailableToFill"/>
+                </ComboBox>
+            </Grid>
+        </GroupBox>
+        <GroupBox Header="Row" HorizontalAlignment="Left" Height="96" VerticalAlignment="Top" Width="358" Margin="10,111,0,0">
+            <Grid>
+                <Button x:Name="AddRowButton" Content="Add to Template" Margin="0,0,10,10" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="110"/>
+                <TextBox x:Name="RowXTextBox" Height="25" TextWrapping="Wrap" Text="0" VerticalAlignment="Bottom" Margin="0,0,182,42" HorizontalAlignment="Right" Width="120"/>
+                <Label Content="X" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,328,42" Height="25"/>
+            </Grid>
+        </GroupBox>
+        <TextBlock x:Name="RowTextBlock" Margin="373,20,10,315" Background="LightGray"/>
+        <TextBlock x:Name="TemplateTextBlock" Margin="373,121,10,214" Background="LightGray"/>
+        <TextBlock x:Name="ResultTextBlock" Margin="373,223,10,10" Background="LightGray"/>
+        <Button x:Name="GenerateButton" Content="Generate" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,223,0,0"/>
     </Grid>
 </Window>

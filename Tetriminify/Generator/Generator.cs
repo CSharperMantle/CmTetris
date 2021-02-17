@@ -42,7 +42,7 @@ namespace Tetriminify.Generator
         /// When this method returns, contains a <see cref="IReadOnlyList{T}"/> of <see cref="Tetrimino"/>s of settled (placed) tetriminos, or
         /// an empty one when fails to generate.
         /// </returns>
-        public static IReadOnlyList<Tetrimino> TryGetPattern(Block[,] template)
+        public static IReadOnlyList<Tetrimino> GetPattern(Block[,] template)
         {
             // This is where we do our traking jobs - to track which blocks are available to fill
             Block[,] workspace = (Block[,])template.Clone();
@@ -52,8 +52,9 @@ namespace Tetriminify.Generator
             Stack<Stack<TetriminoKindDirectionsPair>> pendingTetriminoKinds = new Stack<Stack<TetriminoKindDirectionsPair>>();
             Random rand = new Random();
 
-            Tetrimino currentTetrimino = null;
+            // These are cursors. Before each iteration
             Stack<TetriminoKindDirectionsPair> currentTetriminoKindDirectionsPairStack = null;
+            bool rewindingRequired = false;
 
             /* Here in the main loop there're many things we need to do:
              * 0. All cursors are set to null when begining this loop.
@@ -67,7 +68,7 @@ namespace Tetriminify.Generator
              *    The cursors are set to null for a new iteration from Step 1. Do not forget to set its Blocks
              *    to its suitable FilledBy state in the workspace.
              *    
-             * 3. If there are no possible placeable Tetriminos then we need to 'wind back' the stack.
+             * 3. If there are no possible placeable Tetriminos then we need to 'rewind' the stack.
              *    We pop back one Tetrimino and its corresponding stack of TetriminoKind, choose the
              *    next one and then go back to Step 2. Do not forget to erase any settled block state of
              *    the popped Tetrimino in the workspace.
@@ -87,9 +88,8 @@ namespace Tetriminify.Generator
 
                 // Step 2.
                 // Now we find an empty block. Generate a new Tetrimino using randomized stack of TetriminoKind.
-                if (currentTetriminoKindDirectionsPairStack == null)
+                if (!rewindingRequired)
                 {
-                    // The cursor of current TetriminoKindDirectionsPair is null.
                     // This could mean this is the first run or the last iteration has succeeded in placing a block.
                     currentTetriminoKindDirectionsPairStack = new Stack<TetriminoKindDirectionsPair>();
                     var randomizedTetriminoKinds = new TetriminoKind[] {
@@ -106,12 +106,92 @@ namespace Tetriminify.Generator
                         currentTetriminoKindDirectionsPairStack.Push(new TetriminoKindDirectionsPair(kind, rand));
                     }
                 }
-                // Elsewise we have a winded stack. Anyway, we need to obtain a new TetriminoKind and test over all
+                else
+                {
+                    // In this case we need to rewind the stack for one.
+                    if (settledTetrimino.Count <= 0)
+                    {
+                        // No way out, return!
+                        return settledTetrimino.ToArray();
+                    }
+                    currentTetriminoKindDirectionsPairStack = pendingTetriminoKinds.Pop();
+                    // We still have chances...
+                    Tetrimino lastTetrimino = settledTetrimino.Pop();
+                    foreach (Block block in lastTetrimino.Blocks)
+                    {
+                        workspace[block.Position.Y, block.Position.X].FilledBy = TetriminoKind.AvailableToFill;
+                    }
+                }
+                // Anyway, we need to obtain a new TetriminoKind and test over all
                 // possible directions.
-                // TODO
+                bool solutionFound = false;
+                while (currentTetriminoKindDirectionsPairStack.Count > 0)
+                {
+                    TetriminoKindDirectionsPair currentPair = currentTetriminoKindDirectionsPairStack.Pop();
+                    while (currentPair.PendingDirections.Count > 0)
+                    {
+                        Direction direction = currentPair.PendingDirections.Pop();
+                        Tetrimino tetrimino = Tetrimino.ByFirstBlockPosition(currentPair.TetriminoKind,
+                            new Position(firstBlockCol, firstBlockRow),
+                            direction
+                        );
+                        if (!tetrimino.Blocks.Any(CheckBlockCollision))
+                        {
+                            // Now that we found a solution. Push these to the stack and go to the next iteration.
+                            settledTetrimino.Push(tetrimino);
+                            pendingTetriminoKinds.Push(currentTetriminoKindDirectionsPairStack);
+                            foreach (Block block in tetrimino.Blocks)
+                            {
+                                workspace[block.Position.Y, block.Position.X].FilledBy = block.FilledBy;
+                            }
+                            currentTetriminoKindDirectionsPairStack = null;
+                            solutionFound = true;
+                            rewindingRequired = false;
+                            break;
+                        }
+                        // Oops, collision found.
+                        // We will continue to test over the rest possible combinations.
+                    }
+                    if (solutionFound)
+                    {
+                        break;
+                    }
+                }
+
+                // Step 3.
+                if (!solutionFound)
+                {
+                    // We have run out of options. We need to pop out the previous one.
+                    rewindingRequired = true;
+                }
+
             }
 
-            throw new NotImplementedException();
+            bool CheckBlockCollision(Block block)
+            {
+                // Left or right border collision
+                if (block.Position.X < 0 || block.Position.X >= workspace.GetLength(1))
+                {
+                    return true;
+                }
+                // Bottom border collision
+                if (block.Position.Y >= workspace.GetLength(0))
+                {
+                    return true;
+                }
+                // Block-block collision
+                for (int nRow = 0; nRow < workspace.GetLength(0); nRow++)
+                {
+                    for (int nCol = 0; nCol < workspace.GetLength(1); nCol++)
+                    {
+                        if (workspace[nRow, nCol].Position == block.Position && workspace[nRow, nCol].FilledBy != TetriminoKind.AvailableToFill)
+                        {
+                            return true;
+                        }
+                    }
+                }
+                return false;
+            }
         }
 
         /// <summary>
