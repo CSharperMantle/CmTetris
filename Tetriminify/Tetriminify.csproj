@@ -68,7 +68,7 @@
     </Compile>
     <Compile Include="Generator\Block.cs" />
     <Compile Include="Generator\Direction.cs" />
-    <Compile Include="Generator\Generator.cs" />
+    <Compile Include="Generator\PatternGenerator.cs" />
     <Compile Include="Generator\Position.cs" />
     <Compile Include="Generator\Tetrimino.cs" />
     <Compile Include="Generator\TetriminoHelper.cs" />

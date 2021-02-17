@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Tetriminify.Generator
 {
-    public static class Generator
+    public static class PatternGenerator
     {
         private class TetriminoKindDirectionsPair
         {
@@ -27,11 +25,11 @@ namespace Tetriminify.Generator
         }
 
         /// <summary>
-        /// Try to generate a <see cref="IReadOnlyList{T}"/> of <see cref="Tetrimino"/>s that fills the given template.
+        /// Generate a <see cref="IReadOnlyList{T}"/> of <see cref="Tetrimino"/>s that fills the given template.
         /// </summary>
         /// <param name="template">
         /// <para>
-        /// A two-dimentional <see cref="Array"/> of <see cref="Block"/>s.
+        /// A two-dimensional <see cref="Array"/> of <see cref="Block"/>s.
         /// </para>
         /// <para>
         /// This array should only contain blocks with <see cref="TetriminoKind.AvailableToFill"/> or <see cref="TetriminoKind.UnavailableToFill"/>.

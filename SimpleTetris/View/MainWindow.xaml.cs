@@ -17,8 +17,7 @@ namespace SimpleTetris.View
         {
             InitializeComponent();
 
-            TetrisViewModel viewModel = Resources["ViewModel"] as TetrisViewModel;
-            if (viewModel != null)
+            if (Resources["ViewModel"] is TetrisViewModel viewModel)
             {
                 _viewModel = viewModel;
             }
