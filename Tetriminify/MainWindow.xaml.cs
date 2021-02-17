@@ -105,7 +105,14 @@ namespace Tetriminify
             Block[,] template = To2D(currentTemplate.ToArray());
 
             var tetriminos = PatternGenerator.GetPattern(template);
-
+            
+            if (tetriminos.Count == 0)
+            {
+                MessageBox.Show("Unable to find a solution.",
+                    "Warning",
+                    MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.OK
+                );
+            }
             foreach (Tetrimino tetrimino in tetriminos)
             {
                 foreach (Block block in tetrimino.Blocks)

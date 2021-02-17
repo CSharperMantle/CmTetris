@@ -1,17 +1,18 @@
-﻿using System.Resources;
-using System.Reflection;
+﻿using System.Reflection;
+using System.Resources;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SimpleTetris")]
-[assembly: AssemblyDescription("Simple tetris game using WPF")]
+[assembly: AssemblyTitle("Periotris")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("CSharperMantle")]
-[assembly: AssemblyProduct("CmTetris")]
-[assembly: AssemblyCopyright("Copyright © CSharperMantle 2021")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("Periotris")]
+[assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -52,5 +53,3 @@ using System.Windows;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
-[assembly: Guid("043e97cf-b317-4549-a983-365c5d253d68")]
-[assembly: NeutralResourcesLanguage("")]

@@ -5,8 +5,8 @@ namespace Tetriminify.Generator
 {
     public struct Position : IEquatable<Position>
     {
-        public int X { get; set; }
-        public int Y { get; set; }
+        public int X;
+        public int Y;
 
         public Position(int x, int y)
         {

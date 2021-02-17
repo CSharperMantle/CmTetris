@@ -8,11 +8,11 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Tetriminify")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A tool to generate closely-packed tetrimino patterns")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Tetriminify")]
-[assembly: AssemblyCopyright("Copyright ©  2021")]
+[assembly: AssemblyCompany("CSharperMantle")]
+[assembly: AssemblyProduct("CmTetris")]
+[assembly: AssemblyCopyright("Copyright © CSharperMantle  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -53,3 +53,5 @@ using System.Windows;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: Guid("b4297e8e-70f0-423f-9bb8-d9402b409e99")]
+

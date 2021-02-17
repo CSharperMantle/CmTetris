@@ -42,7 +42,24 @@ namespace Tetriminify.Generator
         /// </returns>
         public static IReadOnlyList<Tetrimino> GetPattern(Block[,] template)
         {
-            // This is where we do our traCking jobs - to track which blocks are available to fill
+            int availableBlocksCount = 0;
+            for (int i = 0; i < template.GetLength(0); i++)
+            {
+                for (int j = 0; j < template.GetLength(1); j++)
+                {
+                    if (template[i, j].FilledBy == TetriminoKind.AvailableToFill)
+                    {
+                        availableBlocksCount++;
+                    }
+                }
+            }
+            if (availableBlocksCount % 4 != 0)
+            {
+                // Since tetriminos are all 4 blocks, if we can't get a proper 4-block division we need to fast-fail.
+                return new List<Tetrimino>();
+            }
+
+            // This is where we do our tracking jobs - to track which blocks are available to fill
             Block[,] workspace = (Block[,])template.Clone();
             // This is where we place our settled tetriminos - we use Stack because we may need to go back a few steps if a plan fails
             Stack<Tetrimino> settledTetrimino = new Stack<Tetrimino>();
@@ -107,7 +124,7 @@ namespace Tetriminify.Generator
                 else
                 {
                     // In this case we need to rewind the stack for one.
-                    if (settledTetrimino.Count <= 0)
+                    if (settledTetrimino.Count == 0)
                     {
                         // No way out, return!
                         return settledTetrimino.ToArray();
@@ -177,16 +194,12 @@ namespace Tetriminify.Generator
                 {
                     return true;
                 }
+                int nRow = block.Position.Y;
+                int nCol = block.Position.X;
                 // Block-block collision
-                for (int nRow = 0; nRow < workspace.GetLength(0); nRow++)
+                if (workspace[nRow, nCol].FilledBy != TetriminoKind.AvailableToFill)
                 {
-                    for (int nCol = 0; nCol < workspace.GetLength(1); nCol++)
-                    {
-                        if (workspace[nRow, nCol].Position == block.Position && workspace[nRow, nCol].FilledBy != TetriminoKind.AvailableToFill)
-                        {
-                            return true;
-                        }
-                    }
+                    return true;
                 }
                 return false;
             }
