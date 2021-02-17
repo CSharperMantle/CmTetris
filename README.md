@@ -14,7 +14,7 @@ Simple Tetris game. Built with MVVM designing patterns and requires no other pac
 * `Space`: Rotate
 
 ### `Tetriminify`
-**WIP**
+A tool to generate closely-packed Tetrimino patterns for arbitary given templates.
 
 ## Usage
 Requires Visual Studio 2019 to open the solution file. Requires .NET Framework 4.6.1 to build.
