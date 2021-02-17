@@ -42,7 +42,7 @@ namespace Tetriminify.Generator
         /// </returns>
         public static IReadOnlyList<Tetrimino> GetPattern(Block[,] template)
         {
-            // This is where we do our traking jobs - to track which blocks are available to fill
+            // This is where we do our traCking jobs - to track which blocks are available to fill
             Block[,] workspace = (Block[,])template.Clone();
             // This is where we place our settled tetriminos - we use Stack because we may need to go back a few steps if a plan fails
             Stack<Tetrimino> settledTetrimino = new Stack<Tetrimino>();
@@ -54,8 +54,8 @@ namespace Tetriminify.Generator
             Stack<TetriminoKindDirectionsPair> currentTetriminoKindDirectionsPairStack = null;
             bool rewindingRequired = false;
 
-            /* Here in the main loop there're many things we need to do:
-             * 0. All cursors are set to null when begining this loop.
+            /* Here in the main loop there are many things we need to do:
+             * 0. All cursors are set to null when beginNing this loop.
              * 
              * 1. Check if there are any more unplaced blocks, if so, we will record its coordinates.
              *    Otherwise we will just return the placed Stack as there are no more Tetriminos to 
@@ -220,24 +220,6 @@ namespace Tetriminify.Generator
                 }
             }
             return (firstBlockCol, firstBlockRow);
-        }
-
-        private static bool CheckBlockCollision(Block block, IReadOnlyList<Block> placedBlocks, int playAreaWidth, int playAreaHeight)
-        {
-            // Left or right border collision
-            if (block.Position.X < 0 || block.Position.X >= playAreaWidth)
-            {
-                return true;
-            }
-            // Bottom border collision
-            if (block.Position.Y >= playAreaHeight)
-            {
-                return true;
-            }
-            // Block-block collision
-            return placedBlocks.Any(
-                (Block placedBlock) => (placedBlock.Position == block.Position) && (placedBlock.FilledBy != TetriminoKind.AvailableToFill)
-            );
         }
     }
 }

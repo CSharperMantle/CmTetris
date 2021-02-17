@@ -69,8 +69,8 @@ namespace Tetriminify
         {
             currentTemplate.Add(currentRow.ToArray());
             currentRow.Clear();
-            currentRowId = 0;
-            currentColId++;
+            currentColId = 0;
+            currentRowId++;
             RefreshCurrentTemplateDisplay();
             RefreshCurrentRowDisplay();
         }
@@ -116,6 +116,8 @@ namespace Tetriminify
             RefreshCurrentResultDisplay(template);
             currentTemplate.Clear();
             currentRow.Clear();
+            currentRowId = 0;
+            currentColId = 0;
             RefreshCurrentRowDisplay();
             RefreshCurrentTemplateDisplay();
         }
