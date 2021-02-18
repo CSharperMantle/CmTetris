@@ -6,6 +6,8 @@ namespace Periotris.Model.Generator
 {
     public static class PatternGenerator
     {
+        public static readonly int TotalAvailableBlocks = 108;
+
         private static readonly Block[,] _periodicTableTemplate = new Block[,] {
             {
                 new Block(TetriminoKind.AvailableToFill, new Position(0, 0), -1),
@@ -70,16 +72,16 @@ namespace Periotris.Model.Generator
             {
                 new Block(TetriminoKind.AvailableToFill, new Position(0, 3), 11),
                 new Block(TetriminoKind.AvailableToFill, new Position(1, 3), 12),
-                new Block(TetriminoKind.UnavailableToFill, new Position(2, 3)),
-                new Block(TetriminoKind.UnavailableToFill, new Position(3, 3)),
-                new Block(TetriminoKind.UnavailableToFill, new Position(4, 3)),
-                new Block(TetriminoKind.UnavailableToFill, new Position(5, 3)),
-                new Block(TetriminoKind.UnavailableToFill, new Position(6, 3)),
-                new Block(TetriminoKind.UnavailableToFill, new Position(7, 3)),
-                new Block(TetriminoKind.UnavailableToFill, new Position(8, 3)),
-                new Block(TetriminoKind.UnavailableToFill, new Position(9, 3)),
-                new Block(TetriminoKind.UnavailableToFill, new Position(10, 3)),
-                new Block(TetriminoKind.UnavailableToFill, new Position(11, 3)),
+                new Block(TetriminoKind.AvailableToFill, new Position(2, 3), -3),
+                new Block(TetriminoKind.AvailableToFill, new Position(3, 3), -4),
+                new Block(TetriminoKind.AvailableToFill, new Position(4, 3), -5),
+                new Block(TetriminoKind.AvailableToFill, new Position(5, 3), -6),
+                new Block(TetriminoKind.AvailableToFill, new Position(6, 3), -7),
+                new Block(TetriminoKind.AvailableToFill, new Position(7, 3), -8),
+                new Block(TetriminoKind.AvailableToFill, new Position(8, 3), -9),
+                new Block(TetriminoKind.AvailableToFill, new Position(9, 3), -10),
+                new Block(TetriminoKind.AvailableToFill, new Position(10, 3), -11),
+                new Block(TetriminoKind.AvailableToFill, new Position(11, 3), -12),
                 new Block(TetriminoKind.AvailableToFill, new Position(12, 3), 13),
                 new Block(TetriminoKind.AvailableToFill, new Position(13, 3), 14),
                 new Block(TetriminoKind.AvailableToFill, new Position(14, 3), 15),
@@ -178,9 +180,36 @@ namespace Periotris.Model.Generator
         /// <returns></returns>
         public static IReadOnlyList<ITetrimino> GetPatternForPeriodicTable()
         {
-            IReadOnlyList<Tetrimino> tetriminos = GetPattern(_periodicTableTemplate);
+            int dim0Len = _periodicTableTemplate.GetLength(0);
+            int dim1Len = _periodicTableTemplate.GetLength(1);
+            Block[,] template = new Block[dim0Len, dim1Len];
+            for (int i = 0; i < dim0Len; i++)
+            {
+                for (int j = 0; j < dim1Len; j++)
+                {
+                    template[i, j] = new Block(_periodicTableTemplate[i, j].FilledBy,
+                        _periodicTableTemplate[i, j].Position,
+                        _periodicTableTemplate[i, j].AtomicNumber
+                    );
+                }
+            }
+
+            IReadOnlyList<Tetrimino> tetriminos = GetPattern(template);
             foreach (Tetrimino tetrimino in tetriminos)
             {
+                Position originalPosition = tetrimino.Position;
+                Position newPosition = GeneratorHelper.GetInitialPositionByKind(tetrimino.Kind);
+                int deltaX = newPosition.X - originalPosition.X;
+                int deltaY = newPosition.Y - originalPosition.Y;
+                List<Block> newBlocks = new List<Block>();
+                foreach (Block block in tetrimino.Blocks)
+                {
+                    newBlocks.Add(new Block(block.FilledBy,
+                        new Position(block.Position.X + deltaX, block.Position.Y + deltaY),
+                        block.AtomicNumber)
+                    );
+                }
+                tetrimino.Blocks = newBlocks;
                 tetrimino.Position = GeneratorHelper.GetInitialPositionByKind(tetrimino.Kind);
             }
             return tetriminos;

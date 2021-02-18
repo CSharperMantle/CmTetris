@@ -9,8 +9,9 @@
              Height="10"
              Width="10"
              Background="White"
+             BorderBrush="Black" BorderThickness="0.5"
              >
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <TextBlock x:Name="ElementNameTextBlock" Text="El" FontSize="4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBlock x:Name="ElementNameTextBlock" Text="El" FontSize="18" VerticalAlignment="Center" HorizontalAlignment="Center"/>
     </Grid>
 </UserControl>

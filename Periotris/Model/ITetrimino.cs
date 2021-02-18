@@ -12,7 +12,5 @@ namespace Periotris.Model
         IReadOnlyList<IBlock> Blocks { get; }
 
         bool TryMove(MoveDirection direction, Func<IBlock, bool> collisionChecker);
-
-        bool TryRotate(RotationDirection rotationDirection, Func<IBlock, bool> collisionChecker);
     }
 }

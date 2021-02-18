@@ -14,6 +14,8 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,7 +36,19 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>Periotris.App</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MathNet.Numerics, Version=4.15.0.0, Culture=neutral, PublicKeyToken=cd8b63ad3d691a37, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.Signed.4.15.0\lib\net461\MathNet.Numerics.dll</HintPath>
+    </Reference>
+    <Reference Include="NCDK, Version=1.6.0.0, Culture=neutral, PublicKeyToken=7b3355892b3327a8, processorArchitecture=MSIL">
+      <HintPath>..\packages\NCDK.1.6.0\lib\netstandard2.0\NCDK.dll</HintPath>
+    </Reference>
+    <Reference Include="NCDK.Math, Version=1.6.0.0, Culture=neutral, PublicKeyToken=7b3355892b3327a8, processorArchitecture=MSIL">
+      <HintPath>..\packages\NCDK.1.6.0\lib\netstandard2.0\NCDK.Math.dll</HintPath>
+    </Reference>
     <Reference Include="SharpDX, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpDX.4.2.0\lib\net45\SharpDX.dll</HintPath>
     </Reference>
@@ -43,6 +57,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
@@ -76,6 +92,8 @@
     <Compile Include="Model\Generator\GeneratorHelper.cs" />
     <Compile Include="Model\TetriminoKind.cs" />
     <Compile Include="Model\TetrisModel.cs" />
+    <Compile Include="ViewModel\BoolVisibilityConverter.cs" />
+    <Compile Include="ViewModel\TetrisViewModel.cs" />
     <Compile Include="View\TetrisControlHelper.cs" />
     <Page Include="View\AnnotatedBlockControl.xaml">
       <SubType>Designer</SubType>
@@ -124,8 +142,13 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\NCDK.1.6.0\build\NCDK.targets" Condition="Exists('..\packages\NCDK.1.6.0\build\NCDK.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\NCDK.1.6.0\build\NCDK.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NCDK.1.6.0\build\NCDK.targets'))" />
+  </Target>
 </Project>

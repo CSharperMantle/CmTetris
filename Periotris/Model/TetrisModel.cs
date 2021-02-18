@@ -58,6 +58,7 @@ namespace Periotris.Model
         public void EndGame()
         {
             GameOver = true;
+            _pendingTetriminos.Clear();
         }
 
         /// <summary>
@@ -128,21 +129,6 @@ namespace Periotris.Model
         }
 
         /// <summary>
-        /// Rotate <see cref="_activeTetrimino"/>.
-        /// </summary>
-        /// <param name="direction">The direction to rotate to</param>
-        public void RotateActiveTetrimino(RotationDirection direction)
-        {
-            if (GameOver)
-            {
-                return;
-            }
-            UpdateActiveTetrimino(true);
-            _activeTetrimino.TryRotate(direction, CheckBlockCollision);
-            UpdateActiveTetrimino(false);
-        }
-
-        /// <summary>
         /// Update the game field.
         /// </summary>
         /// <remarks>
@@ -154,12 +140,6 @@ namespace Periotris.Model
             if (!GameOver)
             {
                 MoveActiveTetrimino(MoveDirection.Down);
-                // If frozen blocks touches the upper border, stop the game.
-                // FIXME: TODO: Bugs here!
-                if (_frozenBlocks.Any(block => block.Position.Y <= 0))
-                {
-                    EndGame();
-                }
                 // Or, if any frozen block's atomic number is not equal to the template's
                 // block's on its same location, i.e., the placed element is not at the 
                 // position it should be, then a misplaced block is found.
@@ -171,6 +151,12 @@ namespace Periotris.Model
                     {
                         EndGame();
                     }
+                }
+
+                // All blocks settled.
+                if (_frozenBlocks.Count >= Generator.PatternGenerator.TotalAvailableBlocks)
+                {
+                    EndGame();
                 }
             }
         }
@@ -241,24 +227,8 @@ namespace Periotris.Model
         /// </remarks>
         private void SpawnNextTetrimino()
         {
-            /*
-            if (NextTetriminoKind.HasValue)
-            {
-                _activeTetrimino = new Tetrimino(NextTetriminoKind.Value);
-            }
-            else
-            {
-
-                _activeTetrimino = new Tetrimino(TetriminoKindHelper.GetRandomTetriminoKind(_random));
-            }
-            NextTetriminoKind = TetriminoKindHelper.GetRandomTetriminoKind(_random);
-            // Pushing newly-generated blocks to upper receiver
-            UpdateActiveTetrimino(false);
-            OnNextTetriminoKindChanged();
-            */
             _activeTetrimino = _pendingTetriminos.Pop();
             UpdateActiveTetrimino(false);
-            throw new NotImplementedException();
         }
 
         /// <summary>

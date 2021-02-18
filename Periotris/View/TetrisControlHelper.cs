@@ -2,17 +2,18 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using NCDK;
 using Periotris.Model;
 
 namespace Periotris.View
 {
     public static class TetrisControlHelper
     {
-        public static FrameworkElement BlockControlFactory(IBlock block, double scale, int atomicNumber)
+        public static FrameworkElement AnnotatedBlockControlFactory(IBlock block, double scale)
         {
             AnnotatedBlockControl newBlockControl = new AnnotatedBlockControl();
-            newBlockControl.SetFill(GetBlockColorByTetriminoKind(block.FilledBy));
-            newBlockControl.SetElementName(GetElementNameByAtomicNumber(atomicNumber));
+            newBlockControl.SetFill(GetBlockColorByAtomicNumber(block.AtomicNumber));
+            newBlockControl.SetElementName(GetElementNameByAtomicNumber(block.AtomicNumber));
             newBlockControl.Height = AnnotatedBlockControl.OriginalHeight * scale;
             newBlockControl.Width = AnnotatedBlockControl.OriginalWidth * scale;
             SetCanvasLocation(newBlockControl,
@@ -29,32 +30,56 @@ namespace Periotris.View
             Canvas.SetTop(element, y);
         }
 
-        public static SolidColorBrush GetBlockColorByTetriminoKind(TetriminoKind tetriminoKind)
+        public static SolidColorBrush GetBlockColorByAtomicNumber(int atomicNumber)
         {
-            switch (tetriminoKind)
+            if (atomicNumber <= 0)
             {
-                case TetriminoKind.Linear:
-                    return new SolidColorBrush(Colors.Blue);
-                case TetriminoKind.Cubic:
-                    return new SolidColorBrush(Colors.Lime);
-                case TetriminoKind.LShapedCis:
-                    return new SolidColorBrush(Colors.Green);
-                case TetriminoKind.LShapedTrans:
-                    return new SolidColorBrush(Colors.Red);
-                case TetriminoKind.ZigZagCis:
-                    return new SolidColorBrush(Colors.Yellow);
-                case TetriminoKind.ZigZagTrans:
-                    return new SolidColorBrush(Colors.Purple);
-                case TetriminoKind.TShaped:
-                    return new SolidColorBrush(Colors.Gray);
-                default:
-                    throw new ArgumentException(nameof(tetriminoKind));
+                return new SolidColorBrush(Colors.Gray);
+            }
+            if ((atomicNumber == 2)
+                || (atomicNumber >= 5 && atomicNumber <= 10)
+                || (atomicNumber >= 13 && atomicNumber <= 18)
+                || (atomicNumber >= 31 && atomicNumber <= 36)
+                || (atomicNumber >= 49 && atomicNumber <= 54)
+                || (atomicNumber >= 81 && atomicNumber <= 86)
+                || (atomicNumber >= 113 && atomicNumber <= 118))
+            {
+                return new SolidColorBrush(Colors.Yellow);
+            }
+            else
+            {
+                if ((atomicNumber >= 3 && atomicNumber <= 4)
+                    || (atomicNumber >= 11 && atomicNumber <= 12)
+                    || (atomicNumber >= 19 && atomicNumber <= 20)
+                    || (atomicNumber >= 37 && atomicNumber <= 38)
+                    || (atomicNumber >= 55 && atomicNumber <= 56)
+                    || (atomicNumber >= 87 && atomicNumber <= 88))
+                {
+                    return new SolidColorBrush(Colors.Magenta);
+                }
+                else
+                {
+                    if (atomicNumber == 1)
+                    {
+                        return new SolidColorBrush(Colors.White);
+                    }
+                    else
+                    {
+                        return new SolidColorBrush(Colors.Green);
+                    }
+                }
             }
         }
 
         public static string GetElementNameByAtomicNumber(int atomicNumber)
         {
-            throw new NotImplementedException();
+            // Is an atomic number.
+            if (atomicNumber > 0)
+            {
+                return ChemicalElement.Of(atomicNumber).Symbol;
+            }
+            // Is a group number.
+            return (-atomicNumber).ToString();
         }
     }
 }

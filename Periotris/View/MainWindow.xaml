@@ -3,10 +3,82 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Periotris"
+        xmlns:local="clr-namespace:Periotris.View"
+        xmlns:viewModel="clr-namespace:Periotris.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Periotris" Height="600" Width="800" Background="DarkSlateGray"
+        KeyDown="MainWindow_KeyDown"
+        SizeChanged="MainWindow_SizeChanged"
+        >
+    <Window.Resources>
+        <viewModel:TetrisViewModel x:Key="ViewModel" />
+        <viewModel:BoolVisibilityConverter x:Key="VisibilityConverter" />
+        <Style x:Key="GroupHeaderTextStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Microsoft YaHei UI" />
+            <Setter Property="TextTrimming" Value="WordEllipsis" />
+            <Setter Property="TextWrapping" Value="NoWrap" />
+            <Setter Property="Foreground" Value="Bisque" />
+            <Setter Property="Typography.StylisticSet20" Value="True" />
+            <Setter Property="Typography.DiscretionaryLigatures" Value="True" />
+            <Setter Property="Typography.CaseSensitiveForms" Value="True" />
+            <Setter Property="FontSize" Value="26.667" />
+            <Setter Property="LineStackingStrategy" Value="BlockLineHeight" />
+            <Setter Property="FontWeight" Value="Light" />
+            <Setter Property="LineHeight" Value="30" />
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <TranslateTransform X="-1" Y="6" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid DataContext="{StaticResource ViewModel}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="1" Text="Periotris (Preview)"
+                       HorizontalAlignment="Left" Margin="35, 15, 0, 0"
+                       FontFamily="Microsoft YaHei UI" FontSize="32" FontWeight="Light"
+                       Foreground="White" />
+        </Grid>
+        <Border x:Name="PlayArea" Grid.Row="1" Background="Black" Margin="10"
+                Loaded="PlayArea_Loaded">
+            <ItemsControl
+                ItemsSource="{Binding Path=Sprites}"
+                Margin="5">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Canvas Background="Black" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+        </Border>
+        <StackPanel Grid.Row="1"
+                    Opacity="0.9" Background="DarkGray" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                    Visibility="{Binding Path=GameOver, Converter={StaticResource VisibilityConverter}}">
+            <TextBlock Text="Game End"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       Opacity="1" Foreground="Yellow"
+                       FontWeight="Bold" FontSize="70" FontFamily="Microsoft YaHei" />
+            <Button x:Name="BeginButton" Content="START"
+                    HorizontalAlignment="Center"
+                    Background="DarkSlateGray" Foreground="Snow"
+                    FontWeight="Bold" FontSize="30"
+                    Click="BeginButton_Click" />
+        </StackPanel>
+
+        <TextBlock Grid.Row="1" Text="Paused"
+                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                   FontFamily="Microsoft YaHei" FontSize="60"
+                   FontWeight="Bold" FontStyle="Normal"
+                   Foreground="Yellow" Background="DarkGray" Opacity="0.6"
+                   Visibility="{Binding Paused, Converter={StaticResource VisibilityConverter}}" />
     </Grid>
 </Window>

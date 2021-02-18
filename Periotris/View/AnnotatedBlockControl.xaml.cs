@@ -21,9 +21,9 @@ namespace Periotris.View
     public partial class AnnotatedBlockControl : UserControl
     {
         // TODO: 1 or 10?
-        public static int OriginalHeight = 10;
+        public static int OriginalHeight = 1;
 
-        public static int OriginalWidth = 10;
+        public static int OriginalWidth = 1;
 
         public AnnotatedBlockControl()
         {
