@@ -227,8 +227,11 @@ namespace Periotris.Model
         /// </remarks>
         private void SpawnNextTetrimino()
         {
-            _activeTetrimino = _pendingTetriminos.Pop();
-            UpdateActiveTetrimino(false);
+            if (_pendingTetriminos.Count > 0)
+            {
+                _activeTetrimino = _pendingTetriminos.Pop();
+                UpdateActiveTetrimino(false);
+            }
         }
 
         /// <summary>
