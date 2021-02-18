@@ -335,9 +335,9 @@ namespace Periotris.Model.Generator
             int firstBlockCol = 0;
             bool firstBlockFound = false;
 
-            for (int nRow = 0; nRow < blockPattern.GetLength(0); nRow++)
+            for (int nRow = blockPattern.GetLength(0) - 1; nRow >= 0; nRow--)
             {
-                for (int nCol = 0; nCol < blockPattern.GetLength(1); nCol++)
+                for (int nCol = blockPattern.GetLength(1) - 1; nCol >= 0; nCol--)
                 {
                     if (blockPattern[nRow, nCol] != 0)
                     {
@@ -363,10 +363,10 @@ namespace Periotris.Model.Generator
             int firstBlockRow = 0;
             int firstBlockCol = 0;
             bool firstBlockFound = false;
-
-            for (int nRow = 0; nRow < blockPattern.GetLength(0); nRow++)
+            
+            for (int nRow = blockPattern.GetLength(0) - 1; nRow >= 0; nRow--)
             {
-                for (int nCol = 0; nCol < blockPattern.GetLength(1); nCol++)
+                for (int nCol = blockPattern.GetLength(1) - 1; nCol >= 0; nCol--)
                 {
                     if (blockPattern[nRow, nCol] != 0)
                     {

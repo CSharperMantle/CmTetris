@@ -255,6 +255,7 @@ namespace Periotris.Model.Generator
             }
 
             IReadOnlyList<Tetrimino> tetriminos = GetPattern(template);
+            /*
             foreach (Tetrimino tetrimino in tetriminos)
             {
                 Position originalPosition = tetrimino.Position;
@@ -272,6 +273,7 @@ namespace Periotris.Model.Generator
                 tetrimino.Blocks = newBlocks;
                 tetrimino.Position = GeneratorHelper.GetInitialPositionByKind(tetrimino.Kind);
             }
+            */
             return tetriminos;
         }
 
@@ -485,9 +487,9 @@ namespace Periotris.Model.Generator
             int firstBlockRow = -1;
             int firstBlockCol = -1;
             bool firstBlockFound = false;
-            for (int nRow = 0; nRow < blocks.GetLength(0); nRow++)
+            for (int nRow = blocks.GetLength(0) - 1; nRow >= 0; nRow--)
             {
-                for (int nCol = 0; nCol < blocks.GetLength(1); nCol++)
+                for (int nCol = blocks.GetLength(1) - 1; nCol >= 0; nCol--)
                 {
                     if (blocks[nRow, nCol].FilledBy == TetriminoKind.AvailableToFill)
                     {

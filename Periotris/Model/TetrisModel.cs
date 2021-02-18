@@ -80,7 +80,7 @@ namespace Periotris.Model
                 _activeTetrimino = null;
             }
             // Fill in tetriminos
-            IEnumerable<ITetrimino> generatedTetriminos = Generator.PatternGenerator.GetPatternForPeriodicTable().Reverse();
+            IReadOnlyList<ITetrimino> generatedTetriminos = Generator.PatternGenerator.GetPatternForPeriodicTable();
             foreach (ITetrimino tetrimino in generatedTetriminos)
             {
                 _pendingTetriminos.Push(tetrimino);
