@@ -5,7 +5,7 @@ using System.Linq;
 namespace Tetriminify.Generator
 {
     /// <summary>
-    /// Represents a Tetrimino.
+    /// Represents an extended Tetrimino.
     /// </summary>
     public class Tetrimino
     {

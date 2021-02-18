@@ -89,7 +89,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Model\Area.cs" />
     <Compile Include="Model\Block.cs" />
     <Compile Include="Model\Direction.cs" />
     <Compile Include="Model\Position.cs" />

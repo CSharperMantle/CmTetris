@@ -1,19 +1,10 @@
-﻿using SimpleTetris.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace SimpleTetris.Model
+namespace Periotris.Model.Generator
 {
-    /// <summary>
-    /// Helper class for <see cref="Tetrimino"/> generation, placing and offset updating.
-    /// </summary>
-    public static class TetriminoHelper
+    internal static class GeneratorHelper
     {
-        /// <summary>
-        /// Get the possible initial position of a given <see cref="TetriminoKind"/> which is closest to the upper edge.
-        /// </summary>
-        /// <param name="kind">Kind of the Tetrimino</param>
-        /// <returns>A <see cref="Position"/> indicating the position</returns>
         public static Position GetInitialPositionByKind(TetriminoKind kind)
         {
             int length = 0;
@@ -46,6 +37,24 @@ namespace SimpleTetris.Model
         /// </summary>
         /// <returns>A <see cref="IReadOnlyList{Block}"/> which contains properly offseted blocks</returns>
         public static IReadOnlyList<Block> CreateOffsetedBlocks(TetriminoKind kind, Position offset, Direction direction = Direction.Up)
+        {
+            int[,] blockPattern = CreateBlockPattern(kind, direction);
+
+            List<Block> offsetedBlocks = new List<Block>();
+            for (int nRow = 0; nRow < blockPattern.GetLength(0); nRow++)
+            {
+                for (int nCol = 0; nCol < blockPattern.GetLength(1); nCol++)
+                {
+                    if (blockPattern[nRow, nCol] != 0)
+                    {
+                        offsetedBlocks.Add(new Block(kind, new Position(nCol + offset.X, nRow + offset.Y)));
+                    }
+                }
+            }
+            return offsetedBlocks.ToArray();
+        }
+
+        public static int[,] CreateBlockPattern(TetriminoKind kind, Direction direction)
         {
             int[,] blockPattern = null;
             switch (kind)
@@ -90,7 +99,7 @@ namespace SimpleTetris.Model
                                 };
                             break;
                         default:
-                            break;
+                            throw new ArgumentException(nameof(direction));
                     }
                     break;
                 case TetriminoKind.Cubic:
@@ -138,6 +147,8 @@ namespace SimpleTetris.Model
                                 { 0, 0, 0 },
                             };
                             break;
+                        default:
+                            throw new ArgumentException(nameof(direction));
                     }
                     break;
                 case TetriminoKind.LShapedTrans:
@@ -178,6 +189,8 @@ namespace SimpleTetris.Model
                                 { 0, 0, 1 },
                             };
                             break;
+                        default:
+                            throw new ArgumentException(nameof(direction));
                     }
                     break;
                 case TetriminoKind.ZigZagCis:
@@ -218,6 +231,8 @@ namespace SimpleTetris.Model
                                 { 1, 0, 0 },
                             };
                             break;
+                        default:
+                            throw new ArgumentException(nameof(direction));
                     }
                     break;
                 case TetriminoKind.ZigZagTrans:
@@ -258,6 +273,8 @@ namespace SimpleTetris.Model
                                 { 0, 1, 0 },
                             };
                             break;
+                        default:
+                            throw new ArgumentException(nameof(direction));
                     }
                     break;
                 case TetriminoKind.TShaped:
@@ -298,29 +315,73 @@ namespace SimpleTetris.Model
                                 { 0, 1, 0 },
                             };
                             break;
+                        default:
+                            throw new ArgumentException(nameof(direction));
                     }
                     break;
                 default:
-                    break;
+                    throw new ArgumentException(nameof(kind));
             }
 
-            if (blockPattern == null)
-            {
-                throw new ArgumentException(nameof(kind));
-            }
+            return blockPattern;
+        }
 
-            List<Block> offsetedBlocks = new List<Block>();
+        public static Position GetPositionByFirstBlockPosition(Position firstBlockPosition, TetriminoKind kind, Direction facingDirection)
+        {
+            int[,] blockPattern = CreateBlockPattern(kind, facingDirection);
+
+            int firstBlockRow = 0;
+            int firstBlockCol = 0;
+            bool firstBlockFound = false;
+
             for (int nRow = 0; nRow < blockPattern.GetLength(0); nRow++)
             {
                 for (int nCol = 0; nCol < blockPattern.GetLength(1); nCol++)
                 {
                     if (blockPattern[nRow, nCol] != 0)
                     {
-                        offsetedBlocks.Add(new Block(kind, new Position(nCol + offset.X, nRow + offset.Y)));
+                        firstBlockRow = nRow;
+                        firstBlockCol = nCol;
+                        firstBlockFound = true;
+                        break;
                     }
                 }
+                if (firstBlockFound)
+                {
+                    break;
+                }
             }
-            return offsetedBlocks.ToArray();
+
+            return new Position(firstBlockPosition.X - firstBlockCol, firstBlockPosition.Y - firstBlockRow);
+        }
+
+        public static Position GetFirstBlockPositionByPosition(Position position, TetriminoKind kind, Direction facingDirection)
+        {
+            int[,] blockPattern = CreateBlockPattern(kind, facingDirection);
+
+            int firstBlockRow = 0;
+            int firstBlockCol = 0;
+            bool firstBlockFound = false;
+
+            for (int nRow = 0; nRow < blockPattern.GetLength(0); nRow++)
+            {
+                for (int nCol = 0; nCol < blockPattern.GetLength(1); nCol++)
+                {
+                    if (blockPattern[nRow, nCol] != 0)
+                    {
+                        firstBlockRow = nRow;
+                        firstBlockCol = nCol;
+                        firstBlockFound = true;
+                        break;
+                    }
+                }
+                if (firstBlockFound)
+                {
+                    break;
+                }
+            }
+
+            return new Position(position.X + firstBlockCol, position.Y + firstBlockRow);
         }
     }
 }
