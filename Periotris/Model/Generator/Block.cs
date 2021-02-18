@@ -4,7 +4,7 @@
     {
         public TetriminoKind FilledBy { get; set; }
 
-        public Position Position { get; }
+        public Position Position { get; set; }
         
         public int AtomicNumber { get; set; }
 

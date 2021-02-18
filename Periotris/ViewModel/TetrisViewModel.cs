@@ -56,7 +56,9 @@ namespace Periotris.ViewModel
 
         public INotifyCollectionChanged Sprites => _sprites;
 
-        public bool GameOver => _model.GameOver;
+        public bool GameOver => _model.GameEnded && !_model.Victory;
+
+        public bool GameWon => _model.GameEnded && _model.Victory;
 
         public bool Paused { get; set; }
 
@@ -76,6 +78,7 @@ namespace Periotris.ViewModel
             }
             _model.StartGame();
             OnPropertyChanged(nameof(GameOver));
+            OnPropertyChanged(nameof(GameWon));
             _timer.Start();
         }
 
@@ -102,6 +105,14 @@ namespace Periotris.ViewModel
                 case Key.D:
                     _model.MoveActiveTetrimino(MoveDirection.Right);
                     break;
+                // IMPORTANT NOTICE: This is a WORKAROUND and should NOT be included
+                // in the production environment.
+                //
+                // TODO: Modify the core algorithm to provide an elegant solution to the
+                // 'impossible pattern' bug.
+                case Key.F:
+                    _model.ForceFreezeActiveTetrimino();
+                    break;
                 case Key.Escape:
                     Paused = !Paused;
                     break;
@@ -112,7 +123,7 @@ namespace Periotris.ViewModel
 
         private void EndGame()
         {
-            _model.EndGame();
+            _model.EndGame(false);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -165,9 +176,10 @@ namespace Periotris.ViewModel
                 _model.Update();
             }
 
-            if (_model.GameOver)
+            if (_model.GameEnded)
             {
                 OnPropertyChanged(nameof(GameOver));
+                OnPropertyChanged(nameof(GameWon));
                 _timer.Stop();
             }
         }

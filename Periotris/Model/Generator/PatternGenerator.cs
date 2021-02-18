@@ -255,7 +255,6 @@ namespace Periotris.Model.Generator
             }
 
             IReadOnlyList<Tetrimino> tetriminos = GetPattern(template);
-            /*
             foreach (Tetrimino tetrimino in tetriminos)
             {
                 Position originalPosition = tetrimino.Position;
@@ -273,7 +272,6 @@ namespace Periotris.Model.Generator
                 tetrimino.Blocks = newBlocks;
                 tetrimino.Position = GeneratorHelper.GetInitialPositionByKind(tetrimino.Kind);
             }
-            */
             return tetriminos;
         }
 

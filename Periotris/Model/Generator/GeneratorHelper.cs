@@ -384,5 +384,22 @@ namespace Periotris.Model.Generator
 
             return new Position(position.X + firstBlockCol, position.Y + firstBlockRow);
         }
+
+        /// <summary>
+        /// <para>
+        /// IMPORTANT NOTICE: This method is a WORKAROUND and is NOT intended to use
+        /// in the production environment.
+        /// </para>
+        /// Serves as a workaround for impossible patterns.
+        /// <para>
+        /// TODO: Modify the core algorithm to provide an elegant solution to the
+        /// 'impossible pattern' bug.
+        /// </para>
+        /// </summary>
+        public static void SetBlockPosition(IBlock block, Position position)
+        {
+            Block realBlock = block as Block;
+            realBlock.Position = position;
+        }
     }
 }

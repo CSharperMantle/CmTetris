@@ -1,9 +1,9 @@
-﻿using System;
+﻿using NCDK;
+using Periotris.Model;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using NCDK;
-using Periotris.Model;
 
 namespace Periotris.View
 {
@@ -46,29 +46,24 @@ namespace Periotris.View
             {
                 return new SolidColorBrush(Colors.Yellow);
             }
-            else
+            if ((atomicNumber >= 3 && atomicNumber <= 4)
+                || (atomicNumber >= 11 && atomicNumber <= 12)
+                || (atomicNumber >= 19 && atomicNumber <= 20)
+                || (atomicNumber >= 37 && atomicNumber <= 38)
+                || (atomicNumber >= 55 && atomicNumber <= 56)
+                || (atomicNumber >= 87 && atomicNumber <= 88))
             {
-                if ((atomicNumber >= 3 && atomicNumber <= 4)
-                    || (atomicNumber >= 11 && atomicNumber <= 12)
-                    || (atomicNumber >= 19 && atomicNumber <= 20)
-                    || (atomicNumber >= 37 && atomicNumber <= 38)
-                    || (atomicNumber >= 55 && atomicNumber <= 56)
-                    || (atomicNumber >= 87 && atomicNumber <= 88))
-                {
-                    return new SolidColorBrush(Colors.Magenta);
-                }
-                else
-                {
-                    if (atomicNumber == 1)
-                    {
-                        return new SolidColorBrush(Colors.White);
-                    }
-                    else
-                    {
-                        return new SolidColorBrush(Colors.Green);
-                    }
-                }
+                return new SolidColorBrush(Colors.Magenta);
             }
+            if (atomicNumber == 1)
+            {
+                return new SolidColorBrush(Colors.White);
+            }
+            if (atomicNumber == 57 || atomicNumber == 89)
+            {
+                return new SolidColorBrush(Colors.LightGreen);
+            }
+            return new SolidColorBrush(Colors.Green);
         }
 
         public static string GetElementNameByAtomicNumber(int atomicNumber)

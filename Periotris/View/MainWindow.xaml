@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Periotris.View"
         xmlns:viewModel="clr-namespace:Periotris.ViewModel"
         mc:Ignorable="d"
-        Title="Periotris" Height="600" Width="800" Background="DarkSlateGray"
+        Title="Periotris (Preview)" Height="600" Width="800" Background="DarkSlateGray"
         KeyDown="MainWindow_KeyDown"
         SizeChanged="MainWindow_SizeChanged"
         >
@@ -42,10 +42,10 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="1" Text="Periotris (Preview)"
-                       HorizontalAlignment="Left" Margin="35, 15, 0, 0"
-                       FontFamily="Microsoft YaHei UI" FontSize="32" FontWeight="Light"
-                       Foreground="White" />
+            <TextBlock Grid.Column="1" Text="The Periodic Table of Elements"
+                       HorizontalAlignment="Center" Margin="35, 15, 0, 0"
+                       FontFamily="Microsoft YaHei UI" FontSize="34" FontWeight="Bold"
+                       Foreground="White" Visibility="{Binding Path=GameWon, Converter={StaticResource VisibilityConverter}}"/>
         </Grid>
         <Border x:Name="PlayArea" Grid.Row="1" Background="Black" Margin="10"
                 Loaded="PlayArea_Loaded">

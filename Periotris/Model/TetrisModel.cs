@@ -44,20 +44,26 @@ namespace Periotris.Model
         /// </summary>
         public TetrisModel()
         {
-            EndGame();
+            EndGame(false);
         }
 
         /// <summary>
         /// Whether the game is in progress.
         /// </summary>
-        public bool GameOver { get; private set; }
+        public bool GameEnded { get; private set; }
+
+        /// <summary>
+        /// Whether the game won.
+        /// </summary>
+        public bool Victory { get; private set; }
 
         /// <summary>
         /// End the current game.
         /// </summary>
-        public void EndGame()
+        public void EndGame(bool victory)
         {
-            GameOver = true;
+            GameEnded = true;
+            Victory = victory;
             _pendingTetriminos.Clear();
         }
 
@@ -88,7 +94,7 @@ namespace Periotris.Model
 
             // Ready to start a new game
             SpawnNextTetrimino();
-            GameOver = false;
+            GameEnded = false;
         }
 
         /// <summary>
@@ -97,7 +103,7 @@ namespace Periotris.Model
         /// <param name="direction">The direction to move to</param>
         public void MoveActiveTetrimino(MoveDirection direction)
         {
-            if (GameOver)
+            if (GameEnded)
             {
                 return;
             }
@@ -137,7 +143,7 @@ namespace Periotris.Model
         /// </remarks>
         public void Update()
         {
-            if (!GameOver)
+            if (!GameEnded)
             {
                 MoveActiveTetrimino(MoveDirection.Down);
                 // Or, if any frozen block's atomic number is not equal to the template's
@@ -149,14 +155,14 @@ namespace Periotris.Model
                     if (Generator.PatternGenerator.PeriodicTableTemplate[block.Position.Y,
                         block.Position.X].AtomicNumber != block.AtomicNumber)
                     {
-                        EndGame();
+                        EndGame(false);
                     }
                 }
 
                 // All blocks settled.
                 if (_frozenBlocks.Count >= Generator.PatternGenerator.TotalAvailableBlocks)
                 {
-                    EndGame();
+                    EndGame(true);
                 }
             }
         }
@@ -176,6 +182,43 @@ namespace Periotris.Model
                 OnBlockChanged(block, true);
                 OnBlockChanged(block, false);
             }
+        }
+
+        /// <summary>
+        /// <para>
+        /// IMPORTANT NOTICE: This method is a WORKAROUND and is NOT intended to use
+        /// in the production environment.
+        /// </para>
+        /// Serves as a workaround for impossible patterns.
+        /// <para>
+        /// TODO: Modify the core algorithm to provide an elegant solution to the
+        /// 'impossible pattern' bug.
+        /// </para>
+        /// </summary>
+        public void ForceFreezeActiveTetrimino()
+        {
+            // Flatten the template.
+            int cursor = 0;
+            List<IBlock> templateBlocks = new List<IBlock>();
+            for (int i = 0; i < Generator.PatternGenerator.PeriodicTableTemplate.GetLength(0); i++)
+            {
+                for (int j = 0; j < Generator.PatternGenerator.PeriodicTableTemplate.GetLength(1); j++)
+                {
+                    templateBlocks.Add(Generator.PatternGenerator.PeriodicTableTemplate[i, j]);
+                    cursor++;
+                }
+            }
+            UpdateActiveTetrimino(true);
+
+            foreach (IBlock block in _activeTetrimino.Blocks)
+            {
+                var position = from templateBlock in templateBlocks
+                               where templateBlock.AtomicNumber == block.AtomicNumber
+                               select templateBlock.Position;
+                Generator.GeneratorHelper.SetBlockPosition(block, position.First());
+            }
+            UpdateActiveTetrimino(false);
+            FreezeActiveTetrimino();
         }
 
         /// <summary>
