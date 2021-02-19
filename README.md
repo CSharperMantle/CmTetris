@@ -1,4 +1,4 @@
-# CmTetris
+# CmTetris [![.NET Framework](https://github.com/CSharperMantle/CmTetris/actions/workflows/dotnet-framework.yml/badge.svg?branch=main)](https://github.com/CSharperMantle/CmTetris/actions/workflows/dotnet-framework.yml)
 
 CSharperMantle's Tetris Collection: a series of Tetris-related projects written by CSharperMantle
 
