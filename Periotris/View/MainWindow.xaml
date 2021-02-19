@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Periotris.View"
         xmlns:viewModel="clr-namespace:Periotris.ViewModel"
         mc:Ignorable="d"
-        Title="Periotris (Preview)" Height="600" Width="800" Background="DarkSlateGray"
+        Title="Periotris" Height="600" Width="800" Background="DarkSlateGray"
         KeyDown="MainWindow_KeyDown"
         SizeChanged="MainWindow_SizeChanged"
         >
@@ -75,10 +75,10 @@
         </StackPanel>
 
         <TextBlock Grid.Row="1" Text="Paused"
-                   VerticalAlignment="Center" HorizontalAlignment="Center"
+                   VerticalAlignment="Center" HorizontalAlignment="Stretch" TextAlignment="Center"
                    FontFamily="Microsoft YaHei" FontSize="60"
                    FontWeight="Bold" FontStyle="Normal"
-                   Foreground="Yellow" Background="DarkGray" Opacity="0.6"
+                   Foreground="Yellow" Background="DarkGray" Opacity="0.9"
                    Visibility="{Binding Paused, Converter={StaticResource VisibilityConverter}}" />
     </Grid>
 </Window>

@@ -86,7 +86,7 @@ namespace Periotris.Model
                 _activeTetrimino = null;
             }
             // Fill in tetriminos
-            IReadOnlyList<ITetrimino> generatedTetriminos = Generator.PatternGenerator.GetPatternForPeriodicTable();
+            IEnumerable<ITetrimino> generatedTetriminos = Generator.PatternGenerator.GetPatternForPeriodicTable().Reverse();
             foreach (ITetrimino tetrimino in generatedTetriminos)
             {
                 _pendingTetriminos.Push(tetrimino);
@@ -182,43 +182,6 @@ namespace Periotris.Model
                 OnBlockChanged(block, true);
                 OnBlockChanged(block, false);
             }
-        }
-
-        /// <summary>
-        /// <para>
-        /// IMPORTANT NOTICE: This method is a WORKAROUND and is NOT intended to use
-        /// in the production environment.
-        /// </para>
-        /// Serves as a workaround for impossible patterns.
-        /// <para>
-        /// TODO: Modify the core algorithm to provide an elegant solution to the
-        /// 'impossible pattern' bug.
-        /// </para>
-        /// </summary>
-        public void ForceFreezeActiveTetrimino()
-        {
-            // Flatten the template.
-            int cursor = 0;
-            List<IBlock> templateBlocks = new List<IBlock>();
-            for (int i = 0; i < Generator.PatternGenerator.PeriodicTableTemplate.GetLength(0); i++)
-            {
-                for (int j = 0; j < Generator.PatternGenerator.PeriodicTableTemplate.GetLength(1); j++)
-                {
-                    templateBlocks.Add(Generator.PatternGenerator.PeriodicTableTemplate[i, j]);
-                    cursor++;
-                }
-            }
-            UpdateActiveTetrimino(true);
-
-            foreach (IBlock block in _activeTetrimino.Blocks)
-            {
-                var position = from templateBlock in templateBlocks
-                               where templateBlock.AtomicNumber == block.AtomicNumber
-                               select templateBlock.Position;
-                Generator.GeneratorHelper.SetBlockPosition(block, position.First());
-            }
-            UpdateActiveTetrimino(false);
-            FreezeActiveTetrimino();
         }
 
         /// <summary>

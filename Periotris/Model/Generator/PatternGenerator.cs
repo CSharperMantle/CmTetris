@@ -254,7 +254,8 @@ namespace Periotris.Model.Generator
                 }
             }
 
-            IReadOnlyList<Tetrimino> tetriminos = GetPattern(template);
+            IReadOnlyList<Tetrimino> tetriminos = Sorting.PatternSorter.GetSortedTetriminos(
+                GetPattern(template), dim1Len, dim0Len);
             foreach (Tetrimino tetrimino in tetriminos)
             {
                 Position originalPosition = tetrimino.Position;

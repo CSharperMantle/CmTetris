@@ -28,7 +28,7 @@ namespace Periotris.Model.Generator
 
         public IReadOnlyList<IBlock> Blocks { get; set; }
 
-        private Tetrimino(TetriminoKind kind, Position position, Position firstBlockPosition, Direction facingDirection)
+        protected Tetrimino(TetriminoKind kind, Position position, Position firstBlockPosition, Direction facingDirection)
         {
             Kind = kind;
             Position = position;

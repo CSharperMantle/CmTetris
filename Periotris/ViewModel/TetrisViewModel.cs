@@ -105,14 +105,6 @@ namespace Periotris.ViewModel
                 case Key.D:
                     _model.MoveActiveTetrimino(MoveDirection.Right);
                     break;
-                // IMPORTANT NOTICE: This is a WORKAROUND and should NOT be included
-                // in the production environment.
-                //
-                // TODO: Modify the core algorithm to provide an elegant solution to the
-                // 'impossible pattern' bug.
-                case Key.F:
-                    _model.ForceFreezeActiveTetrimino();
-                    break;
                 case Key.Escape:
                     Paused = !Paused;
                     break;
