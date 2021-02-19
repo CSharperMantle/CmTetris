@@ -19,8 +19,6 @@ A tool to generate closely-packed Tetrimino patterns for arbitary given template
 ### `Periotris`
 A Tetris game based on the theme of the Period Table of Elements.
 
-Still in preview stage as sometimes a pattern that is impossible to fill will be generated.
-
 #### Controls
 * `A`: Move left
 * `D`: Move right
