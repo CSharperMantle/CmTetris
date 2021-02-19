@@ -22,3 +22,12 @@ jobs:
       
     - name: Build
       run: msbuild CmTetris.sln /p:Configuration=Release
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: built-artifacts
+        path: |
+          SimpleTetris/bin/
+          Tetriminify/bin/
+          Periotris/bin/
