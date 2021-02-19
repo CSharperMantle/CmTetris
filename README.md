@@ -15,7 +15,9 @@ Simple Tetris game. Built with MVVM designing patterns and requires no other pac
 * `Esc`: Pause
 
 ### `Tetriminify`
-A tool to generate closely-packed Tetrimino patterns for arbitary given templates.
+A tool to generate closely-packed Tetrimino patterns and falling orders for arbitary given templates.
+
+**Notice:** This tool is fragile. Use it properly ;)
 
 ### `Periotris`
 A Tetris game based on the theme of the Period Table of Elements.
