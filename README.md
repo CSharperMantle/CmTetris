@@ -12,6 +12,7 @@ Simple Tetris game. Built with MVVM designing patterns and requires no other pac
 * `D`: Move right
 * `S`: Move down
 * `Space`: Rotate
+* `Esc`: Pause
 
 ### `Tetriminify`
 A tool to generate closely-packed Tetrimino patterns for arbitary given templates.
@@ -23,6 +24,7 @@ A Tetris game based on the theme of the Period Table of Elements.
 * `A`: Move left
 * `D`: Move right
 * `S`: Move down
+* `Esc`: Pause
 
 ## Usage
 Requires Visual Studio 2017 to open the solution file. Requires .NET Framework 4.6.1 to build.
