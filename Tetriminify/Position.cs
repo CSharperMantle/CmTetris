@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-namespace Tetriminify.Generator
+namespace Tetriminify
 {
     public struct Position : IEquatable<Position>
     {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using Tetriminify.Generator;
+using Tetriminify.Sorter;
 
 namespace Tetriminify
 {
@@ -15,6 +16,8 @@ namespace Tetriminify
         private List<Block> currentRow = new List<Block>();
 
         private List<Block[]> currentTemplate = new List<Block[]>();
+
+        private List<Block[]> orderedResult = new List<Block[]>();
 
         private int currentRowId = 0;
 
@@ -100,11 +103,11 @@ namespace Tetriminify
             TemplateTextBlock.Text = sb.ToString();
         }
 
-        private void GenerateButton_Click(object sender, RoutedEventArgs e)
+        private void GeneratePatternButton_Click(object sender, RoutedEventArgs e)
         {
             Block[,] template = To2D(currentTemplate.ToArray());
 
-            var tetriminos = PatternGenerator.GetPattern(template);
+            IReadOnlyList<ITetrimino> tetriminos = PatternGenerator.GetPattern(template);
             
             if (tetriminos.Count == 0)
             {
@@ -121,6 +124,11 @@ namespace Tetriminify
                 }
             }
             RefreshCurrentResultDisplay(template);
+
+            IReadOnlyList<ITetrimino> orderedTetriminos = PatternSorter.GetSortedTetriminos(tetriminos, template.GetLength(1), template.GetLength(0));
+            int?[,] order = new int?[template.GetLength(0), template.GetLength(1)];
+            RefreshCurrentOrderedDisplay(orderedTetriminos, order);
+
             currentTemplate.Clear();
             currentRow.Clear();
             currentRowId = 0;
@@ -175,6 +183,39 @@ namespace Tetriminify
             ResultTextBlock.Text = sb.ToString();
         }
 
+        private void RefreshCurrentOrderedDisplay(IReadOnlyList<ITetrimino> tetriminos, int?[,] order)
+        {
+            int n = 0;
+
+            foreach (ITetrimino tetrimino in tetriminos)
+            {
+                foreach (IBlock block in tetrimino.Blocks)
+                {
+                    order[block.Position.Y, block.Position.X] = n;
+                }
+                n++;
+            }
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < order.GetLength(0); i++)
+            {
+                for (int j = 0; j < order.GetLength(1); j++)
+                {
+                    int? nth = order[i, j];
+                    if (!nth.HasValue)
+                    {
+                        sb.Append("  ");
+                    }
+                    else
+                    {
+                        sb.AppendFormat("{0} ", nth.Value);
+                    }
+                }
+                sb.AppendLine();
+            }
+            OrderedTextBlock.Text = sb.ToString();
+        }
+        
         private static T[,] To2D<T>(T[][] source)
         {
             try

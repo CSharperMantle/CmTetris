@@ -1,4 +1,4 @@
-﻿namespace Tetriminify.Generator
+﻿namespace Tetriminify
 {
     /// <summary>
     /// Kinds of Tetrimino.

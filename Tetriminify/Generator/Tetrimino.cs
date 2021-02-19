@@ -7,7 +7,7 @@ namespace Tetriminify.Generator
     /// <summary>
     /// Represents an extended Tetrimino.
     /// </summary>
-    public class Tetrimino
+    internal class Tetrimino : ITetrimino
     {
         public TetriminoKind Kind { get; private set; }
 
@@ -26,7 +26,7 @@ namespace Tetriminify.Generator
 
         public Direction FacingDirection { get; private set; }
 
-        public IReadOnlyList<Block> Blocks { get; private set; }
+        public IReadOnlyList<IBlock> Blocks { get; private set; }
 
         private Tetrimino(TetriminoKind kind, Position position, Position firstBlockPosition, Direction facingDirection)
         {

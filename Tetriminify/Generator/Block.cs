@@ -1,8 +1,9 @@
 ﻿namespace Tetriminify.Generator
 {
-    public class Block
+    internal class Block : IBlock
     {
         public TetriminoKind FilledBy { get; set; }
+
         public Position Position { get; set; }
 
         public Block(TetriminoKind filledBy, Position position)

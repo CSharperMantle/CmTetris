@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Tetriminify.Generator
 {
-    public static class TetriminoHelper
+    internal static class TetriminoHelper
     {
         /// <summary>
         /// Get a list of <see cref="Block"/>s well positioned according to the offset.

@@ -4,17 +4,24 @@ using System.Linq;
 
 namespace Tetriminify.Generator
 {
+    /// <summary>
+    /// Static class providing pattern generation. 
+    /// </summary>
     public static class PatternGenerator
     {
+        /// <summary>
+        /// Represent a <see cref="TetriminoKind"/> and its <see cref="Direction"/>s that has not
+        /// yet been tested.
+        /// </summary>
         private class TetriminoKindDirectionsPair
         {
-            public TetriminoKind TetriminoKind { get; private set; }
+            public TetriminoKind Kind { get; private set; }
 
             public Stack<Direction> PendingDirections { get; private set; }
 
             public TetriminoKindDirectionsPair(TetriminoKind kind, Random rand)
             {
-                TetriminoKind = kind;
+                Kind = kind;
                 PendingDirections = new Stack<Direction>(new Direction[] {
                         Direction.Left,
                         Direction.Right,
@@ -40,7 +47,7 @@ namespace Tetriminify.Generator
         /// When this method returns, contains a <see cref="IReadOnlyList{T}"/> of <see cref="Tetrimino"/>s of settled (placed) tetriminos, or
         /// an empty one when fails to generate.
         /// </returns>
-        public static IReadOnlyList<Tetrimino> GetPattern(Block[,] template)
+        public static IReadOnlyList<ITetrimino> GetPattern(IBlock[,] template)
         {
             int availableBlocksCount = 0;
             for (int i = 0; i < template.GetLength(0); i++)
@@ -146,7 +153,7 @@ namespace Tetriminify.Generator
                     while (currentPair.PendingDirections.Count > 0)
                     {
                         Direction direction = currentPair.PendingDirections.Pop();
-                        Tetrimino tetrimino = Tetrimino.ByFirstBlockPosition(currentPair.TetriminoKind,
+                        Tetrimino tetrimino = Tetrimino.ByFirstBlockPosition(currentPair.Kind,
                             new Position(firstBlockCol, firstBlockRow),
                             direction
                         );
@@ -182,7 +189,7 @@ namespace Tetriminify.Generator
 
             }
 
-            bool CheckBlockCollision(Block block)
+            bool CheckBlockCollision(IBlock block)
             {
                 // Left or right border collision
                 if (block.Position.X < 0 || block.Position.X >= workspace.GetLength(1))

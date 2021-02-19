@@ -70,12 +70,18 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Generator\Block.cs" />
-    <Compile Include="Generator\Direction.cs" />
+    <Compile Include="Direction.cs" />
     <Compile Include="Generator\PatternGenerator.cs" />
-    <Compile Include="Generator\Position.cs" />
+    <Compile Include="Sorter\DependencyBuilder.cs" />
+    <Compile Include="Sorter\MemoizedBlock.cs" />
+    <Compile Include="Sorter\PatternSorter.cs" />
+    <Compile Include="Position.cs" />
     <Compile Include="Generator\Tetrimino.cs" />
     <Compile Include="Generator\TetriminoHelper.cs" />
-    <Compile Include="Generator\TetriminoKind.cs" />
+    <Compile Include="Sorter\TetriminoNode.cs" />
+    <Compile Include="TetriminoKind.cs" />
+    <Compile Include="IBlock.cs" />
+    <Compile Include="ITetrimino.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

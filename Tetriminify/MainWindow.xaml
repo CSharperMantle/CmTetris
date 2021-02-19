@@ -27,8 +27,9 @@
             </Grid>
         </GroupBox>
         <TextBlock x:Name="RowTextBlock" Margin="373,20,10,372" Background="LightGray" FontFamily="Consolas" FontSize="14"/>
-        <TextBlock x:Name="TemplateTextBlock" Margin="373,68,10,214" Background="LightGray" FontFamily="Consolas" FontSize="14"/>
-        <TextBlock x:Name="ResultTextBlock" Margin="373,223,10,10" Background="LightGray" FontFamily="Consolas" FontSize="14"/>
-        <Button x:Name="GenerateButton" Content="Generate" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,223,0,0" Click="GenerateButton_Click"/>
+        <TextBlock x:Name="TemplateTextBlock" Margin="373,68,10,196" Background="LightGray" FontFamily="Consolas" FontSize="14"/>
+        <TextBlock x:Name="ResultTextBlock" Margin="373,250,10,10" Background="LightGray" FontFamily="Consolas" FontSize="14"/>
+        <TextBlock x:Name="OrderedTextBlock" Margin="10,250,444,10" Background="LightGray" FontFamily="Consolas" FontSize="14"/>
+        <Button x:Name="GeneratePatternButton" Content="Generate" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="10,223,0,0" Click="GeneratePatternButton_Click"/>
     </Grid>
 </Window>

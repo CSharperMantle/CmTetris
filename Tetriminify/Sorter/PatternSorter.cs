@@ -1,0 +1,49 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Tetriminify.Sorter
+{
+    /// <summary>
+    /// Topological sorting performer.
+    /// </summary>
+    public static class PatternSorter
+    {
+        public static IReadOnlyList<ITetrimino> GetSortedTetriminos(IReadOnlyList<ITetrimino> tetriminos, int playAreaWidth, int playAreaHeight)
+        {
+            IReadOnlyList<TetriminoNode> graph = DependencyBuilder.GetTetriminoDependencyGraph(
+                tetriminos, playAreaWidth, playAreaHeight);
+
+            List<TetriminoNode> startNodes = new List<TetriminoNode>(
+                from node in graph
+                where node.Depending.Count == 0
+                select node
+            );
+            List<TetriminoNode> result = new List<TetriminoNode>();
+
+            while (startNodes.Count != 0)
+            {
+                TetriminoNode n = startNodes[0];
+                startNodes.Remove(n);
+                result.Add(n);
+                List<TetriminoNode> dependedBy = n.DependedBy.ToList();
+                foreach (TetriminoNode m in dependedBy)
+                {
+                    n.DependedBy.Remove(m);
+                    m.Depending.Remove(n);
+                    if (m.Depending.Count == 0)
+                    {
+                        startNodes.Add(m);
+                    }
+                }
+            }
+            if (graph.Any(node => node.DependedBy.Count != 0 || node.Depending.Count != 0))
+            {
+                throw new ArgumentException(nameof(tetriminos));
+            }
+            return result;
+        }
+    }
+}
