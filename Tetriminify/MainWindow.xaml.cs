@@ -70,6 +70,14 @@ namespace Tetriminify
 
         private void AddRowButton_Click(object sender, RoutedEventArgs e)
         {
+            if (currentRow.Count == 0)
+            {
+                MessageBox.Show("Current row is empty.",
+                    "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error
+                );
+                return;
+            }
             currentTemplate.Add(currentRow.ToArray());
             currentRow.Clear();
             currentColId = 0;
@@ -105,7 +113,20 @@ namespace Tetriminify
 
         private void GeneratePatternButton_Click(object sender, RoutedEventArgs e)
         {
-            Block[,] template = To2D(currentTemplate.ToArray());
+            Block[,] template;
+
+            try
+            {
+                template = To2D(currentTemplate.ToArray());
+            }
+            catch (ArgumentException)
+            {
+                MessageBox.Show("Unable to generate a square array. Is the template empty?",
+                    "Error",
+                    MessageBoxButton.OK, MessageBoxImage.Error
+                );
+                return;
+            }
 
             IReadOnlyList<ITetrimino> tetriminos = PatternGenerator.GetPattern(template);
             
