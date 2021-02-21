@@ -255,7 +255,7 @@ namespace Periotris.Model.Generator
             }
 
             IReadOnlyList<Tetrimino> tetriminos = Sorting.PatternSorter.GetSortedTetriminos(
-                GetPattern(template), dim1Len, dim0Len);
+                GetPossibleTetriminoPattern(template), dim1Len, dim0Len);
             foreach (Tetrimino tetrimino in tetriminos)
             {
                 Position originalPosition = tetrimino.Position;
@@ -276,13 +276,13 @@ namespace Periotris.Model.Generator
             return tetriminos;
         }
 
-        private class TetriminoKindDirectionsPair
+        private class KindDirectionsPair
         {
             public TetriminoKind TetriminoKind { get; private set; }
 
             public Stack<Direction> PendingDirections { get; private set; }
 
-            public TetriminoKindDirectionsPair(TetriminoKind kind, Random rand)
+            public KindDirectionsPair(TetriminoKind kind, Random rand)
             {
                 TetriminoKind = kind;
                 PendingDirections = new Stack<Direction>(new Direction[] {
@@ -310,7 +310,7 @@ namespace Periotris.Model.Generator
         /// When this method returns, contains a <see cref="IReadOnlyList{T}"/> of <see cref="Tetrimino"/>s of settled (placed) tetriminos, or
         /// an empty one when fails to generate.
         /// </returns>
-        private static IReadOnlyList<Tetrimino> GetPattern(Block[,] template)
+        private static IReadOnlyList<Tetrimino> GetPossibleTetriminoPattern(Block[,] template)
         {
             int availableBlocksCount = 0;
             for (int i = 0; i < template.GetLength(0); i++)
@@ -334,11 +334,11 @@ namespace Periotris.Model.Generator
             // This is where we place our settled tetriminos - we use Stack because we may need to go back a few steps if a plan fails
             Stack<Tetrimino> settledTetrimino = new Stack<Tetrimino>();
             // This is where we place our information to generate randomized tetriminos
-            Stack<Stack<TetriminoKindDirectionsPair>> pendingTetriminoKinds = new Stack<Stack<TetriminoKindDirectionsPair>>();
+            Stack<Stack<KindDirectionsPair>> pendingTetriminoKinds = new Stack<Stack<KindDirectionsPair>>();
             Random rand = new Random();
 
             // These are cursors. Before each iteration
-            Stack<TetriminoKindDirectionsPair> currentTetriminoKindDirectionsPairStack = null;
+            Stack<KindDirectionsPair> currentTetriminoKindDirectionsPairStack = null;
             bool rewindingRequired = false;
 
             /* Here in the main loop there are many things we need to do:
@@ -376,7 +376,7 @@ namespace Periotris.Model.Generator
                 if (!rewindingRequired)
                 {
                     // This could mean this is the first run or the last iteration has succeeded in placing a block.
-                    currentTetriminoKindDirectionsPairStack = new Stack<TetriminoKindDirectionsPair>();
+                    currentTetriminoKindDirectionsPairStack = new Stack<KindDirectionsPair>();
                     var randomizedTetriminoKinds = new TetriminoKind[] {
                         TetriminoKind.Cubic,
                         TetriminoKind.Linear,
@@ -388,7 +388,7 @@ namespace Periotris.Model.Generator
                     }.ToList().OrderBy(x => rand.Next());
                     foreach (TetriminoKind kind in randomizedTetriminoKinds)
                     {
-                        currentTetriminoKindDirectionsPairStack.Push(new TetriminoKindDirectionsPair(kind, rand));
+                        currentTetriminoKindDirectionsPairStack.Push(new KindDirectionsPair(kind, rand));
                     }
                 }
                 else
@@ -412,7 +412,7 @@ namespace Periotris.Model.Generator
                 bool solutionFound = false;
                 while (currentTetriminoKindDirectionsPairStack.Count > 0)
                 {
-                    TetriminoKindDirectionsPair currentPair = currentTetriminoKindDirectionsPairStack.Pop();
+                    KindDirectionsPair currentPair = currentTetriminoKindDirectionsPairStack.Pop();
                     while (currentPair.PendingDirections.Count > 0)
                     {
                         Direction direction = currentPair.PendingDirections.Pop();

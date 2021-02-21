@@ -39,7 +39,7 @@ namespace Periotris.Model.Generator
         /// <returns>A <see cref="IReadOnlyList{Block}"/> which contains properly offseted blocks</returns>
         public static IReadOnlyList<Block> CreateOffsetedBlocks(TetriminoKind kind, Position offset, Direction direction = Direction.Up)
         {
-            int[,] blockPattern = CreateBlockPattern(kind, direction);
+            int[,] blockPattern = CreateBlocksMask(kind, direction);
 
             List<Block> offsetedBlocks = new List<Block>();
             for (int nRow = 0; nRow < blockPattern.GetLength(0); nRow++)
@@ -55,7 +55,7 @@ namespace Periotris.Model.Generator
             return offsetedBlocks.ToArray();
         }
 
-        public static int[,] CreateBlockPattern(TetriminoKind kind, Direction direction)
+        public static int[,] CreateBlocksMask(TetriminoKind kind, Direction direction)
         {
             int[,] blockPattern = null;
             switch (kind)
@@ -329,7 +329,7 @@ namespace Periotris.Model.Generator
 
         public static Position GetPositionByFirstBlockPosition(Position firstBlockPosition, TetriminoKind kind, Direction facingDirection)
         {
-            int[,] blockPattern = CreateBlockPattern(kind, facingDirection);
+            int[,] blockPattern = CreateBlocksMask(kind, facingDirection);
 
             int firstBlockRow = 0;
             int firstBlockCol = 0;
@@ -358,7 +358,7 @@ namespace Periotris.Model.Generator
 
         public static Position GetFirstBlockPositionByPosition(Position position, TetriminoKind kind, Direction facingDirection)
         {
-            int[,] blockPattern = CreateBlockPattern(kind, facingDirection);
+            int[,] blockPattern = CreateBlocksMask(kind, facingDirection);
 
             int firstBlockRow = 0;
             int firstBlockCol = 0;

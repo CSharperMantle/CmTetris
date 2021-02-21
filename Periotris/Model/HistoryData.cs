@@ -13,7 +13,7 @@ namespace Periotris.Model
         public static readonly string DataFilePath = "history.json";
 
         [DataMember]
-        public List<TimeSpan> PlayRecords { get; }
+        public List<TimeSpan> PlayRecords { get; private set; }
 
         [DataMember]
         public TimeSpan? FastestRecord { get; private set; }

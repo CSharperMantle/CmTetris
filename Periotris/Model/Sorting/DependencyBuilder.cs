@@ -5,9 +5,9 @@ namespace Periotris.Model.Sorting
     /// <summary>
     /// Tetrimino-tetrimino dependency relationship builder.
     /// </summary>
-    public static class DependencyBuilder
+    internal static class DependencyBuilder
     {
-        internal static IReadOnlyList<TetriminoNode> GetTetriminoDependencyGraph(IReadOnlyList<ITetrimino> tetriminos, int playAreaWidth, int playAreaHeight)
+        public static IReadOnlyList<TetriminoNode> GetTetriminoDependencyGraph(IReadOnlyList<ITetrimino> tetriminos, int playAreaWidth, int playAreaHeight)
         {
             // Build block map
             List<TetriminoNode> tetriminoNodes = new List<TetriminoNode>(tetriminos.Count);

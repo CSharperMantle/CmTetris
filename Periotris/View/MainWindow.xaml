@@ -57,8 +57,7 @@
         <Border x:Name="PlayArea" Grid.Row="1" Background="Black" Margin="10"
                 Loaded="PlayArea_Loaded">
             <ItemsControl
-                ItemsSource="{Binding Path=Sprites}"
-                Margin="5">
+                ItemsSource="{Binding Path=Sprites}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Canvas Background="Black" />

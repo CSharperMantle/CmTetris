@@ -27,7 +27,7 @@ namespace Periotris.ViewModel
         {
             set
             {
-                Scale = value.Width / (TetrisConst.PlayAreaWidth + 1);
+                Scale = value.Width / TetrisConst.PlayAreaWidth;
                 _model.UpdateAllBlocks();
             }
         }

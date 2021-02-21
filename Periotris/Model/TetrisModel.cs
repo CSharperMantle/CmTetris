@@ -92,7 +92,6 @@ namespace Periotris.Model
                 NewHighScore = _historyData.AddNewScore(_stopwatch.Elapsed);
                 HistoryData.WriteToFile(_historyData);
             }
-            _stopwatch.Reset();
             _pendingTetriminos.Clear();
         }
 
@@ -122,6 +121,7 @@ namespace Periotris.Model
             }
 
             // Ready to start a new game
+            _stopwatch.Reset();
             _stopwatch.Start();
             SpawnNextTetrimino();
             GameEnded = false;
