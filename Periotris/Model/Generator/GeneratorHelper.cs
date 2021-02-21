@@ -1,11 +1,189 @@
-﻿using System;
+﻿using Periotris.Common;
+using System;
 using System.Collections.Generic;
-using Periotris.Common;
 
 namespace Periotris.Model.Generator
 {
     internal static class GeneratorHelper
     {
+        public static readonly int[,] LinearLeftMask = new int[,]
+        {
+            { 0, 0, 0, 0 },
+            { 0, 0, 0, 0 },
+            { 1, 1, 1, 1 },
+            { 0, 0, 0, 0 }
+        };
+
+        public static readonly int[,] LinearUpMask = new int[,]
+        {
+            { 0, 1, 0, 0 },
+            { 0, 1, 0, 0 },
+            { 0, 1, 0, 0 },
+            { 0, 1, 0, 0 }
+        };
+
+        public static readonly int[,] LinearRightMask = new int[,]
+        {
+            { 0, 0, 0, 0 },
+            { 1, 1, 1, 1 },
+            { 0, 0, 0, 0 },
+            { 0, 0, 0, 0 }
+        };
+
+        public static readonly int[,] LinearDownMask = new int[,]
+        {
+            { 0, 0, 1, 0 },
+            { 0, 0, 1, 0 },
+            { 0, 0, 1, 0 },
+            { 0, 0, 1, 0 }
+        };
+
+        public static readonly int[,] CubicMask = new int[,]
+        {
+            { 1, 1 },
+            { 1, 1 }
+        };
+
+        public static readonly int[,] LCisUpMask = new int[,]
+        {
+            { 0, 1, 0 },
+            { 0, 1, 0 },
+            { 0, 1, 1 },
+        };
+
+        public static readonly int[,] LCisRightMask = new int[,]
+        {
+            { 0, 0, 0 },
+            { 1, 1, 1 },
+            { 1, 0, 0 },
+        };
+
+        public static readonly int[,] LCisDownMask = new int[,]
+        {
+            { 1, 1, 0 },
+            { 0, 1, 0 },
+            { 0, 1, 0 },
+        };
+
+        public static readonly int[,] LCisLeftMask = new int[,]
+        {
+            { 0, 0, 1 },
+            { 1, 1, 1 },
+            { 0, 0, 0 },
+        };
+
+        public static readonly int[,] LTransUpMask = new int[,]
+        {
+            { 0, 1, 0 },
+            { 0, 1, 0 },
+            { 1, 1, 0 },
+        };
+
+        public static readonly int[,] LTransRightMask = new int[,]
+        {
+            { 1, 0, 0 },
+            { 1, 1, 1 },
+            { 0, 0, 0 },
+        };
+
+        public static readonly int[,] LTransDownMask = new int[,]
+        {
+            { 0, 1, 1 },
+            { 0, 1, 0 },
+            { 0, 1, 0 },
+        };
+
+        public static readonly int[,] LTransLeftMask = new int[,]
+        {
+            { 0, 0, 0 },
+            { 1, 1, 1 },
+            { 0, 0, 1 },
+        };
+
+        public static readonly int[,] ZCisUpMask = new int[,]
+        {
+            { 1, 1, 0 },
+            { 0, 1, 1 },
+            { 0, 0, 0 },
+        };
+
+        public static readonly int[,] ZCisRightMask = new int[,]
+        {
+            { 0, 0, 1 },
+            { 0, 1, 1 },
+            { 0, 1, 0 },
+        };
+
+        public static readonly int[,] ZCisDownMask = new int[,]
+        {
+            { 0, 0, 0 },
+            { 1, 1, 0 },
+            { 0, 1, 1 },
+        };
+
+        public static readonly int[,] ZCisLeftMask = new int[,]
+        {
+            { 0, 1, 0 },
+            { 1, 1, 0 },
+            { 1, 0, 0 },
+        };
+
+        public static readonly int[,] ZTransUpMask = new int[,]
+        {
+            { 0, 1, 1 },
+            { 1, 1, 0 },
+            { 0, 0, 0 },
+        };
+
+        public static readonly int[,] ZTransRightMask = new int[,]
+        {
+            { 0, 1, 0 },
+            { 0, 1, 1 },
+            { 0, 0, 1 },
+        };
+
+        public static readonly int[,] ZTransDownMask = new int[,]
+        {
+            { 0, 0, 0 },
+            { 0, 1, 1 },
+            { 1, 1, 0 },
+        };
+
+        public static readonly int[,] ZTransLeftMask = new int[,]
+        {
+            { 1, 0, 0 },
+            { 1, 1, 0 },
+            { 0, 1, 0 },
+        };
+
+        public static readonly int[,] TUpMask = new int[,]
+        {
+            { 0, 1, 0 },
+            { 1, 1, 1 },
+            { 0, 0, 0 },
+        };
+
+        public static readonly int[,] TRightMask = new int[,]
+        {
+            { 0, 1, 0 },
+            { 0, 1, 1 },
+            { 0, 1, 0 },
+        };
+
+        public static readonly int[,] TDownMask = new int[,]
+        {
+            { 0, 0, 0 },
+            { 1, 1, 1 },
+            { 0, 1, 0 },
+        };
+
+        public static readonly int[,] TLeftMask = new int[,]
+        {
+            { 0, 1, 0 },
+            { 1, 1, 0 },
+            { 0, 1, 0 },
+        };
+
         public static Position GetInitialPositionByKind(TetriminoKind kind)
         {
             int length = 0;
@@ -57,96 +235,48 @@ namespace Periotris.Model.Generator
 
         public static int[,] CreateBlocksMask(TetriminoKind kind, Direction direction)
         {
-            int[,] blockPattern = null;
+            int[,] blockMask = null;
             switch (kind)
             {
                 case TetriminoKind.Linear:
                     switch (direction)
                     {
                         case Direction.Left:
-                            blockPattern = new int[,]
-                                {
-                                    { 0, 0, 0, 0 },
-                                    { 0, 0, 0, 0 },
-                                    { 1, 1, 1, 1 },
-                                    { 0, 0, 0, 0 }
-                                };
+                            blockMask = LinearLeftMask;
                             break;
                         case Direction.Up:
-                            blockPattern = new int[,]
-                                {
-                                    { 0, 1, 0, 0 },
-                                    { 0, 1, 0, 0 },
-                                    { 0, 1, 0, 0 },
-                                    { 0, 1, 0, 0 }
-                                };
+                            blockMask = LinearUpMask;
                             break;
                         case Direction.Right:
-                            blockPattern = new int[,]
-                                {
-                                    { 0, 0, 0, 0 },
-                                    { 1, 1, 1, 1 },
-                                    { 0, 0, 0, 0 },
-                                    { 0, 0, 0, 0 }
-                                };
+                            blockMask = LinearRightMask;
                             break;
                         case Direction.Down:
-                            blockPattern = new int[,]
-                                {
-                                    { 0, 0, 1, 0 },
-                                    { 0, 0, 1, 0 },
-                                    { 0, 0, 1, 0 },
-                                    { 0, 0, 1, 0 }
-                                };
+                            blockMask = LinearDownMask;
                             break;
                         default:
                             throw new ArgumentException(nameof(direction));
                     }
                     break;
                 case TetriminoKind.Cubic:
-                    blockPattern = new int[,]
-                        {
-                            { 1, 1 },
-                            { 1, 1 }
-                        };
+                    blockMask = CubicMask;
                     break;
                 case TetriminoKind.LShapedCis:
                     switch (direction)
                     {
                         case Direction.Up:
-                            blockPattern = new int[,]
-                            {
-                                { 0, 1, 0 },
-                                { 0, 1, 0 },
-                                { 0, 1, 1 },
-                            };
+                            blockMask = LCisUpMask;
                             break;
 
                         case Direction.Right:
-                            blockPattern = new int[,]
-                            {
-                                { 0, 0, 0 },
-                                { 1, 1, 1 },
-                                { 1, 0, 0 },
-                            };
+                            blockMask = LCisRightMask;
                             break;
 
                         case Direction.Down:
-                            blockPattern = new int[,]
-                            {
-                                { 1, 1, 0 },
-                                { 0, 1, 0 },
-                                { 0, 1, 0 },
-                            };
+                            blockMask = LCisDownMask;
                             break;
 
                         case Direction.Left:
-                            blockPattern = new int[,]
-                            {
-                                { 0, 0, 1 },
-                                { 1, 1, 1 },
-                                { 0, 0, 0 },
-                            };
+                            blockMask = LCisLeftMask;
                             break;
                         default:
                             throw new ArgumentException(nameof(direction));
@@ -156,39 +286,19 @@ namespace Periotris.Model.Generator
                     switch (direction)
                     {
                         case Direction.Up:
-                            blockPattern = new int[,]
-                            {
-                                { 0, 1, 0 },
-                                { 0, 1, 0 },
-                                { 1, 1, 0 },
-                            };
+                            blockMask = LTransUpMask;
                             break;
 
                         case Direction.Right:
-                            blockPattern = new int[,]
-                            {
-                                { 1, 0, 0 },
-                                { 1, 1, 1 },
-                                { 0, 0, 0 },
-                            };
+                            blockMask = LTransRightMask;
                             break;
 
                         case Direction.Down:
-                            blockPattern = new int[,]
-                            {
-                                { 0, 1, 1 },
-                                { 0, 1, 0 },
-                                { 0, 1, 0 },
-                            };
+                            blockMask = LTransDownMask;
                             break;
 
                         case Direction.Left:
-                            blockPattern = new int[,]
-                            {
-                                { 0, 0, 0 },
-                                { 1, 1, 1 },
-                                { 0, 0, 1 },
-                            };
+                            blockMask = LTransLeftMask;
                             break;
                         default:
                             throw new ArgumentException(nameof(direction));
@@ -198,39 +308,19 @@ namespace Periotris.Model.Generator
                     switch (direction)
                     {
                         case Direction.Up:
-                            blockPattern = new int[,]
-                            {
-                                { 1, 1, 0 },
-                                { 0, 1, 1 },
-                                { 0, 0, 0 },
-                            };
+                            blockMask = ZCisUpMask;
                             break;
 
                         case Direction.Right:
-                            blockPattern = new int[,]
-                            {
-                                { 0, 0, 1 },
-                                { 0, 1, 1 },
-                                { 0, 1, 0 },
-                            };
+                            blockMask = ZCisRightMask;
                             break;
 
                         case Direction.Down:
-                            blockPattern = new int[,]
-                            {
-                                { 0, 0, 0 },
-                                { 1, 1, 0 },
-                                { 0, 1, 1 },
-                            };
+                            blockMask = ZCisDownMask;
                             break;
 
                         case Direction.Left:
-                            blockPattern = new int[,]
-                            {
-                                { 0, 1, 0 },
-                                { 1, 1, 0 },
-                                { 1, 0, 0 },
-                            };
+                            blockMask = ZCisLeftMask;
                             break;
                         default:
                             throw new ArgumentException(nameof(direction));
@@ -240,39 +330,19 @@ namespace Periotris.Model.Generator
                     switch (direction)
                     {
                         case Direction.Up:
-                            blockPattern = new int[,]
-                            {
-                                { 0, 1, 1 },
-                                { 1, 1, 0 },
-                                { 0, 0, 0 },
-                            };
+                            blockMask = ZTransUpMask;
                             break;
 
                         case Direction.Right:
-                            blockPattern = new int[,]
-                            {
-                                { 0, 1, 0 },
-                                { 0, 1, 1 },
-                                { 0, 0, 1 },
-                            };
+                            blockMask = ZTransRightMask;
                             break;
 
                         case Direction.Down:
-                            blockPattern = new int[,]
-                            {
-                                { 0, 0, 0 },
-                                { 0, 1, 1 },
-                                { 1, 1, 0 },
-                            };
+                            blockMask = ZTransDownMask;
                             break;
 
                         case Direction.Left:
-                            blockPattern = new int[,]
-                            {
-                                { 1, 0, 0 },
-                                { 1, 1, 0 },
-                                { 0, 1, 0 },
-                            };
+                            blockMask = ZTransLeftMask;
                             break;
                         default:
                             throw new ArgumentException(nameof(direction));
@@ -282,39 +352,19 @@ namespace Periotris.Model.Generator
                     switch (direction)
                     {
                         case Direction.Up:
-                            blockPattern = new int[,]
-                            {
-                                { 0, 1, 0 },
-                                { 1, 1, 1 },
-                                { 0, 0, 0 },
-                            };
+                            blockMask = TUpMask;
                             break;
 
                         case Direction.Right:
-                            blockPattern = new int[,]
-                            {
-                                { 0, 1, 0 },
-                                { 0, 1, 1 },
-                                { 0, 1, 0 },
-                            };
+                            blockMask = TRightMask;
                             break;
 
                         case Direction.Down:
-                            blockPattern = new int[,]
-                            {
-                                { 0, 0, 0 },
-                                { 1, 1, 1 },
-                                { 0, 1, 0 },
-                            };
+                            blockMask = TDownMask;
                             break;
 
                         case Direction.Left:
-                            blockPattern = new int[,]
-                            {
-                                { 0, 1, 0 },
-                                { 1, 1, 0 },
-                                { 0, 1, 0 },
-                            };
+                            blockMask = TLeftMask;
                             break;
                         default:
                             throw new ArgumentException(nameof(direction));
@@ -324,7 +374,7 @@ namespace Periotris.Model.Generator
                     throw new ArgumentException(nameof(kind));
             }
 
-            return blockPattern;
+            return blockMask;
         }
 
         public static Position GetPositionByFirstBlockPosition(Position firstBlockPosition, TetriminoKind kind, Direction facingDirection)
@@ -363,7 +413,7 @@ namespace Periotris.Model.Generator
             int firstBlockRow = 0;
             int firstBlockCol = 0;
             bool firstBlockFound = false;
-            
+
             for (int nRow = blockPattern.GetLength(0) - 1; nRow >= 0; nRow--)
             {
                 for (int nCol = blockPattern.GetLength(1) - 1; nCol >= 0; nCol--)

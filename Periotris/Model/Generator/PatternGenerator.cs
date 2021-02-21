@@ -376,7 +376,7 @@ namespace Periotris.Model.Generator
                 if (!rewindingRequired)
                 {
                     // This could mean this is the first run or the last iteration has succeeded in placing a block.
-                    currentTetriminoKindDirectionsPairStack = new Stack<KindDirectionsPair>();
+                    currentTetriminoKindDirectionsPairStack = new Stack<KindDirectionsPair>(7);
                     var randomizedTetriminoKinds = new TetriminoKind[] {
                         TetriminoKind.Cubic,
                         TetriminoKind.Linear,
