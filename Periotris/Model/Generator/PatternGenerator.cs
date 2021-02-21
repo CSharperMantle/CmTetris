@@ -376,20 +376,15 @@ namespace Periotris.Model.Generator
                 if (!rewindingRequired)
                 {
                     // This could mean this is the first run or the last iteration has succeeded in placing a block.
-                    currentTetriminoKindDirectionsPairStack = new Stack<KindDirectionsPair>(7);
-                    var randomizedTetriminoKinds = new TetriminoKind[] {
-                        TetriminoKind.Cubic,
-                        TetriminoKind.Linear,
-                        TetriminoKind.LShapedCis,
-                        TetriminoKind.LShapedTrans,
-                        TetriminoKind.TShaped,
-                        TetriminoKind.ZigZagCis,
-                        TetriminoKind.ZigZagTrans
-                    }.ToList().OrderBy(x => rand.Next());
-                    foreach (TetriminoKind kind in randomizedTetriminoKinds)
-                    {
-                        currentTetriminoKindDirectionsPairStack.Push(new KindDirectionsPair(kind, rand));
-                    }
+                    currentTetriminoKindDirectionsPairStack = new Stack<KindDirectionsPair>(new KindDirectionsPair[] {
+                        new KindDirectionsPair(TetriminoKind.Cubic, rand),
+                        new KindDirectionsPair(TetriminoKind.Linear, rand),
+                        new KindDirectionsPair(TetriminoKind.LShapedCis, rand),
+                        new KindDirectionsPair(TetriminoKind.LShapedTrans, rand),
+                        new KindDirectionsPair(TetriminoKind.TShaped, rand),
+                        new KindDirectionsPair(TetriminoKind.ZigZagCis, rand),
+                        new KindDirectionsPair(TetriminoKind.ZigZagTrans, rand)
+                    }.ToList().OrderBy(x => rand.Next()));
                 }
                 else
                 {
