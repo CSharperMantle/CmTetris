@@ -13,6 +13,7 @@
     <Window.Resources>
         <viewModel:TetrisViewModel x:Key="ViewModel" />
         <viewModel:BoolVisibilityConverter x:Key="VisibilityConverter" />
+        <viewModel:TimeSpanStringConverter x:Key="TimeSpanConverter" />
         <Style x:Key="GroupHeaderTextStyle" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Microsoft YaHei UI" />
             <Setter Property="TextTrimming" Value="WordEllipsis" />
@@ -47,6 +48,12 @@
                        FontFamily="Microsoft YaHei UI" FontSize="34" FontWeight="Bold"
                        Foreground="White" Visibility="{Binding Path=GameWon, Converter={StaticResource VisibilityConverter}}"/>
         </Grid>
+
+        <TextBlock Grid.Row="0"
+                       Style="{StaticResource GroupHeaderTextStyle}"
+                       Text="{Binding Path=ElapsedTime, Converter={StaticResource TimeSpanConverter}}"
+                       HorizontalAlignment="Right" Margin="0, 20, 30, 0" />
+
         <Border x:Name="PlayArea" Grid.Row="1" Background="Black" Margin="10"
                 Loaded="PlayArea_Loaded">
             <ItemsControl
@@ -67,11 +74,14 @@
                        HorizontalAlignment="Center"
                        Opacity="1" Foreground="Yellow"
                        FontWeight="Bold" FontSize="70" FontFamily="Microsoft YaHei" />
-            <Button x:Name="BeginButton" Content="START"
+            <Button x:Name="BeginButton" Content="Start"
                     HorizontalAlignment="Center"
                     Background="DarkSlateGray" Foreground="Snow"
                     FontWeight="Bold" FontSize="30"
-                    Click="BeginButton_Click" />
+                    Click="BeginButton_Click" Padding="3" />
+            <CheckBox x:Name="ColorsCheckBox" 
+                      HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.TextAlignment="Center"
+                      IsChecked="{Binding Path=RenderColors, Mode=TwoWay}" Content="Colors" Padding="4,0,0,0"/>
         </StackPanel>
 
         <TextBlock Grid.Row="1" Text="Paused"

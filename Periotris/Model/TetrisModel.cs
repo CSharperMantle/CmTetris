@@ -1,7 +1,7 @@
 ﻿using Periotris.Common;
-
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Periotris.Model
@@ -17,6 +17,16 @@ namespace Periotris.Model
         /// Random number generator used to generate new <see cref="NextTetriminoKind"/>.
         /// </summary>
         private readonly Random _random = new Random();
+
+        /// <summary>
+        /// Stopwatch for recording play time and scoreboarding.
+        /// </summary>
+        private readonly Stopwatch _stopwatch = new Stopwatch();
+
+        /// <summary>
+        /// Leaderboard and scoreboard.
+        /// </summary>
+        private HistoryData _historyData;
 
         /// <summary>
         /// The active and only user-controllable <see cref="ITetrimino"/> on the field.
@@ -37,13 +47,14 @@ namespace Periotris.Model
         /// <summary>
         /// Tetriminos that are waiting to be inserted to the playing field.
         /// </summary>
-        private Stack<ITetrimino> _pendingTetriminos = new Stack<ITetrimino>();
+        private readonly Stack<ITetrimino> _pendingTetriminos = new Stack<ITetrimino>();
 
         /// <summary>
         /// Construct a new <see cref="TetrisModel"/> whose game is initially ended.
         /// </summary>
         public TetrisModel()
         {
+            _historyData = HistoryData.ReadFromFile();
             EndGame(false);
         }
 
@@ -58,12 +69,30 @@ namespace Periotris.Model
         public bool Victory { get; private set; }
 
         /// <summary>
+        /// The <see cref="Stopwatch.Elapsed"/> of the current game.
+        /// </summary>
+        public TimeSpan ElapsedTime => _stopwatch.Elapsed;
+
+        /// <summary>
+        /// Set by <see cref="EndGame(bool)"/> to check if the current run's time is lower than
+        /// any other records.
+        /// </summary>
+        public bool NewHighScore { get; private set; }
+
+        /// <summary>
         /// End the current game.
         /// </summary>
         public void EndGame(bool victory)
         {
             GameEnded = true;
             Victory = victory;
+            _stopwatch.Stop();
+            if (victory)
+            {
+                NewHighScore = _historyData.AddNewScore(_stopwatch.Elapsed);
+                HistoryData.WriteToFile(_historyData);
+            }
+            _stopwatch.Reset();
             _pendingTetriminos.Clear();
         }
 
@@ -93,6 +122,7 @@ namespace Periotris.Model
             }
 
             // Ready to start a new game
+            _stopwatch.Start();
             SpawnNextTetrimino();
             GameEnded = false;
         }

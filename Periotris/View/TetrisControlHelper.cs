@@ -9,10 +9,17 @@ namespace Periotris.View
 {
     public static class TetrisControlHelper
     {
-        public static FrameworkElement AnnotatedBlockControlFactory(IBlock block, double scale)
+        public static FrameworkElement AnnotatedBlockControlFactory(IBlock block, bool renderColors, double scale)
         {
             AnnotatedBlockControl newBlockControl = new AnnotatedBlockControl();
-            newBlockControl.SetFill(GetBlockColorByAtomicNumber(block.AtomicNumber));
+            if (renderColors)
+            {
+                newBlockControl.SetFill(GetBlockColorByAtomicNumber(block.AtomicNumber));
+            }
+            else
+            {
+                newBlockControl.SetFill(new SolidColorBrush(Colors.White));
+            }
             newBlockControl.SetElementName(GetElementNameByAtomicNumber(block.AtomicNumber));
             newBlockControl.Height = AnnotatedBlockControl.OriginalHeight * scale;
             newBlockControl.Width = AnnotatedBlockControl.OriginalWidth * scale;

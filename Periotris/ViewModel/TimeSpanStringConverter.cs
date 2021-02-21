@@ -1,26 +1,24 @@
 ﻿using System;
 using System.Globalization;
-using System.Windows;
 using System.Windows.Data;
 
 namespace Periotris.ViewModel
 {
-    public class BoolVisibilityConverter : IValueConverter
+    public class TimeSpanStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is bool && (bool)value)
+            if (value is TimeSpan realVal)
             {
-                return Visibility.Visible;
+                return string.Format("{0:D2}:{1:D2}", realVal.Minutes, realVal.Seconds);
             }
-
-            return Visibility.Hidden;
+            throw new ArgumentException(nameof(value));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotSupportedException("Two-way binding is not supported on " +
-                                            nameof(BoolVisibilityConverter));
+                                            nameof(TimeSpanStringConverter));
         }
     }
 }

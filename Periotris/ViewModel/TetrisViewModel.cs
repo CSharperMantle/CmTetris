@@ -60,11 +60,15 @@ namespace Periotris.ViewModel
 
         public bool GameWon => _model.GameEnded && _model.Victory;
 
+        public TimeSpan ElapsedTime => _model.ElapsedTime;
+
+        public bool NewHighScore => _model.NewHighScore;
+
         public bool Paused { get; set; }
 
-        private bool _lastPaused = true;
+        public bool RenderColors { get; set; } = true;
 
-        public int RowsCleared { get; private set; }
+        private bool _lastPaused = true;
 
         /// <summary>
         /// Start the underlying game in <see cref="TetrisModel"/>.
@@ -133,7 +137,7 @@ namespace Periotris.ViewModel
                 if (!_blocksByPosition.Keys.Contains(e.BlockUpdated.Position))
                 {
                     // Create a new BlockControl.
-                    FrameworkElement blockControl = TetrisControlHelper.AnnotatedBlockControlFactory(e.BlockUpdated, Scale);
+                    FrameworkElement blockControl = TetrisControlHelper.AnnotatedBlockControlFactory(e.BlockUpdated, RenderColors, Scale);
                     _blocksByPosition.Add(e.BlockUpdated.Position, blockControl);
                     _sprites.Add(blockControl);
                 }
@@ -166,12 +170,14 @@ namespace Periotris.ViewModel
             if (!Paused)
             {
                 _model.Update();
+                OnPropertyChanged(nameof(ElapsedTime));
             }
 
             if (_model.GameEnded)
             {
                 OnPropertyChanged(nameof(GameOver));
                 OnPropertyChanged(nameof(GameWon));
+                OnPropertyChanged(nameof(NewHighScore));
                 _timer.Stop();
             }
         }

@@ -21,7 +21,7 @@ jobs:
       run: nuget restore CmTetris.sln
       
     - name: Build
-      run: msbuild CmTetris.sln /p:Configuration=Release
+      run: msbuild CmTetris.sln /p:Configuration=Release /maxcpucount:4
 
     - name: Upload artifacts
       uses: actions/upload-artifact@v2

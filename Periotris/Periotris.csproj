@@ -33,7 +33,7 @@
     <PublisherName>CSharperMantle</PublisherName>
     <SuiteName>CmTetris</SuiteName>
     <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationVersion>1.1.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -111,6 +111,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\TetrisConst.cs" />
+    <Compile Include="Model\HistoryData.cs" />
     <Compile Include="Model\Sorting\DependencyBuilder.cs" />
     <Compile Include="Model\Generator\Block.cs" />
     <Compile Include="Model\Direction.cs" />
@@ -128,6 +129,7 @@
     <Compile Include="Model\TetrisModel.cs" />
     <Compile Include="ViewModel\BoolVisibilityConverter.cs" />
     <Compile Include="ViewModel\TetrisViewModel.cs" />
+    <Compile Include="ViewModel\TimeSpanStringConverter.cs" />
     <Compile Include="View\TetrisControlHelper.cs" />
     <Page Include="View\AnnotatedBlockControl.xaml">
       <SubType>Designer</SubType>
@@ -168,7 +170,6 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
-    <None Include="Periotris_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
