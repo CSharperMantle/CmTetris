@@ -22,10 +22,18 @@ A tool to generate closely-packed Tetrimino patterns and falling orders for arbi
 ### `Periotris`
 A Tetris game based on the theme of the Period Table of Elements.
 
+#### Features
+* Purely original and accurate periodic table of elements
+* Puzzles are algorithm-guaranteed solvable
+* New map each time
+* Leaderboards
+* Colorful and colorless mode switchable
+
 #### Controls
-* `A`: Move left
-* `D`: Move right
-* `S`: Move down
+* `A` || `Left arrow`: Move left
+* `D` || `Right arrow`: Move right
+* `S` || `Down arrow`: Move down
+* `Space`: Rotate
 * `Esc`: Pause
 
 ## Usage

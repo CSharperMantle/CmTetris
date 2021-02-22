@@ -52,7 +52,7 @@
         <StackPanel  Grid.Row="0"
                      HorizontalAlignment="Right" Margin="0, 20, 30, 0" >
             <TextBlock Style="{StaticResource GroupHeaderTextStyle}"
-                       Text="{Binding Path=ElapsedTime, Converter={StaticResource TimeSpanConverter}}"
+                       Text="{Binding Path=ElapsedTime, Converter={StaticResource TimeSpanConverter}}" Foreground="Yellow"
                        TextAlignment="Center"/>
             <TextBlock Style="{StaticResource GroupHeaderTextStyle}"
                        Text="{Binding Path=CurrentHighestScore, Converter={StaticResource TimeSpanConverter}}"
