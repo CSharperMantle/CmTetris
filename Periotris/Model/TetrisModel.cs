@@ -3,11 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 
 namespace Periotris.Model
 {
     public class TetrisModel
     {
+        public static readonly string AssemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
         /// <summary>
         /// "Frozen" or inactive blocks. They can not be moved by user.
         /// </summary>
@@ -78,6 +81,8 @@ namespace Periotris.Model
         /// any other records.
         /// </summary>
         public bool NewHighScore { get; private set; }
+
+        public TimeSpan? CurrentHighestScore => _historyData.FastestRecord;
 
         /// <summary>
         /// End the current game.

@@ -62,11 +62,13 @@ namespace Periotris.ViewModel
 
         public TimeSpan ElapsedTime => _model.ElapsedTime;
 
-        public bool NewHighScore => _model.NewHighScore;
+        public TimeSpan? CurrentHighestScore => _model.CurrentHighestScore;
 
         public bool Paused { get; set; }
 
         public bool RenderColors { get; set; } = true;
+
+        public string AssemblyVersion => TetrisModel.AssemblyVersion;
 
         private bool _lastPaused = true;
 
@@ -184,7 +186,7 @@ namespace Periotris.ViewModel
                 _timer.Stop();
                 OnPropertyChanged(nameof(GameOver));
                 OnPropertyChanged(nameof(GameWon));
-                OnPropertyChanged(nameof(NewHighScore));
+                OnPropertyChanged(nameof(CurrentHighestScore));
                 return;
             }
 
