@@ -114,7 +114,7 @@ namespace Periotris.Model
                 _activeTetrimino = null;
             }
             // Fill in tetriminos
-            IEnumerable<ITetrimino> generatedTetriminos = Generator.PatternGenerator.GetPatternForPeriodicTable().Reverse();
+            IEnumerable<ITetrimino> generatedTetriminos = Generator.PatternGenerator.GetPatternForPeriodicTable(_random).Reverse();
             foreach (ITetrimino tetrimino in generatedTetriminos)
             {
                 _pendingTetriminos.Push(tetrimino);
@@ -161,6 +161,21 @@ namespace Periotris.Model
                 _activeTetrimino.TryMove(direction, CheckBlockCollision);
             }
             // Re-add moved blocks.
+            UpdateActiveTetrimino(false);
+        }
+
+        /// <summary>
+        /// Rotate <see cref="_activeTetrimino"/>.
+        /// </summary>
+        /// <param name="direction">The direction to rotate to</param>
+        public void RotateActiveTetrimino(RotationDirection direction)
+        {
+            if (GameEnded)
+            {
+                return;
+            }
+            UpdateActiveTetrimino(true);
+            _activeTetrimino.TryRotate(direction, CheckBlockCollision);
             UpdateActiveTetrimino(false);
         }
 

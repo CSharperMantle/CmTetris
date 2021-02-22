@@ -32,7 +32,7 @@
         /// <para>--o+</para>
         /// <para>--v+</para>
         /// </summary>
-        Down
+        Down,
     }
 
     public enum RotationDirection

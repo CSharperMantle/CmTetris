@@ -6,6 +6,6 @@
 
         public static readonly int PlayAreaHeight = 11;
 
-        public static readonly int UpdateIntervalSeconds = 1;
+        public static readonly double UpdateIntervalSeconds = 1.5;
     }
 }

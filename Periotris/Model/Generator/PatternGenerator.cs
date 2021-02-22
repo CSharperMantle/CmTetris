@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Periotris.Model.Generator
 {
@@ -238,24 +239,25 @@ namespace Periotris.Model.Generator
         /// periodic table.
         /// </summary>
         /// <returns></returns>
-        public static IReadOnlyList<ITetrimino> GetPatternForPeriodicTable()
+        public static IReadOnlyList<ITetrimino> GetPatternForPeriodicTable(Random rand)
         {
             int dim0Len = _periodicTableTemplate.GetLength(0);
             int dim1Len = _periodicTableTemplate.GetLength(1);
             Block[,] template = new Block[dim0Len, dim1Len];
-            for (int i = 0; i < dim0Len; i++)
-            {
-                for (int j = 0; j < dim1Len; j++)
+            Parallel.For(0, dim0Len,
+                (int i) =>
                 {
-                    template[i, j] = new Block(_periodicTableTemplate[i, j].FilledBy,
-                        _periodicTableTemplate[i, j].Position,
-                        _periodicTableTemplate[i, j].AtomicNumber
-                    );
-                }
-            }
+                    for (int j = 0; j < dim1Len; j++)
+                    {
+                        template[i, j] = new Block(_periodicTableTemplate[i, j].FilledBy,
+                            _periodicTableTemplate[i, j].Position,
+                            _periodicTableTemplate[i, j].AtomicNumber
+                        );
+                    }
+                });
 
             IReadOnlyList<Tetrimino> tetriminos = Sorting.PatternSorter.GetSortedTetriminos(
-                GetPossibleTetriminoPattern(template), dim1Len, dim0Len);
+                GetPossibleTetriminoPattern(template, rand), dim1Len, dim0Len);
             foreach (Tetrimino tetrimino in tetriminos)
             {
                 Position originalPosition = tetrimino.Position;
@@ -263,21 +265,36 @@ namespace Periotris.Model.Generator
                 int deltaX = newPosition.X - originalPosition.X;
                 int deltaY = newPosition.Y - originalPosition.Y;
                 List<Block> newBlocks = new List<Block>();
-                foreach (Block block in tetrimino.Blocks)
+                foreach (Block block in tetrimino.RealBlocks)
                 {
-                    newBlocks.Add(new Block(block.FilledBy,
+                    newBlocks.Add(new Block(
+                        block.FilledBy,
                         new Position(block.Position.X + deltaX, block.Position.Y + deltaY),
-                        block.AtomicNumber)
-                    );
+                        block.AtomicNumber, block.Identifier
+                        ));
                 }
-                tetrimino.Blocks = newBlocks;
+                tetrimino.RealBlocks = newBlocks;
                 tetrimino.Position = GeneratorHelper.GetInitialPositionByKind(tetrimino.Kind);
+
+                // Randomly rotate the current Tetrimino.
+                int rotationCount = rand.Next(0, Enum.GetValues(typeof(Direction)).Length);
+                for (int i = 0; i < rotationCount; i++)
+                {
+                    tetrimino.TryRotate(RotationDirection.Right, (_) => false);
+                }
             }
             return tetriminos;
         }
 
         private class KindDirectionsPair
         {
+            public static Direction[] AllDirections = new Direction[] {
+                Direction.Left,
+                Direction.Right,
+                Direction.Up,
+                Direction.Down,
+            };
+
             public TetriminoKind TetriminoKind { get; private set; }
 
             public Stack<Direction> PendingDirections { get; private set; }
@@ -285,12 +302,7 @@ namespace Periotris.Model.Generator
             public KindDirectionsPair(TetriminoKind kind, Random rand)
             {
                 TetriminoKind = kind;
-                PendingDirections = new Stack<Direction>(new Direction[] {
-                    Direction.Left,
-                    Direction.Right,
-                    Direction.Up,
-                    Direction.Down,
-                }.ToList().OrderBy(x => rand.Next()));
+                PendingDirections = new Stack<Direction>(AllDirections.OrderBy(x => rand.Next()));
             }
         }
 
@@ -310,19 +322,22 @@ namespace Periotris.Model.Generator
         /// When this method returns, contains a <see cref="IReadOnlyList{T}"/> of <see cref="Tetrimino"/>s of settled (placed) tetriminos, or
         /// an empty one when fails to generate.
         /// </returns>
-        private static IReadOnlyList<Tetrimino> GetPossibleTetriminoPattern(Block[,] template)
+        private static IReadOnlyList<Tetrimino> GetPossibleTetriminoPattern(Block[,] template, Random rand)
         {
             int availableBlocksCount = 0;
-            for (int i = 0; i < template.GetLength(0); i++)
-            {
-                for (int j = 0; j < template.GetLength(1); j++)
+
+            Parallel.For(0, template.GetLength(0),
+                (int i) =>
                 {
-                    if (template[i, j].FilledBy == TetriminoKind.AvailableToFill)
+                    for (int j = 0; j < template.GetLength(1); j++)
                     {
-                        availableBlocksCount++;
+                        if (template[i, j].FilledBy == TetriminoKind.AvailableToFill)
+                        {
+                            availableBlocksCount++;
+                        }
                     }
-                }
-            }
+                });
+            
             if (availableBlocksCount % 4 != 0)
             {
                 // Since tetriminos are all 4 blocks, if we can't get a proper 4-block division we need to fast-fail.
@@ -335,7 +350,6 @@ namespace Periotris.Model.Generator
             Stack<Tetrimino> settledTetrimino = new Stack<Tetrimino>();
             // This is where we place our information to generate randomized tetriminos
             Stack<Stack<KindDirectionsPair>> pendingTetriminoKinds = new Stack<Stack<KindDirectionsPair>>();
-            Random rand = new Random();
 
             // These are cursors. Before each iteration
             Stack<KindDirectionsPair> currentTetriminoKindDirectionsPairStack = null;
@@ -384,7 +398,7 @@ namespace Periotris.Model.Generator
                         new KindDirectionsPair(TetriminoKind.TShaped, rand),
                         new KindDirectionsPair(TetriminoKind.ZigZagCis, rand),
                         new KindDirectionsPair(TetriminoKind.ZigZagTrans, rand)
-                    }.ToList().OrderBy(x => rand.Next()));
+                    }.OrderBy(x => rand.Next()));
                 }
                 else
                 {
@@ -397,7 +411,7 @@ namespace Periotris.Model.Generator
                     currentTetriminoKindDirectionsPairStack = pendingTetriminoKinds.Pop();
                     // We still have chances...
                     Tetrimino lastTetrimino = settledTetrimino.Pop();
-                    foreach (Block block in lastTetrimino.Blocks)
+                    foreach (IBlock block in lastTetrimino.RealBlocks)
                     {
                         workspace[block.Position.Y, block.Position.X].FilledBy = TetriminoKind.AvailableToFill;
                     }
@@ -415,12 +429,12 @@ namespace Periotris.Model.Generator
                             new Position(firstBlockCol, firstBlockRow),
                             direction
                         );
-                        if (!tetrimino.Blocks.Any(CheckBlockCollision))
+                        if (!tetrimino.RealBlocks.Any(CheckBlockCollision))
                         {
                             // Now that we found a solution. Push these to the stack and go to the next iteration.
                             settledTetrimino.Push(tetrimino);
                             pendingTetriminoKinds.Push(currentTetriminoKindDirectionsPairStack);
-                            foreach (Block block in tetrimino.Blocks)
+                            foreach (Block block in tetrimino.RealBlocks)
                             {
                                 block.AtomicNumber = workspace[block.Position.Y, block.Position.X].AtomicNumber;
                                 workspace[block.Position.Y, block.Position.X].FilledBy = block.FilledBy;
@@ -450,18 +464,19 @@ namespace Periotris.Model.Generator
 
             bool CheckBlockCollision(IBlock block)
             {
+                int nRow = block.Position.Y;
+                int nCol = block.Position.X;
+
                 // Left or right border collision
-                if (block.Position.X < 0 || block.Position.X >= workspace.GetLength(1))
+                if (nCol < 0 || nCol >= workspace.GetLength(1))
                 {
                     return true;
                 }
                 // Bottom border collision
-                if (block.Position.Y >= workspace.GetLength(0))
+                if (nRow >= workspace.GetLength(0))
                 {
                     return true;
                 }
-                int nRow = block.Position.Y;
-                int nCol = block.Position.X;
                 // Block-block collision
                 if (workspace[nRow, nCol].FilledBy != TetriminoKind.AvailableToFill)
                 {

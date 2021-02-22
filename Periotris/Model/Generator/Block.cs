@@ -8,11 +8,24 @@
         
         public int AtomicNumber { get; set; }
 
-        public Block(TetriminoKind filledBy, Position position, int atomicNumber = 0)
+        public int Identifier { get; set; }
+
+        public Block(TetriminoKind filledBy, Position position)
+            : this(filledBy, position, 0, 0)
+        {
+        }
+
+        public Block(TetriminoKind filledBy, Position position, int atomicNumber)
+            : this(filledBy, position, atomicNumber, 0)
+        {
+        }
+
+        public Block(TetriminoKind filledBy, Position position, int atomicNumber, int identifier)
         {
             FilledBy = filledBy;
             Position = position;
             AtomicNumber = atomicNumber;
+            Identifier = identifier;
         }
 
         public override string ToString()

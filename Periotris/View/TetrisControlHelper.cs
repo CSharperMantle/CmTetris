@@ -1,6 +1,5 @@
 ﻿using NCDK;
 using Periotris.Model;
-using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -12,14 +11,7 @@ namespace Periotris.View
         public static FrameworkElement AnnotatedBlockControlFactory(IBlock block, bool renderColors, double scale)
         {
             AnnotatedBlockControl newBlockControl = new AnnotatedBlockControl();
-            if (renderColors)
-            {
-                newBlockControl.SetFill(GetBlockColorByAtomicNumber(block.AtomicNumber));
-            }
-            else
-            {
-                newBlockControl.SetFill(new SolidColorBrush(Colors.White));
-            }
+            newBlockControl.SetFill(GetBlockColorByAtomicNumber(block.AtomicNumber, renderColors));
             newBlockControl.SetElementName(GetElementNameByAtomicNumber(block.AtomicNumber));
             newBlockControl.Height = AnnotatedBlockControl.OriginalHeight * scale;
             newBlockControl.Width = AnnotatedBlockControl.OriginalWidth * scale;
@@ -37,8 +29,13 @@ namespace Periotris.View
             Canvas.SetTop(element, y);
         }
 
-        public static SolidColorBrush GetBlockColorByAtomicNumber(int atomicNumber)
+        public static SolidColorBrush GetBlockColorByAtomicNumber(int atomicNumber, bool renderColors)
         {
+            if (!renderColors)
+            {
+                return new SolidColorBrush(Colors.White);
+            }
+
             if (atomicNumber <= 0)
             {
                 return new SolidColorBrush(Colors.Gray);

@@ -1,11 +1,11 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Periotris.Model.Generator
 {
     /// <summary>
-    /// Represents an extended Tetrimino.
+    /// Represent an extended Tetrimino.
     /// </summary>
     internal class Tetrimino : ITetrimino
     {
@@ -26,7 +26,9 @@ namespace Periotris.Model.Generator
 
         public Direction FacingDirection { get; private set; }
 
-        public IReadOnlyList<IBlock> Blocks { get; set; }
+        public IReadOnlyList<IBlock> Blocks => RealBlocks;
+
+        public IReadOnlyList<Block> RealBlocks { get; set; }
 
         protected Tetrimino(TetriminoKind kind, Position position, Position firstBlockPosition, Direction facingDirection)
         {
@@ -34,55 +36,71 @@ namespace Periotris.Model.Generator
             Position = position;
             FacingDirection = facingDirection;
             FirstBlockPosition = firstBlockPosition;
-            Blocks = GeneratorHelper.CreateOffsetedBlocks(kind, Position, facingDirection);
+            RealBlocks = GeneratorHelper.CreateOffsetedBlocks(kind, Position, facingDirection);
         }
-
-        /// <summary>
-        /// Move a <see cref="Tetrimino"/> towards a <see cref="MoveDirection"/> if permits.
-        /// The <see cref="Tetrimino"/> will not be changed if the operation fails.
-        /// </summary>
-        /// <param name="collisionChecker">A <see cref="Func{Block, bool}"/> which returns <see cref="true"/>
-        /// when the block will collide</param>
-        /// <returns>Whether the <see cref="TryMove"/> step succeeds</returns>
+        
         public bool TryMove(MoveDirection direction, Func<IBlock, bool> collisionChecker)
         {
             Position position = Position;
-            List<Block> newBlocks = new List<Block>();
             if (direction == MoveDirection.Down)
             {
                 int row = position.Y + 1;
                 position = new Position(position.X, row);
-                foreach (Block block in Blocks)
-                {
-                    newBlocks.Add(new Block(block.FilledBy,
-                        new Position(block.Position.X, block.Position.Y + 1),
-                        block.AtomicNumber)
-                    );
-                }
             }
             else
             {
                 int delta = (direction == MoveDirection.Right) ? 1 : -1;
                 int column = position.X + delta;
                 position = new Position(column, position.Y);
-
-                foreach (Block block in Blocks)
-                {
-                    newBlocks.Add(new Block(block.FilledBy,
-                        new Position(block.Position.X + delta, block.Position.Y),
-                        block.AtomicNumber)
-                    );
-                }
             }
 
+            IReadOnlyList<Block> newBlocks = GeneratorHelper.CreateOffsetedBlocks(Kind, position, FacingDirection);
             if (newBlocks.Any(collisionChecker))
             {
                 return false;
             }
+            GeneratorHelper.MapAtomicNumberForNewBlocks(RealBlocks, newBlocks);
 
             Position = position;
-            Blocks = newBlocks;
+            RealBlocks = newBlocks;
             return true;
+        }
+
+        public bool TryRotate(RotationDirection rotationDirection, Func<IBlock, bool> collisionChecker)
+        {
+            int count = Enum.GetValues(typeof(Direction)).Length;
+            int delta = (rotationDirection == RotationDirection.Right) ? 1 : -1;
+            int direction = (int)FacingDirection + delta;
+            if (direction < 0)
+            {
+                direction += count;
+            }
+
+            if (direction >= count)
+            {
+                direction %= count;
+            }
+
+            int[] adjustPattern = Kind == TetriminoKind.Linear
+                                ? new[] { 0, 1, -1, 2, -2 }
+                                : new[] { 0, 1, -1 };
+            foreach (int adjust in adjustPattern)
+            {
+                Position newPos = new Position(Position.X + adjust, Position.Y);
+                IReadOnlyList<Block> newBlocks = GeneratorHelper.CreateOffsetedBlocks(Kind, newPos, (Direction)direction);
+
+                if (!newBlocks.Any(collisionChecker))
+                {
+                    GeneratorHelper.MapAtomicNumberForNewBlocks(RealBlocks, newBlocks);
+
+                    FacingDirection = (Direction)direction;
+                    Position = newPos;
+                    RealBlocks = newBlocks;
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public override string ToString()

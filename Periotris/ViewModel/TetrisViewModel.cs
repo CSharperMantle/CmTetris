@@ -109,6 +109,18 @@ namespace Periotris.ViewModel
                 case Key.D:
                     _model.MoveActiveTetrimino(MoveDirection.Right);
                     break;
+                case Key.Left:
+                    _model.MoveActiveTetrimino(MoveDirection.Left);
+                    break;
+                case Key.Down:
+                    _model.MoveActiveTetrimino(MoveDirection.Down);
+                    break;
+                case Key.Right:
+                    _model.MoveActiveTetrimino(MoveDirection.Right);
+                    break;
+                case Key.Space:
+                    _model.RotateActiveTetrimino(RotationDirection.Right);
+                    break;
                 case Key.Escape:
                     Paused = !Paused;
                     break;
@@ -167,18 +179,19 @@ namespace Periotris.ViewModel
                 _lastPaused = Paused;
             }
 
+            if (_model.GameEnded)
+            {
+                _timer.Stop();
+                OnPropertyChanged(nameof(GameOver));
+                OnPropertyChanged(nameof(GameWon));
+                OnPropertyChanged(nameof(NewHighScore));
+                return;
+            }
+
             if (!Paused)
             {
                 _model.Update();
                 OnPropertyChanged(nameof(ElapsedTime));
-            }
-
-            if (_model.GameEnded)
-            {
-                OnPropertyChanged(nameof(GameOver));
-                OnPropertyChanged(nameof(GameWon));
-                OnPropertyChanged(nameof(NewHighScore));
-                _timer.Stop();
             }
         }
     }

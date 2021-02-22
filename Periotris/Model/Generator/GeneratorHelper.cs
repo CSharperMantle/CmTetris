@@ -1,187 +1,216 @@
 ﻿using Periotris.Common;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Periotris.Model.Generator
 {
     internal static class GeneratorHelper
     {
+        /// <summary>
+        /// Mask for <see cref="TetriminoKind.Linear"/> and <see cref="Direction.Left"/>.
+        /// </summary>
+        /// <remarks>
+        /// The 1, 2, 3, 4 numbers are called 'identifiers' which is used to identify the
+        /// blocks in the same <see cref="TetriminoKind"/> with different directions.
+        /// These are used to guarantee the consistence for <see cref="IBlock.AtomicNumber"/>
+        /// in <see cref="ITetrimino.TryMove(MoveDirection, Func{IBlock, bool})"/> and
+        /// <see cref="ITetrimino.TryRotate(RotationDirection, Func{IBlock, bool})"/>.
+        /// </remarks>
         public static readonly int[,] LinearLeftMask = new int[,]
         {
             { 0, 0, 0, 0 },
             { 0, 0, 0, 0 },
-            { 1, 1, 1, 1 },
+            { 1, 2, 3, 4 },
             { 0, 0, 0, 0 }
         };
 
         public static readonly int[,] LinearUpMask = new int[,]
         {
             { 0, 1, 0, 0 },
-            { 0, 1, 0, 0 },
-            { 0, 1, 0, 0 },
-            { 0, 1, 0, 0 }
+            { 0, 2, 0, 0 },
+            { 0, 3, 0, 0 },
+            { 0, 4, 0, 0 }
         };
 
         public static readonly int[,] LinearRightMask = new int[,]
         {
             { 0, 0, 0, 0 },
-            { 1, 1, 1, 1 },
+            { 4, 3, 2, 1 },
             { 0, 0, 0, 0 },
             { 0, 0, 0, 0 }
         };
 
         public static readonly int[,] LinearDownMask = new int[,]
         {
-            { 0, 0, 1, 0 },
-            { 0, 0, 1, 0 },
-            { 0, 0, 1, 0 },
+            { 0, 0, 4, 0 },
+            { 0, 0, 3, 0 },
+            { 0, 0, 2, 0 },
             { 0, 0, 1, 0 }
         };
 
-        public static readonly int[,] CubicMask = new int[,]
+        public static readonly int[,] CubicMaskUp = new int[,]
         {
-            { 1, 1 },
-            { 1, 1 }
+            { 1, 2 },
+            { 4, 3 }
+        };
+
+        public static readonly int[,] CubicMaskRight = new int[,]
+        {
+            { 4, 1 },
+            { 3, 2 }
+        };
+
+        public static readonly int[,] CubicMaskLeft = new int[,]
+        {
+            { 2, 3 },
+            { 1, 4 }
+        };
+
+        public static readonly int[,] CubicMaskDown = new int[,]
+        {
+            { 3, 4 },
+            { 2, 1 }
         };
 
         public static readonly int[,] LCisUpMask = new int[,]
         {
             { 0, 1, 0 },
-            { 0, 1, 0 },
-            { 0, 1, 1 },
+            { 0, 2, 0 },
+            { 0, 3, 4 },
         };
 
         public static readonly int[,] LCisRightMask = new int[,]
         {
             { 0, 0, 0 },
-            { 1, 1, 1 },
-            { 1, 0, 0 },
+            { 3, 2, 1 },
+            { 4, 0, 0 },
         };
 
         public static readonly int[,] LCisDownMask = new int[,]
         {
-            { 1, 1, 0 },
-            { 0, 1, 0 },
+            { 4, 3, 0 },
+            { 0, 2, 0 },
             { 0, 1, 0 },
         };
 
         public static readonly int[,] LCisLeftMask = new int[,]
         {
-            { 0, 0, 1 },
-            { 1, 1, 1 },
+            { 0, 0, 4 },
+            { 1, 2, 3 },
             { 0, 0, 0 },
         };
 
         public static readonly int[,] LTransUpMask = new int[,]
         {
             { 0, 1, 0 },
-            { 0, 1, 0 },
-            { 1, 1, 0 },
+            { 0, 2, 0 },
+            { 4, 3, 0 },
         };
 
         public static readonly int[,] LTransRightMask = new int[,]
         {
-            { 1, 0, 0 },
-            { 1, 1, 1 },
+            { 4, 0, 0 },
+            { 3, 2, 1 },
             { 0, 0, 0 },
         };
 
         public static readonly int[,] LTransDownMask = new int[,]
         {
-            { 0, 1, 1 },
-            { 0, 1, 0 },
+            { 0, 3, 4 },
+            { 0, 2, 0 },
             { 0, 1, 0 },
         };
 
         public static readonly int[,] LTransLeftMask = new int[,]
         {
             { 0, 0, 0 },
-            { 1, 1, 1 },
-            { 0, 0, 1 },
+            { 1, 2, 3 },
+            { 0, 0, 4 },
         };
 
         public static readonly int[,] ZCisUpMask = new int[,]
         {
-            { 1, 1, 0 },
-            { 0, 1, 1 },
+            { 1, 2, 0 },
+            { 0, 3, 4 },
             { 0, 0, 0 },
         };
 
         public static readonly int[,] ZCisRightMask = new int[,]
         {
             { 0, 0, 1 },
-            { 0, 1, 1 },
-            { 0, 1, 0 },
+            { 0, 3, 2 },
+            { 0, 4, 0 },
         };
 
         public static readonly int[,] ZCisDownMask = new int[,]
         {
             { 0, 0, 0 },
-            { 1, 1, 0 },
-            { 0, 1, 1 },
+            { 4, 3, 0 },
+            { 0, 2, 1 },
         };
 
         public static readonly int[,] ZCisLeftMask = new int[,]
         {
-            { 0, 1, 0 },
-            { 1, 1, 0 },
+            { 0, 4, 0 },
+            { 2, 3, 0 },
             { 1, 0, 0 },
         };
 
         public static readonly int[,] ZTransUpMask = new int[,]
         {
-            { 0, 1, 1 },
-            { 1, 1, 0 },
+            { 0, 3, 4 },
+            { 1, 2, 0 },
             { 0, 0, 0 },
         };
 
         public static readonly int[,] ZTransRightMask = new int[,]
         {
             { 0, 1, 0 },
-            { 0, 1, 1 },
-            { 0, 0, 1 },
+            { 0, 2, 3 },
+            { 0, 0, 4 },
         };
 
         public static readonly int[,] ZTransDownMask = new int[,]
         {
             { 0, 0, 0 },
-            { 0, 1, 1 },
-            { 1, 1, 0 },
+            { 0, 2, 1 },
+            { 4, 3, 0 },
         };
 
         public static readonly int[,] ZTransLeftMask = new int[,]
         {
-            { 1, 0, 0 },
-            { 1, 1, 0 },
+            { 4, 0, 0 },
+            { 3, 2, 0 },
             { 0, 1, 0 },
         };
 
         public static readonly int[,] TUpMask = new int[,]
         {
             { 0, 1, 0 },
-            { 1, 1, 1 },
+            { 2, 3, 4 },
             { 0, 0, 0 },
         };
 
         public static readonly int[,] TRightMask = new int[,]
         {
-            { 0, 1, 0 },
-            { 0, 1, 1 },
-            { 0, 1, 0 },
+            { 0, 2, 0 },
+            { 0, 3, 1 },
+            { 0, 4, 0 },
         };
 
         public static readonly int[,] TDownMask = new int[,]
         {
             { 0, 0, 0 },
-            { 1, 1, 1 },
+            { 4, 3, 2 },
             { 0, 1, 0 },
         };
 
         public static readonly int[,] TLeftMask = new int[,]
         {
-            { 0, 1, 0 },
-            { 1, 1, 0 },
-            { 0, 1, 0 },
+            { 0, 4, 0 },
+            { 1, 3, 0 },
+            { 0, 2, 0 },
         };
 
         public static Position GetInitialPositionByKind(TetriminoKind kind)
@@ -217,20 +246,42 @@ namespace Periotris.Model.Generator
         /// <returns>A <see cref="IReadOnlyList{Block}"/> which contains properly offseted blocks</returns>
         public static IReadOnlyList<Block> CreateOffsetedBlocks(TetriminoKind kind, Position offset, Direction direction = Direction.Up)
         {
-            int[,] blockPattern = CreateBlocksMask(kind, direction);
+            int[,] mask = CreateBlocksMask(kind, direction);
 
             List<Block> offsetedBlocks = new List<Block>();
-            for (int nRow = 0; nRow < blockPattern.GetLength(0); nRow++)
+            for (int nRow = 0; nRow < mask.GetLength(0); nRow++)
             {
-                for (int nCol = 0; nCol < blockPattern.GetLength(1); nCol++)
+                for (int nCol = 0; nCol < mask.GetLength(1); nCol++)
                 {
-                    if (blockPattern[nRow, nCol] != 0)
+                    int identifier = mask[nRow, nCol];
+                    if (identifier != 0)
                     {
-                        offsetedBlocks.Add(new Block(kind, new Position(nCol + offset.X, nRow + offset.Y)));
+                        offsetedBlocks.Add(new Block(kind, new Position(nCol + offset.X, nRow + offset.Y), 0, identifier));
                     }
                 }
             }
             return offsetedBlocks.ToArray();
+        }
+
+        /// <summary>
+        /// Fill new blocks with the proper <see cref="IBlock.AtomicNumber"/> according to
+        /// the <see cref="Block.Identifier"/>.
+        /// </summary>
+        /// <param name="oldBlocks">The old blocks</param>
+        /// <param name="newBlocks">The new blocks which will be filled with old atomic number</param>
+        public static void MapAtomicNumberForNewBlocks(IReadOnlyList<Block> oldBlocks, IReadOnlyList<Block> newBlocks)
+        {
+            foreach (Block oldBlock in oldBlocks)
+            {
+                var newBlockList =
+                    from block in newBlocks
+                    where block.Identifier == oldBlock.Identifier
+                    select block;
+                foreach (Block newBlock in newBlockList)
+                {
+                    newBlock.AtomicNumber = oldBlock.AtomicNumber;
+                }
+            }
         }
 
         public static int[,] CreateBlocksMask(TetriminoKind kind, Direction direction)
@@ -258,7 +309,26 @@ namespace Periotris.Model.Generator
                     }
                     break;
                 case TetriminoKind.Cubic:
-                    blockMask = CubicMask;
+                    switch (direction)
+                    {
+                        case Direction.Up:
+                            blockMask = CubicMaskUp;
+                            break;
+
+                        case Direction.Right:
+                            blockMask = CubicMaskRight;
+                            break;
+
+                        case Direction.Down:
+                            blockMask = CubicMaskDown;
+                            break;
+
+                        case Direction.Left:
+                            blockMask = CubicMaskLeft;
+                            break;
+                        default:
+                            throw new ArgumentException(nameof(direction));
+                    }
                     break;
                 case TetriminoKind.LShapedCis:
                     switch (direction)
