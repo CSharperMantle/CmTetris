@@ -29,6 +29,7 @@ namespace Periotris.ViewModel
             {
                 Scale = value.Width / TetrisConst.PlayAreaWidth;
                 _model.UpdateAllBlocks();
+                RecreateAssistGrids();
             }
         }
 
@@ -36,6 +37,9 @@ namespace Periotris.ViewModel
 
         private readonly Dictionary<Position, FrameworkElement> _blocksByPosition =
             new Dictionary<Position, FrameworkElement>();
+
+        private readonly List<FrameworkElement> _assistGridLines =
+            new List<FrameworkElement>();
 
         private readonly ObservableCollection<FrameworkElement> _sprites =
             new ObservableCollection<FrameworkElement>();
@@ -47,6 +51,7 @@ namespace Periotris.ViewModel
             Scale = 1;
 
             _model.BlockChanged += ModelBlockChangedEventHandler;
+            _model.GameEnd += ModelGameEndEventListener;
 
             _timer.Interval = TimeSpan.FromSeconds(TetrisConst.UpdateIntervalSeconds);
             _timer.Tick += TimerTickEventHandler;
@@ -68,7 +73,7 @@ namespace Periotris.ViewModel
 
         public bool RenderColors { get; set; } = true;
 
-        public string AssemblyVersion => TetrisModel.AssemblyVersion;
+        public bool RenderGridAssistance { get; set; } = false;
 
         private bool _lastPaused = true;
 
@@ -77,7 +82,7 @@ namespace Periotris.ViewModel
         /// </summary>
         public void StartGame()
         {
-            Paused = false;
+            RecreateAssistGrids();
             foreach (FrameworkElement block in _blocksByPosition.Values)
             {
                 _sprites.Remove(block);
@@ -85,6 +90,7 @@ namespace Periotris.ViewModel
             _model.StartGame();
             OnPropertyChanged(nameof(GameOver));
             OnPropertyChanged(nameof(GameWon));
+            Paused = false;
             _timer.Start();
         }
 
@@ -133,7 +139,36 @@ namespace Periotris.ViewModel
 
         private void EndGame()
         {
-            _model.EndGame(false);
+            _timer.Stop();
+            OnPropertyChanged(nameof(GameOver));
+            OnPropertyChanged(nameof(GameWon));
+            OnPropertyChanged(nameof(CurrentHighestScore));
+        }
+
+        private void RecreateAssistGrids()
+        {
+            foreach (FrameworkElement line in _assistGridLines)
+                if (_sprites.Contains(line))
+                    _sprites.Remove(line);
+            _assistGridLines.Clear();
+            if (!RenderGridAssistance)
+            {
+                return;
+            }
+            for (int x = 0; x < TetrisConst.PlayAreaWidth; x++)
+            {
+                var scanLine = TetrisControlHelper.VerticalAssistGridLineFactory(
+                    x, TetrisConst.PlayAreaHeight, Scale);
+                _assistGridLines.Add(scanLine);
+                _sprites.Add(scanLine);
+            }
+            for (int y = 0; y < TetrisConst.PlayAreaHeight; y++)
+            {
+                var scanLine = TetrisControlHelper.HorizontalAssistGridLineFactory(
+                    y, TetrisConst.PlayAreaWidth, Scale);
+                _assistGridLines.Add(scanLine);
+                _sprites.Add(scanLine);
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -173,21 +208,17 @@ namespace Periotris.ViewModel
             }
         }
 
+        private void ModelGameEndEventListener(object sender, EventArgs e)
+        {
+            EndGame();
+        }
+
         private void TimerTickEventHandler(object sender, EventArgs e)
         {
             if (_lastPaused != Paused)
             {
                 OnPropertyChanged(nameof(Paused));
                 _lastPaused = Paused;
-            }
-
-            if (_model.GameEnded)
-            {
-                _timer.Stop();
-                OnPropertyChanged(nameof(GameOver));
-                OnPropertyChanged(nameof(GameWon));
-                OnPropertyChanged(nameof(CurrentHighestScore));
-                return;
             }
 
             if (!Paused)

@@ -3,6 +3,7 @@ using Periotris.Model;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace Periotris.View
 {
@@ -21,6 +22,32 @@ namespace Periotris.View
             );
             Panel.SetZIndex(newBlockControl, 1);
             return newBlockControl;
+        }
+
+        public static FrameworkElement HorizontalAssistGridLineFactory(int y, int width, double scale)
+        {
+            Rectangle rectangle = new Rectangle
+            {
+                Width = width * scale,
+                Height = 1,
+                Opacity = 0.1,
+                Fill = new SolidColorBrush(Colors.White)
+            };
+            SetCanvasLocation(rectangle, 0, y * scale);
+            return rectangle;
+        }
+
+        public static FrameworkElement VerticalAssistGridLineFactory(int x, int height, double scale)
+        {
+            Rectangle rectangle = new Rectangle
+            {
+                Width = 1,
+                Height = height * scale,
+                Opacity = 0.1,
+                Fill = new SolidColorBrush(Colors.White)
+            };
+            SetCanvasLocation(rectangle, x * scale, 0);
+            return rectangle;
         }
 
         public static void SetCanvasLocation(FrameworkElement element, double x, double y)

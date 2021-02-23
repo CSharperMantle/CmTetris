@@ -9,8 +9,6 @@ namespace Periotris.Model
 {
     public class TetrisModel
     {
-        public static readonly string AssemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-
         /// <summary>
         /// "Frozen" or inactive blocks. They can not be moved by user.
         /// </summary>
@@ -62,7 +60,7 @@ namespace Periotris.Model
         }
 
         /// <summary>
-        /// Whether the game is in progress.
+        /// Whether the game is ended.
         /// </summary>
         public bool GameEnded { get; private set; }
 
@@ -98,6 +96,7 @@ namespace Periotris.Model
                 HistoryData.WriteToFile(_historyData);
             }
             _pendingTetriminos.Clear();
+            OnGameEnd();
         }
 
         /// <summary>
@@ -138,7 +137,8 @@ namespace Periotris.Model
         /// <param name="direction">The direction to move to</param>
         public void MoveActiveTetrimino(MoveDirection direction)
         {
-            if (GameEnded)
+            // The game has not fully started!
+            if (GameEnded || _activeTetrimino == null)
             {
                 return;
             }
@@ -175,10 +175,12 @@ namespace Periotris.Model
         /// <param name="direction">The direction to rotate to</param>
         public void RotateActiveTetrimino(RotationDirection direction)
         {
-            if (GameEnded)
+            // The game has not fully started!
+            if (GameEnded || _activeTetrimino == null)
             {
                 return;
             }
+
             UpdateActiveTetrimino(true);
             _activeTetrimino.TryRotate(direction, CheckBlockCollision);
             UpdateActiveTetrimino(false);
@@ -193,32 +195,34 @@ namespace Periotris.Model
         /// </remarks>
         public void Update()
         {
-            if (!GameEnded)
+            if (GameEnded)
             {
-                MoveActiveTetrimino(MoveDirection.Down);
-                // Or, if any frozen block's atomic number is not equal to the template's
-                // block's on its same location, i.e., the placed element is not at the 
-                // position it should be, then a misplaced block is found.
-                // End the game.
-                foreach (IBlock block in _frozenBlocks)
-                {
-                    if (Generator.PatternGenerator.PeriodicTableTemplate[block.Position.Y,
-                        block.Position.X].AtomicNumber != block.AtomicNumber)
-                    {
-                        EndGame(false);
-                    }
-                }
+                return;
+            }
 
-                // All blocks settled.
-                if (_frozenBlocks.Count >= Generator.PatternGenerator.TotalAvailableBlocks)
+            MoveActiveTetrimino(MoveDirection.Down);
+            // Or, if any frozen block's atomic number is not equal to the template's
+            // block's on its same location, i.e., the placed element is not at the 
+            // position it should be, then a misplaced block is found.
+            // End the game.
+            foreach (IBlock block in _frozenBlocks)
+            {
+                if (Generator.PatternGenerator.PeriodicTableTemplate[block.Position.Y,
+                    block.Position.X].AtomicNumber != block.AtomicNumber)
                 {
-                    EndGame(true);
+                    EndGame(false);
                 }
+            }
+
+            // All blocks settled.
+            if (_frozenBlocks.Count >= Generator.PatternGenerator.TotalAvailableBlocks)
+            {
+                EndGame(true);
             }
         }
 
         /// <summary>
-        /// Refresh all <see cref="Block"/>s in <see cref="_activeTetrimino"/> and <see cref="_frozenBlocks"/>.
+        /// Refresh all <see cref="IBlock"/>s in <see cref="_activeTetrimino"/> and <see cref="_frozenBlocks"/>.
         /// </summary>
         /// <remarks>
         /// Dim all blocks and then re-fire them.
@@ -247,8 +251,8 @@ namespace Periotris.Model
         }
 
         /// <summary>
-        /// Internal method which checks whether a <see cref="Block"/> would collide
-        /// with other <see cref="Block"/>s in <see cref="_frozenBlocks"/> or
+        /// Internal method which checks whether a <see cref="IBlock"/> would collide
+        /// with other <see cref="IBlock"/>s in <see cref="_frozenBlocks"/> or
         /// with the borders of the game field.
         /// </summary>
         /// <returns>Whether a block will collide or not</returns>
@@ -292,7 +296,7 @@ namespace Periotris.Model
 
         /// <summary>
         /// Internal method used to trigger <see cref="BlockChanged"/> event on
-        /// every <see cref="Block"/> in <see cref="_activeTetrimino"/>.
+        /// every <see cref="IBlock"/> in <see cref="_activeTetrimino"/>.
         /// </summary>
         private void UpdateActiveTetrimino(bool disappeared)
         {
@@ -306,7 +310,7 @@ namespace Periotris.Model
         }
 
         /// <summary>
-        /// An event fired when a <see cref="Block"/> needs to be updated.
+        /// An event fired when a <see cref="IBlock"/> needs to be updated.
         /// </summary>
         public event EventHandler<BlockChangedEventArgs> BlockChanged;
 
@@ -314,6 +318,17 @@ namespace Periotris.Model
         {
             EventHandler<BlockChangedEventArgs> blockChanged = BlockChanged;
             blockChanged?.Invoke(this, new BlockChangedEventArgs(block, disappeared));
+        }
+
+        /// <summary>
+        /// An event fired when the game ends.
+        /// </summary>
+        public event EventHandler GameEnd;
+
+        private void OnGameEnd()
+        {
+            EventHandler gameEnded = GameEnd;
+            gameEnded?.Invoke(this, new EventArgs());
         }
     }
 }

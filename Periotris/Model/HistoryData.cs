@@ -37,7 +37,7 @@ namespace Periotris.Model
                 FastestRecord = newPlayTime;
                 return true;
             }
-            if (FastestRecord < newPlayTime)
+            if (newPlayTime < FastestRecord)
             {
                 FastestRecord = newPlayTime;
                 return true;

@@ -258,37 +258,39 @@ namespace Periotris.Model.Generator
 
             IReadOnlyList<Tetrimino> tetriminos = Sorting.PatternSorter.GetSortedTetriminos(
                 GetPossibleTetriminoPattern(template, rand), dim1Len, dim0Len);
-            foreach (Tetrimino tetrimino in tetriminos)
-            {
-                Position originalPosition = tetrimino.Position;
-                Position newPosition = GeneratorHelper.GetInitialPositionByKind(tetrimino.Kind);
-                int deltaX = newPosition.X - originalPosition.X;
-                int deltaY = newPosition.Y - originalPosition.Y;
-                List<Block> newBlocks = new List<Block>();
-                foreach (Block block in tetrimino.RealBlocks)
-                {
-                    newBlocks.Add(new Block(
-                        block.FilledBy,
-                        new Position(block.Position.X + deltaX, block.Position.Y + deltaY),
-                        block.AtomicNumber, block.Identifier
-                        ));
-                }
-                tetrimino.RealBlocks = newBlocks;
-                tetrimino.Position = GeneratorHelper.GetInitialPositionByKind(tetrimino.Kind);
 
-                // Randomly rotate the current Tetrimino.
-                int rotationCount = rand.Next(0, Enum.GetValues(typeof(Direction)).Length);
-                for (int i = 0; i < rotationCount; i++)
-                {
-                    tetrimino.TryRotate(RotationDirection.Right, (_) => false);
-                }
-            }
+            Parallel.ForEach(tetriminos,
+                (Tetrimino tetrimino) => {
+                    // Repositioning the tetriminos.
+                    Position originalPosition = tetrimino.Position;
+                    Position newPosition = GeneratorHelper.GetInitialPositionByKind(tetrimino.Kind);
+                    int deltaX = newPosition.X - originalPosition.X;
+                    int deltaY = newPosition.Y - originalPosition.Y;
+                    List<Block> newBlocks = new List<Block>(tetrimino.RealBlocks.Count);
+                    foreach (Block block in tetrimino.RealBlocks)
+                    {
+                        newBlocks.Add(new Block(
+                            block.FilledBy,
+                            new Position(block.Position.X + deltaX, block.Position.Y + deltaY),
+                            block.AtomicNumber, block.Identifier
+                            ));
+                    }
+                    tetrimino.RealBlocks = newBlocks;
+                    tetrimino.Position = GeneratorHelper.GetInitialPositionByKind(tetrimino.Kind);
+
+                    // Randomly rotate the current Tetrimino.
+                    int rotationCount = rand.Next(0, Enum.GetValues(typeof(Direction)).Length);
+                    for (int i = 0; i < rotationCount; i++)
+                    {
+                        tetrimino.TryRotate(RotationDirection.Right, (_) => false);
+                    }
+                });
             return tetriminos;
         }
 
         private class KindDirectionsPair
         {
-            public static Direction[] AllDirections = new Direction[] {
+            public static readonly Direction[] AllDirections = new Direction[] {
                 Direction.Left,
                 Direction.Right,
                 Direction.Up,
@@ -347,7 +349,8 @@ namespace Periotris.Model.Generator
             // This is where we do our tracking jobs - to track which blocks are available to fill
             Block[,] workspace = (Block[,])template.Clone();
             // This is where we place our settled tetriminos - we use Stack because we may need to go back a few steps if a plan fails
-            Stack<Tetrimino> settledTetrimino = new Stack<Tetrimino>();
+            // The initial capacity is the estimated numbers of tetriminos
+            Stack<Tetrimino> settledTetrimino = new Stack<Tetrimino>(availableBlocksCount / 4);
             // This is where we place our information to generate randomized tetriminos
             Stack<Stack<KindDirectionsPair>> pendingTetriminoKinds = new Stack<Stack<KindDirectionsPair>>();
 

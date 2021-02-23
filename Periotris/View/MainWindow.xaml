@@ -43,59 +43,71 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="1" Text="The Periodic Table of Elements"
+            <TextBlock Grid.Column="1"
+                       Text="The Periodic Table of Elements"
                        HorizontalAlignment="Center" Margin="35, 15, 0, 0"
+                       Foreground="White"
                        FontFamily="Microsoft YaHei UI" FontSize="34" FontWeight="Bold"
-                       Foreground="White" Visibility="{Binding Path=GameWon, Converter={StaticResource VisibilityConverter}}"/>
+                       Visibility="{Binding Path=GameWon, Converter={StaticResource VisibilityConverter}}"/>
         </Grid>
 
-        <StackPanel  Grid.Row="0"
-                     HorizontalAlignment="Right" Margin="0, 20, 30, 0" >
-            <TextBlock Style="{StaticResource GroupHeaderTextStyle}"
-                       Text="{Binding Path=ElapsedTime, Converter={StaticResource TimeSpanConverter}}" Foreground="Yellow"
-                       TextAlignment="Center"/>
-            <TextBlock Style="{StaticResource GroupHeaderTextStyle}"
-                       Text="{Binding Path=CurrentHighestScore, Converter={StaticResource TimeSpanConverter}}"
-                       TextAlignment="Center"/>
+        <StackPanel Grid.Row="0"
+                    HorizontalAlignment="Right" Margin="0, 20, 30, 0">
+            <TextBlock Text="{Binding Path=ElapsedTime, Converter={StaticResource TimeSpanConverter}}"
+                       Style="{StaticResource GroupHeaderTextStyle}"
+                       Foreground="Yellow" TextAlignment="Center"/>
+            <TextBlock Text="{Binding Path=CurrentHighestScore, Converter={StaticResource TimeSpanConverter}}"
+                       Style="{StaticResource GroupHeaderTextStyle}" TextAlignment="Center"/>
         </StackPanel>
 
-        <Border x:Name="PlayArea" Grid.Row="1" Background="Black" Margin="10"
+        <Border x:Name="PlayArea"
+                Grid.Row="1" Margin="10"
+                Background="Black"
                 Loaded="PlayArea_Loaded">
             <ItemsControl
                 ItemsSource="{Binding Path=Sprites}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <Canvas Background="Black" />
+                        <Canvas Background="Black"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
         </Border>
         <StackPanel Grid.Row="1"
-                    Opacity="0.9" Background="DarkGray" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                    HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                    Opacity="0.9" Background="DarkGray"
                     Visibility="{Binding Path=GameOver, Converter={StaticResource VisibilityConverter}}">
             <TextBlock Text="Game End"
-                       VerticalAlignment="Center"
-                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center" HorizontalAlignment="Center"
                        Opacity="1" Foreground="Yellow"
                        FontWeight="Bold" FontSize="70" FontFamily="Microsoft YaHei" />
-            <Button x:Name="BeginButton" Content="Start"
-                    HorizontalAlignment="Center"
+            <Button x:Name="BeginButton"
+                    Content="Start"
+                    HorizontalAlignment="Center" Padding="3"
                     Background="DarkSlateGray" Foreground="Snow"
                     FontWeight="Bold" FontSize="30"
-                    Click="BeginButton_Click" Padding="3" />
-            <CheckBox x:Name="ColorsCheckBox" 
-                      HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.TextAlignment="Center"
-                      IsChecked="{Binding Path=RenderColors, Mode=TwoWay}" Content="Colors" Padding="4,0,0,0"/>
+                    Click="BeginButton_Click"/>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center" VerticalAlignment="Center">
+                <CheckBox x:Name="ColorsCheckBox"
+                          Content="Colors"
+                          HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.TextAlignment="Center" Padding="4,0,10,0"
+                          IsChecked="{Binding Path=RenderColors, Mode=TwoWay}"/>
+                <CheckBox x:Name="GridAssistanceCheckBox"
+                          Content="Assistance grid"
+                          HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.TextAlignment="Center" Padding="4,0,10,0"
+                          IsChecked="{Binding Path=RenderGridAssistance, Mode=TwoWay}"/>
+            </StackPanel>
             <TextBlock Text="This game is licensed under GNU General Public License version 3. Go to https://github.com/CSharperMantle/CmTetris.git for more information."
-                       TextAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"
+                       HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
                        Foreground="White" FontFamily="Microsoft YaHei UI" TextWrapping="Wrap"/>
         </StackPanel>
 
-        <TextBlock Grid.Row="1" Text="Paused"
+        <TextBlock Grid.Row="1"
+                   Text="Paused"
                    VerticalAlignment="Center" HorizontalAlignment="Stretch" TextAlignment="Center"
-                   FontFamily="Microsoft YaHei UI" FontSize="60"
-                   FontWeight="Bold" FontStyle="Normal"
+                   FontFamily="Microsoft YaHei UI" FontSize="60" FontWeight="Bold" FontStyle="Normal"
                    Foreground="Yellow" Background="DarkGray" Opacity="0.9"
-                   Visibility="{Binding Paused, Converter={StaticResource VisibilityConverter}}" />
+                   Visibility="{Binding Paused, Converter={StaticResource VisibilityConverter}}"/>
     </Grid>
 </Window>
