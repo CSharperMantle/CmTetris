@@ -12,7 +12,7 @@ using System.Windows;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("CSharperMantle")]
 [assembly: AssemblyProduct("CmTetris")]
-[assembly: AssemblyCopyright("Copyright © CSharperMantle  2021")]
+[assembly: AssemblyCopyright("Copyright (C) 2021 CSharperMantle. Licensed under GNU General Public License version 3.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
