@@ -176,13 +176,32 @@ namespace Periotris.Model
         public void RotateActiveTetrimino(RotationDirection direction)
         {
             // The game has not fully started!
-            if (GameEnded || _activeTetrimino == null)
+            if (GameEnded)
             {
                 return;
             }
 
             UpdateActiveTetrimino(true);
             _activeTetrimino.TryRotate(direction, CheckBlockCollision);
+            UpdateActiveTetrimino(false);
+        }
+
+        /// <summary>
+        /// Instant fix the <see cref="_activeTetrimino"/> to the lowest possible position.
+        /// </summary>
+        public void InstantDropActiveTetrimino()
+        {
+            if (GameEnded)
+            {
+                return;
+            }
+
+            UpdateActiveTetrimino(true);
+            // Move until we done.
+            while (_activeTetrimino.TryMove(MoveDirection.Down, CheckBlockCollision))
+            {
+                ;
+            }
             UpdateActiveTetrimino(false);
         }
 
