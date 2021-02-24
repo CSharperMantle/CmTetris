@@ -19,10 +19,16 @@ Simple Tetris game. Built with MVVM designing patterns and requires no other pac
 ### `Tetriminify`
 A tool to generate closely-packed Tetrimino patterns and falling orders for arbitary given templates.
 
-**Notice:** This tool is fragile. Use it properly ;)
+![GUI of Tetriminify 1.1.0.0](https://user-images.githubusercontent.com/32665105/108998874-7dc6df00-76dc-11eb-88d0-78ec5dee8abf.png)
+
+*Figure: GUI of Tetriminify 1.1.0.0 with a generated packing pattern (lower right) and falling orders (lower left) on display. A: Empty block. U: Unavailable block. L, C, I: L-shaped tetrimino, cubic tetrimino, linear tetrimino*
 
 ### `Periotris`
 A Tetris game based on the theme of the Period Table of Elements.
+
+![Screenshot of Periotris](https://user-images.githubusercontent.com/32665105/108997960-37bd4b80-76db-11eb-8554-237beb8d5d3e.png)
+
+*Figure: In-game screenshot of Periotris 1.5.2.1 with 'Colors' and 'Assistance grid' options enabled*
 
 #### Features
 * Purely original and accurate periodic table of elements
