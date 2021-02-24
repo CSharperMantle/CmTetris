@@ -310,10 +310,6 @@ namespace Periotris.Model
                 _activeTetrimino = _pendingTetriminos.Pop();
                 UpdateActiveTetrimino(false);
             }
-            else
-            {
-                throw new Exception(nameof(_pendingTetriminos));
-            }
         }
 
         /// <summary>

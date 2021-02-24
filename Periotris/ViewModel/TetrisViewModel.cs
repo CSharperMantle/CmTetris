@@ -117,6 +117,9 @@ namespace Periotris.ViewModel
                 case Key.D:
                     _model.MoveActiveTetrimino(MoveDirection.Right);
                     break;
+                case Key.W:
+                    _model.RotateActiveTetrimino(RotationDirection.Right);
+                    break;
                 case Key.Left:
                     _model.MoveActiveTetrimino(MoveDirection.Left);
                     break;
@@ -126,7 +129,7 @@ namespace Periotris.ViewModel
                 case Key.Right:
                     _model.MoveActiveTetrimino(MoveDirection.Right);
                     break;
-                case Key.F:
+                case Key.Up:
                     _model.RotateActiveTetrimino(RotationDirection.Right);
                     break;
                 case Key.Space:
