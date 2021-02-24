@@ -33,7 +33,8 @@ A Tetris game based on the theme of the Period Table of Elements.
 * `A` || `Left arrow`: Move left
 * `D` || `Right arrow`: Move right
 * `S` || `Down arrow`: Move down
-* `Space`: Rotate
+* `F`: Rotate
+* `Space`: Instant drop to the lowest
 * `Esc`: Pause
 
 ## Usage

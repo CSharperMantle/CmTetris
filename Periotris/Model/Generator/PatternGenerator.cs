@@ -244,17 +244,16 @@ namespace Periotris.Model.Generator
             int dim0Len = _periodicTableTemplate.GetLength(0);
             int dim1Len = _periodicTableTemplate.GetLength(1);
             Block[,] template = new Block[dim0Len, dim1Len];
-            Parallel.For(0, dim0Len,
-                (int i) =>
+            for (int i = 0; i < dim0Len; i++)
+            {
+                for (int j = 0; j < dim1Len; j++)
                 {
-                    for (int j = 0; j < dim1Len; j++)
-                    {
-                        template[i, j] = new Block(_periodicTableTemplate[i, j].FilledBy,
-                            _periodicTableTemplate[i, j].Position,
-                            _periodicTableTemplate[i, j].AtomicNumber
-                        );
-                    }
-                });
+                    template[i, j] = new Block(_periodicTableTemplate[i, j].FilledBy,
+                        _periodicTableTemplate[i, j].Position,
+                        _periodicTableTemplate[i, j].AtomicNumber
+                    );
+                }
+            }
 
             IReadOnlyList<Tetrimino> tetriminos = Sorting.PatternSorter.GetSortedTetriminos(
                 GetPossibleTetriminoPattern(template, rand), dim1Len, dim0Len);
@@ -328,17 +327,16 @@ namespace Periotris.Model.Generator
         {
             int availableBlocksCount = 0;
 
-            Parallel.For(0, template.GetLength(0),
-                (int i) =>
+            for (int i = 0; i < template.GetLength(0); i++)
+            {
+                for (int j = 0; j < template.GetLength(1); j++)
                 {
-                    for (int j = 0; j < template.GetLength(1); j++)
+                    if (template[i, j].FilledBy == TetriminoKind.AvailableToFill)
                     {
-                        if (template[i, j].FilledBy == TetriminoKind.AvailableToFill)
-                        {
-                            availableBlocksCount++;
-                        }
+                        availableBlocksCount++;
                     }
-                });
+                }
+            }
             
             if (availableBlocksCount % 4 != 0)
             {

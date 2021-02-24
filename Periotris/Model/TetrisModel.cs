@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 
 namespace Periotris.Model
 {
@@ -310,6 +309,10 @@ namespace Periotris.Model
             {
                 _activeTetrimino = _pendingTetriminos.Pop();
                 UpdateActiveTetrimino(false);
+            }
+            else
+            {
+                throw new Exception(nameof(_pendingTetriminos));
             }
         }
 
