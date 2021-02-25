@@ -7,6 +7,12 @@ namespace Periotris.Model.Generator
 {
     public static class PatternGenerator
     {
+        /// <summary>
+        /// Total available blocks in <see cref="_periodicTableTemplate"/>.
+        /// </summary>
+        /// <remarks>
+        /// Update this if the whole pattern is changed.
+        /// </remarks>
         public static readonly int TotalAvailableBlocks = 108;
 
         private static readonly Block[,] _periodicTableTemplate = new Block[,] {
@@ -325,30 +331,11 @@ namespace Periotris.Model.Generator
         /// </returns>
         private static IReadOnlyList<Tetrimino> GetPossibleTetriminoPattern(Block[,] template, Random rand)
         {
-            int availableBlocksCount = 0;
-
-            for (int i = 0; i < template.GetLength(0); i++)
-            {
-                for (int j = 0; j < template.GetLength(1); j++)
-                {
-                    if (template[i, j].FilledBy == TetriminoKind.AvailableToFill)
-                    {
-                        availableBlocksCount++;
-                    }
-                }
-            }
-            
-            if (availableBlocksCount % 4 != 0)
-            {
-                // Since tetriminos are all 4 blocks, if we can't get a proper 4-block division we need to fast-fail.
-                return new List<Tetrimino>();
-            }
-
             // This is where we do our tracking jobs - to track which blocks are available to fill
-            Block[,] workspace = (Block[,])template.Clone();
+            Block[,] workspace = template;
             // This is where we place our settled tetriminos - we use Stack because we may need to go back a few steps if a plan fails
             // The initial capacity is the estimated numbers of tetriminos
-            Stack<Tetrimino> settledTetrimino = new Stack<Tetrimino>(availableBlocksCount / 4);
+            Stack<Tetrimino> settledTetrimino = new Stack<Tetrimino>(TotalAvailableBlocks / 4);
             // This is where we place our information to generate randomized tetriminos
             Stack<Stack<KindDirectionsPair>> pendingTetriminoKinds = new Stack<Stack<KindDirectionsPair>>();
 
@@ -463,27 +450,19 @@ namespace Periotris.Model.Generator
 
             }
 
+            // True if the block will collide.
             bool CheckBlockCollision(IBlock block)
             {
                 int nRow = block.Position.Y;
                 int nCol = block.Position.X;
 
-                // Left or right border collision
-                if (nCol < 0 || nCol >= workspace.GetLength(1))
-                {
-                    return true;
-                }
-                // Bottom border collision
-                if (nRow >= workspace.GetLength(0))
+                // Left, right or bottom border collision
+                if (nCol < 0 || nCol >= workspace.GetLength(1) || nRow >= workspace.GetLength(0))
                 {
                     return true;
                 }
                 // Block-block collision
-                if (workspace[nRow, nCol].FilledBy != TetriminoKind.AvailableToFill)
-                {
-                    return true;
-                }
-                return false;
+                return workspace[nRow, nCol].FilledBy != TetriminoKind.AvailableToFill;
             }
         }
 

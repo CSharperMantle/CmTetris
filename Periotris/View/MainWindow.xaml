@@ -7,6 +7,7 @@
         xmlns:viewModel="clr-namespace:Periotris.ViewModel"
         mc:Ignorable="d"
         Title="Periotris" Height="600" Width="800" Background="DarkSlateGray"
+        MinHeight="420" MinWidth="560"
         KeyDown="MainWindow_KeyDown"
         SizeChanged="MainWindow_SizeChanged"
         >
@@ -55,9 +56,10 @@
                     HorizontalAlignment="Right" Margin="0, 20, 30, 0">
             <TextBlock Text="{Binding Path=ElapsedTime, Converter={StaticResource TimeSpanConverter}}"
                        Style="{StaticResource GroupHeaderTextStyle}"
-                       Foreground="Yellow" TextAlignment="Center"/>
+                       Foreground="Yellow" TextAlignment="Center" FontFamily="Consolas"/>
             <TextBlock Text="{Binding Path=CurrentHighestScore, Converter={StaticResource TimeSpanConverter}}"
-                       Style="{StaticResource GroupHeaderTextStyle}" TextAlignment="Center"/>
+                       Style="{StaticResource GroupHeaderTextStyle}"
+                       Foreground="White" TextAlignment="Center" FontFamily="Consolas"/>
         </StackPanel>
 
         <Border x:Name="PlayArea"

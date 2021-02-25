@@ -44,7 +44,9 @@ namespace Periotris.ViewModel
         private readonly ObservableCollection<FrameworkElement> _sprites =
             new ObservableCollection<FrameworkElement>();
 
-        private readonly DispatcherTimer _timer = new DispatcherTimer();
+        private readonly DispatcherTimer _gameTimer = new DispatcherTimer();
+
+        private readonly DispatcherTimer _timeDisplayRefreshTimer = new DispatcherTimer();
 
         public TetrisViewModel()
         {
@@ -53,8 +55,11 @@ namespace Periotris.ViewModel
             _model.BlockChanged += ModelBlockChangedEventHandler;
             _model.GameEnd += ModelGameEndEventListener;
 
-            _timer.Interval = TimeSpan.FromSeconds(TetrisConst.UpdateIntervalSeconds);
-            _timer.Tick += TimerTickEventHandler;
+            _gameTimer.Interval = TimeSpan.FromSeconds(TetrisConst.GameUpdateIntervalSeconds);
+            _gameTimer.Tick += GameUpdateTimerTickEventHandler;
+
+            _timeDisplayRefreshTimer.Interval = TimeSpan.FromSeconds(TetrisConst.TimeDisplayUpdateIntervalSeconds);
+            _timeDisplayRefreshTimer.Tick += TimeDisplayTimerTickEventHandler;
 
             EndGame();
         }
@@ -91,7 +96,8 @@ namespace Periotris.ViewModel
             OnPropertyChanged(nameof(GameOver));
             OnPropertyChanged(nameof(GameWon));
             Paused = false;
-            _timer.Start();
+            _gameTimer.Start();
+            _timeDisplayRefreshTimer.Start();
         }
 
         public void OnKeyDown(Key key)
@@ -145,7 +151,8 @@ namespace Periotris.ViewModel
 
         private void EndGame()
         {
-            _timer.Stop();
+            _gameTimer.Stop();
+            _timeDisplayRefreshTimer.Stop();
             OnPropertyChanged(nameof(GameOver));
             OnPropertyChanged(nameof(GameWon));
             OnPropertyChanged(nameof(CurrentHighestScore));
@@ -219,7 +226,7 @@ namespace Periotris.ViewModel
             EndGame();
         }
 
-        private void TimerTickEventHandler(object sender, EventArgs e)
+        private void GameUpdateTimerTickEventHandler(object sender, EventArgs e)
         {
             if (_lastPaused != Paused)
             {
@@ -230,8 +237,12 @@ namespace Periotris.ViewModel
             if (!Paused)
             {
                 _model.Update();
-                OnPropertyChanged(nameof(ElapsedTime));
             }
+        }
+
+        private void TimeDisplayTimerTickEventHandler(object sender, EventArgs e)
+        {
+            OnPropertyChanged(nameof(ElapsedTime));
         }
     }
 }

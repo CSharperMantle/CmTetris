@@ -248,7 +248,7 @@ namespace Periotris.Model.Generator
         {
             int[,] mask = CreateBlocksMask(kind, direction);
 
-            List<Block> offsetedBlocks = new List<Block>();
+            List<Block> offsetedBlocks = new List<Block>(4);
             for (int nRow = 0; nRow < mask.GetLength(0); nRow++)
             {
                 for (int nCol = 0; nCol < mask.GetLength(1); nCol++)
@@ -260,7 +260,7 @@ namespace Periotris.Model.Generator
                     }
                 }
             }
-            return offsetedBlocks.ToArray();
+            return offsetedBlocks;
         }
 
         /// <summary>
@@ -447,60 +447,121 @@ namespace Periotris.Model.Generator
             return blockMask;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>May need updating when block pattern changes.</remarks>
+        private static (int row, int col) GetFirstBlockPosFromMask(TetriminoKind kind, Direction facingDirection)
+        {
+            switch (kind)
+            {
+                case TetriminoKind.Linear:
+                    switch (facingDirection)
+                    {
+                        case Direction.Left:
+                            return (2, 3);
+                        case Direction.Up:
+                            return (3, 1);
+                        case Direction.Right:
+                            return (1, 3);
+                        case Direction.Down:
+                            return (3, 2);
+                        default:
+                            throw new ArgumentException(nameof(facingDirection));
+                    }
+                case TetriminoKind.Cubic:
+                    return (1, 1);
+                case TetriminoKind.LShapedCis:
+                    switch (facingDirection)
+                    {
+                        case Direction.Left:
+                            return (1, 2);
+                        case Direction.Up:
+                            return (2, 2);
+                        case Direction.Right:
+                            return (2, 0);
+                        case Direction.Down:
+                            return (2, 1);
+                        default:
+                            throw new ArgumentException(nameof(facingDirection));
+                    }
+                case TetriminoKind.LShapedTrans:
+                    switch (facingDirection)
+                    {
+                        case Direction.Left:
+                            return (2, 2);
+                        case Direction.Up:
+                            return (2, 1);
+                        case Direction.Right:
+                            return (1, 2);
+                        case Direction.Down:
+                            return (2, 1);
+                        default:
+                            throw new ArgumentException(nameof(facingDirection));
+                    }
+                case TetriminoKind.ZigZagCis:
+                    switch (facingDirection)
+                    {
+                        case Direction.Left:
+                            return (2, 0);
+                        case Direction.Up:
+                            return (1, 2);
+                        case Direction.Right:
+                            return (2, 1);
+                        case Direction.Down:
+                            return (2, 2);
+                        default:
+                            throw new ArgumentException(nameof(facingDirection));
+                    }
+                case TetriminoKind.ZigZagTrans:
+                    switch (facingDirection)
+                    {
+                        case Direction.Left:
+                            return (2, 1);
+                        case Direction.Up:
+                            return (1, 1);
+                        case Direction.Right:
+                            return (2, 2);
+                        case Direction.Down:
+                            return (2, 1);
+                        default:
+                            throw new ArgumentException(nameof(facingDirection));
+                    }
+                case TetriminoKind.TShaped:
+                    switch (facingDirection)
+                    {
+                        case Direction.Left:
+                            return (2, 1);
+                        case Direction.Up:
+                            return (1, 2);
+                        case Direction.Right:
+                            return (2, 1);
+                        case Direction.Down:
+                            return (2, 1);
+                        default:
+                            throw new ArgumentException(nameof(facingDirection));
+                    }
+                default:
+                    throw new ArgumentException(nameof(kind));
+            }
+        }
+
         public static Position GetPositionByFirstBlockPosition(Position firstBlockPosition, TetriminoKind kind, Direction facingDirection)
         {
-            int[,] blockPattern = CreateBlocksMask(kind, facingDirection);
-
             int firstBlockRow = 0;
             int firstBlockCol = 0;
-            bool firstBlockFound = false;
 
-            for (int nRow = blockPattern.GetLength(0) - 1; nRow >= 0; nRow--)
-            {
-                for (int nCol = blockPattern.GetLength(1) - 1; nCol >= 0; nCol--)
-                {
-                    if (blockPattern[nRow, nCol] != 0)
-                    {
-                        firstBlockRow = nRow;
-                        firstBlockCol = nCol;
-                        firstBlockFound = true;
-                        break;
-                    }
-                }
-                if (firstBlockFound)
-                {
-                    break;
-                }
-            }
+            (firstBlockRow, firstBlockCol) = GetFirstBlockPosFromMask(kind, facingDirection);
 
             return new Position(firstBlockPosition.X - firstBlockCol, firstBlockPosition.Y - firstBlockRow);
         }
 
         public static Position GetFirstBlockPositionByPosition(Position position, TetriminoKind kind, Direction facingDirection)
         {
-            int[,] blockPattern = CreateBlocksMask(kind, facingDirection);
-
             int firstBlockRow = 0;
             int firstBlockCol = 0;
-            bool firstBlockFound = false;
 
-            for (int nRow = blockPattern.GetLength(0) - 1; nRow >= 0; nRow--)
-            {
-                for (int nCol = blockPattern.GetLength(1) - 1; nCol >= 0; nCol--)
-                {
-                    if (blockPattern[nRow, nCol] != 0)
-                    {
-                        firstBlockRow = nRow;
-                        firstBlockCol = nCol;
-                        firstBlockFound = true;
-                        break;
-                    }
-                }
-                if (firstBlockFound)
-                {
-                    break;
-                }
-            }
+            (firstBlockRow, firstBlockCol) = GetFirstBlockPosFromMask(kind, facingDirection);
 
             return new Position(position.X + firstBlockCol, position.Y + firstBlockRow);
         }
