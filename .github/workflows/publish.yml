@@ -1,0 +1,72 @@
+name: Publish
+on:
+  push:
+    tags:
+      - 'release/*'
+jobs:
+  build:
+    runs-on: windows-2019
+    
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+        
+      - name: Setup NuGet executables
+        uses: NuGet/setup-nuget@v1.0.5
+        
+      - name: Restore NuGet packages
+        run: nuget restore CmTetris.sln
+        
+      - name: Build
+        run: 'msbuild CmTetris.sln /p:Configuration=Release /maxcpucount:4'
+        
+  publish:
+    runs-on: windows-2019
+    
+    needs:
+      - build
+      
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+        
+      - name: Setup NuGet executables
+        uses: NuGet/setup-nuget@v1.0.5
+        
+      - name: Restore NuGet packages
+        run: nuget restore CmTetris.sln
+        
+      - name: Publish ClickOnce
+        run: >-
+          msbuild CmTetris.sln /p:Configuration=Release /t:publish
+          /p:PublishDir="publish/" /maxcpucount:4
+          
+      - name: Zip artifacts
+        run: >-
+           tar.exe -acf publish.zip Periotris/publish/* SimpleTetris/publish/* Tetriminify/publish/*
+            
+      - name: Create release on tag
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+        with:
+          tag_name: '${{ github.ref }}'
+          release_name: 'Release ${{ github.ref }}'
+          body: Release created by Publish workflow on each tag.
+          draft: false
+          prerelease: false
+          
+      - name: Upload release assets
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+        with:
+          upload_url: '${{ steps.create_release.outputs.upload_url }}'
+          asset_path: ./publish.zip
+          asset_name: publish.zip
+          asset_content_type: application/zip
