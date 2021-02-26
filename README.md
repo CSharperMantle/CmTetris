@@ -47,14 +47,22 @@ A Tetris game based on the theme of the Period Table of Elements.
 * `Esc`: Pause
 
 ## License
+
+<a rel="license" href="http://www.gnu.org/licenses/gpl-3.0.html"><img alt="GNU GPLv3" src="http://www.gnu.org/graphics/gplv3-with-text-136x68.png"></a>
+```plain-text
 Copyright (C) 2021 Rong "Mantle" Bao (CSharperMantle)
 
-This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software
+Foundation, either version 3 of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with this program.  If not, see https://github.com/CSharperMantle/CmTetris/blob/main/LICENSE .
-
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see https://github.com/CSharperMantle/CmTetris/blob/main/LICENSE .
+```
 ## Dependencies
 ### `mathnet/mathnet-numerics`: Math.NET Numerics
 ```plain-text
