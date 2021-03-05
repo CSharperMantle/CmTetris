@@ -1,8 +1,8 @@
-﻿    using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Periotris.Model.Generator
+namespace Periotris.Model.Generation
 {
     /// <summary>
     /// Represent an extended Tetrimino.

@@ -85,8 +85,8 @@
     <Reference Include="NCDK, Version=1.6.1.0, Culture=neutral, PublicKeyToken=7b3355892b3327a8, processorArchitecture=MSIL">
       <HintPath>..\packages\NCDK.1.6.1\lib\netstandard2.0\NCDK.dll</HintPath>
     </Reference>
-    <Reference Include="NCDK.Math, Version=1.6.0.0, Culture=neutral, PublicKeyToken=7b3355892b3327a8, processorArchitecture=MSIL">
-      <HintPath>..\packages\NCDK.1.6.0\lib\netstandard2.0\NCDK.Math.dll</HintPath>
+    <Reference Include="NCDK.Math, Version=1.6.1.0, Culture=neutral, PublicKeyToken=7b3355892b3327a8, processorArchitecture=MSIL">
+      <HintPath>..\packages\NCDK.1.6.1\lib\netstandard2.0\NCDK.Math.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -116,25 +116,32 @@
     <Compile Include="Common\TetrisConst.cs" />
     <Compile Include="Model\HistoryData.cs" />
     <Compile Include="Model\Sorting\DependencyBuilder.cs" />
-    <Compile Include="Model\Generator\Block.cs" />
+    <Compile Include="Model\Generation\Block.cs" />
     <Compile Include="Model\Direction.cs" />
-    <Compile Include="Model\Generator\PatternGenerator.cs" />
+    <Compile Include="Model\Generation\PatternGenerator.cs" />
     <Compile Include="Model\IBlock.cs" />
     <Compile Include="Model\ITetrimino.cs" />
     <Compile Include="Model\Sorting\MemoizedBlock.cs" />
-    <Compile Include="Model\Sorting\PatternSorter.cs" />
+    <Compile Include="Model\Sorting\TetriminoSorter.cs" />
     <Compile Include="Model\Position.cs" />
-    <Compile Include="Model\Generator\Tetrimino.cs" />
+    <Compile Include="Model\Generation\Tetrimino.cs" />
     <Compile Include="Model\TetriminoChangedEventArgs.cs" />
-    <Compile Include="Model\Generator\GeneratorHelper.cs" />
+    <Compile Include="Model\Generation\GeneratorHelper.cs" />
     <Compile Include="Model\TetriminoKind.cs" />
     <Compile Include="Model\Sorting\TetriminoNode.cs" />
     <Compile Include="Model\TetrisModel.cs" />
     <Compile Include="ViewModel\BoolVisibilityConverter.cs" />
     <Compile Include="ViewModel\TetrisViewModel.cs" />
     <Compile Include="ViewModel\TimeSpanStringConverter.cs" />
+    <Compile Include="View\GamePage.xaml.cs">
+      <DependentUpon>GamePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\TetrisControlHelper.cs" />
     <Page Include="View\AnnotatedBlockControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\GamePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -2,7 +2,7 @@
 
 namespace Periotris.Model.Sorting
 {
-    internal class TetriminoNode : Generator.Tetrimino
+    internal class TetriminoNode : Generation.Tetrimino
     {
         public IReadOnlyList<MemoizedBlock> MemoizedBlocks { get; set; }
 

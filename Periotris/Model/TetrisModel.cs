@@ -117,7 +117,7 @@ namespace Periotris.Model
                 _activeTetrimino = null;
             }
             // Fill in tetriminos
-            IEnumerable<ITetrimino> generatedTetriminos = Generator.PatternGenerator.GetPatternForPeriodicTable(_random).Reverse();
+            IEnumerable<ITetrimino> generatedTetriminos = Generation.PatternGenerator.GetPatternForPeriodicTable(_random).Reverse();
             foreach (ITetrimino tetrimino in generatedTetriminos)
             {
                 _pendingTetriminos.Push(tetrimino);
@@ -225,7 +225,7 @@ namespace Periotris.Model
             // End the game.
             foreach (IBlock block in _frozenBlocks)
             {
-                if (Generator.PatternGenerator.PeriodicTableTemplate[block.Position.Y,
+                if (Generation.GeneratorHelper.PeriodicTableTemplate[block.Position.Y,
                     block.Position.X].AtomicNumber != block.AtomicNumber)
                 {
                     EndGame(false);
@@ -233,7 +233,7 @@ namespace Periotris.Model
             }
 
             // All blocks settled.
-            if (_frozenBlocks.Count >= Generator.PatternGenerator.TotalAvailableBlocks)
+            if (_frozenBlocks.Count >= Generation.GeneratorHelper.TotalAvailableBlocks)
             {
                 EndGame(true);
             }

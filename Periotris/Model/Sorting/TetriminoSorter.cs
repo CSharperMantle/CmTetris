@@ -7,9 +7,9 @@ namespace Periotris.Model.Sorting
     /// <summary>
     /// Topological sorting performer.
     /// </summary>
-    public static class PatternSorter
+    internal static class TetriminoSorter
     {
-        internal static IReadOnlyList<Generator.Tetrimino> GetSortedTetriminos(IReadOnlyList<ITetrimino> tetriminos, int playAreaWidth, int playAreaHeight)
+        public static IReadOnlyList<Generation.Tetrimino> GetSortedTetriminos(IReadOnlyList<ITetrimino> tetriminos, int playAreaWidth, int playAreaHeight)
         {
             IReadOnlyList<TetriminoNode> graph = DependencyBuilder.GetTetriminoDependencyGraph(
                 tetriminos, playAreaWidth, playAreaHeight);

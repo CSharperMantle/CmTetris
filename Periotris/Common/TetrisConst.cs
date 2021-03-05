@@ -2,12 +2,12 @@
 {
     public static class TetrisConst
     {
-        public static readonly int PlayAreaWidth = 18;
+        public const int PlayAreaWidth = 18;
 
-        public static readonly int PlayAreaHeight = 11;
+        public const int PlayAreaHeight = 11;
 
-        public static readonly double GameUpdateIntervalSeconds = 1.5;
+        public const double GameUpdateIntervalSeconds = 1.5;
 
-        public static readonly double TimeDisplayUpdateIntervalSeconds = 0.1;
+        public const double TimeDisplayUpdateIntervalSeconds = 0.1;
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Periotris.Model.Generator
+﻿namespace Periotris.Model.Generation
 {
     internal class Block : IBlock
     {

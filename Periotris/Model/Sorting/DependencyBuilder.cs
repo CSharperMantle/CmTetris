@@ -12,11 +12,11 @@ namespace Periotris.Model.Sorting
             // Build block map
             List<TetriminoNode> tetriminoNodes = new List<TetriminoNode>(tetriminos.Count);
             MemoizedBlock[,] memoizedMap = new MemoizedBlock[playAreaHeight, playAreaWidth];
-            foreach (Generator.Tetrimino tetrimino in tetriminos)
+            foreach (Generation.Tetrimino tetrimino in tetriminos)
             {
                 TetriminoNode tetriminoNode = new TetriminoNode(tetrimino.Kind,
                     tetrimino.Position,
-                    Generator.GeneratorHelper.GetFirstBlockPositionByPosition(tetrimino.Position, tetrimino.Kind, tetrimino.FacingDirection),
+                    Generation.GeneratorHelper.GetFirstBlockPositionByPosition(tetrimino.Position, tetrimino.Kind, tetrimino.FacingDirection),
                     tetrimino.FacingDirection
                 );
                 tetriminoNode.RealBlocks = tetriminoNode.MemoizedBlocks = GetMemoizedBlocksForTetriminoNode(tetriminoNode, tetrimino);
@@ -57,7 +57,7 @@ namespace Periotris.Model.Sorting
         private static IReadOnlyList<MemoizedBlock> GetMemoizedBlocksForTetriminoNode(TetriminoNode node, ITetrimino tetrimino)
         {
             List<MemoizedBlock> memoizedBlocks = new List<MemoizedBlock>();
-            foreach (Generator.Block block in tetrimino.Blocks)
+            foreach (Generation.Block block in tetrimino.Blocks)
             {
                 MemoizedBlock newBlock = new MemoizedBlock(block.FilledBy, block.Position, node, block.AtomicNumber, block.Identifier);
                 memoizedBlocks.Add(newBlock);
