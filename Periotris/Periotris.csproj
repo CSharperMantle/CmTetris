@@ -82,8 +82,8 @@
     <Reference Include="MathNet.Numerics, Version=4.15.0.0, Culture=neutral, PublicKeyToken=cd8b63ad3d691a37, processorArchitecture=MSIL">
       <HintPath>..\packages\MathNet.Numerics.Signed.4.15.0\lib\net461\MathNet.Numerics.dll</HintPath>
     </Reference>
-    <Reference Include="NCDK, Version=1.6.0.0, Culture=neutral, PublicKeyToken=7b3355892b3327a8, processorArchitecture=MSIL">
-      <HintPath>..\packages\NCDK.1.6.0\lib\netstandard2.0\NCDK.dll</HintPath>
+    <Reference Include="NCDK, Version=1.6.1.0, Culture=neutral, PublicKeyToken=7b3355892b3327a8, processorArchitecture=MSIL">
+      <HintPath>..\packages\NCDK.1.6.1\lib\netstandard2.0\NCDK.dll</HintPath>
     </Reference>
     <Reference Include="NCDK.Math, Version=1.6.0.0, Culture=neutral, PublicKeyToken=7b3355892b3327a8, processorArchitecture=MSIL">
       <HintPath>..\packages\NCDK.1.6.0\lib\netstandard2.0\NCDK.Math.dll</HintPath>
