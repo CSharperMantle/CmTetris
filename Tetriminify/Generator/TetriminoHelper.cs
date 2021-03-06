@@ -6,24 +6,19 @@ namespace Tetriminify.Generator
     internal static class TetriminoHelper
     {
         /// <summary>
-        /// Get a list of <see cref="Block"/>s well positioned according to the offset.
+        ///     Get a list of <see cref="Block" />s well positioned according to the offset.
         /// </summary>
-        /// <returns>A <see cref="IReadOnlyList{Block}"/> which contains properly offseted blocks</returns>
-        public static IReadOnlyList<Block> CreateOffsetedBlocks(TetriminoKind kind, Position offset, Direction direction = Direction.Up)
+        /// <returns>A <see cref="IReadOnlyList{Block}" /> which contains properly offseted blocks</returns>
+        public static IReadOnlyList<Block> CreateOffsetedBlocks(TetriminoKind kind, Position offset,
+            Direction direction = Direction.Up)
         {
-            int[,] blockPattern = CreateBlockPattern(kind, direction);
+            var blockPattern = CreateBlockPattern(kind, direction);
 
-            List<Block> offsetedBlocks = new List<Block>();
-            for (int nRow = 0; nRow < blockPattern.GetLength(0); nRow++)
-            {
-                for (int nCol = 0; nCol < blockPattern.GetLength(1); nCol++)
-                {
-                    if (blockPattern[nRow, nCol] != 0)
-                    {
-                        offsetedBlocks.Add(new Block(kind, new Position(nCol + offset.X, nRow + offset.Y)));
-                    }
-                }
-            }
+            var offsetedBlocks = new List<Block>();
+            for (var nRow = 0; nRow < blockPattern.GetLength(0); nRow++)
+            for (var nCol = 0; nCol < blockPattern.GetLength(1); nCol++)
+                if (blockPattern[nRow, nCol] != 0)
+                    offsetedBlocks.Add(new Block(kind, new Position(nCol + offset.X, nRow + offset.Y)));
             return offsetedBlocks.ToArray();
         }
 
@@ -36,261 +31,267 @@ namespace Tetriminify.Generator
                     switch (direction)
                     {
                         case Direction.Left:
-                            blockPattern = new int[,]
-                                {
-                                    { 0, 0, 0, 0 },
-                                    { 0, 0, 0, 0 },
-                                    { 1, 1, 1, 1 },
-                                    { 0, 0, 0, 0 }
-                                };
+                            blockPattern = new[,]
+                            {
+                                {0, 0, 0, 0},
+                                {0, 0, 0, 0},
+                                {1, 1, 1, 1},
+                                {0, 0, 0, 0}
+                            };
                             break;
                         case Direction.Up:
-                            blockPattern = new int[,]
-                                {
-                                    { 0, 1, 0, 0 },
-                                    { 0, 1, 0, 0 },
-                                    { 0, 1, 0, 0 },
-                                    { 0, 1, 0, 0 }
-                                };
+                            blockPattern = new[,]
+                            {
+                                {0, 1, 0, 0},
+                                {0, 1, 0, 0},
+                                {0, 1, 0, 0},
+                                {0, 1, 0, 0}
+                            };
                             break;
                         case Direction.Right:
-                            blockPattern = new int[,]
-                                {
-                                    { 0, 0, 0, 0 },
-                                    { 1, 1, 1, 1 },
-                                    { 0, 0, 0, 0 },
-                                    { 0, 0, 0, 0 }
-                                };
+                            blockPattern = new[,]
+                            {
+                                {0, 0, 0, 0},
+                                {1, 1, 1, 1},
+                                {0, 0, 0, 0},
+                                {0, 0, 0, 0}
+                            };
                             break;
                         case Direction.Down:
-                            blockPattern = new int[,]
-                                {
-                                    { 0, 0, 1, 0 },
-                                    { 0, 0, 1, 0 },
-                                    { 0, 0, 1, 0 },
-                                    { 0, 0, 1, 0 }
-                                };
+                            blockPattern = new[,]
+                            {
+                                {0, 0, 1, 0},
+                                {0, 0, 1, 0},
+                                {0, 0, 1, 0},
+                                {0, 0, 1, 0}
+                            };
                             break;
                         default:
                             throw new ArgumentException(nameof(direction));
                     }
+
                     break;
                 case TetriminoKind.Cubic:
-                    blockPattern = new int[,]
-                        {
-                            { 1, 1 },
-                            { 1, 1 }
-                        };
+                    blockPattern = new[,]
+                    {
+                        {1, 1},
+                        {1, 1}
+                    };
                     break;
                 case TetriminoKind.LShapedCis:
                     switch (direction)
                     {
                         case Direction.Up:
-                            blockPattern = new int[,]
+                            blockPattern = new[,]
                             {
-                                { 0, 1, 0 },
-                                { 0, 1, 0 },
-                                { 0, 1, 1 },
+                                {0, 1, 0},
+                                {0, 1, 0},
+                                {0, 1, 1}
                             };
                             break;
 
                         case Direction.Right:
-                            blockPattern = new int[,]
+                            blockPattern = new[,]
                             {
-                                { 0, 0, 0 },
-                                { 1, 1, 1 },
-                                { 1, 0, 0 },
+                                {0, 0, 0},
+                                {1, 1, 1},
+                                {1, 0, 0}
                             };
                             break;
 
                         case Direction.Down:
-                            blockPattern = new int[,]
+                            blockPattern = new[,]
                             {
-                                { 1, 1, 0 },
-                                { 0, 1, 0 },
-                                { 0, 1, 0 },
+                                {1, 1, 0},
+                                {0, 1, 0},
+                                {0, 1, 0}
                             };
                             break;
 
                         case Direction.Left:
-                            blockPattern = new int[,]
+                            blockPattern = new[,]
                             {
-                                { 0, 0, 1 },
-                                { 1, 1, 1 },
-                                { 0, 0, 0 },
+                                {0, 0, 1},
+                                {1, 1, 1},
+                                {0, 0, 0}
                             };
                             break;
                         default:
                             throw new ArgumentException(nameof(direction));
                     }
+
                     break;
                 case TetriminoKind.LShapedTrans:
                     switch (direction)
                     {
                         case Direction.Up:
-                            blockPattern = new int[,]
+                            blockPattern = new[,]
                             {
-                                { 0, 1, 0 },
-                                { 0, 1, 0 },
-                                { 1, 1, 0 },
+                                {0, 1, 0},
+                                {0, 1, 0},
+                                {1, 1, 0}
                             };
                             break;
 
                         case Direction.Right:
-                            blockPattern = new int[,]
+                            blockPattern = new[,]
                             {
-                                { 1, 0, 0 },
-                                { 1, 1, 1 },
-                                { 0, 0, 0 },
+                                {1, 0, 0},
+                                {1, 1, 1},
+                                {0, 0, 0}
                             };
                             break;
 
                         case Direction.Down:
-                            blockPattern = new int[,]
+                            blockPattern = new[,]
                             {
-                                { 0, 1, 1 },
-                                { 0, 1, 0 },
-                                { 0, 1, 0 },
+                                {0, 1, 1},
+                                {0, 1, 0},
+                                {0, 1, 0}
                             };
                             break;
 
                         case Direction.Left:
-                            blockPattern = new int[,]
+                            blockPattern = new[,]
                             {
-                                { 0, 0, 0 },
-                                { 1, 1, 1 },
-                                { 0, 0, 1 },
+                                {0, 0, 0},
+                                {1, 1, 1},
+                                {0, 0, 1}
                             };
                             break;
                         default:
                             throw new ArgumentException(nameof(direction));
                     }
+
                     break;
                 case TetriminoKind.ZigZagCis:
                     switch (direction)
                     {
                         case Direction.Up:
-                            blockPattern = new int[,]
+                            blockPattern = new[,]
                             {
-                                { 1, 1, 0 },
-                                { 0, 1, 1 },
-                                { 0, 0, 0 },
+                                {1, 1, 0},
+                                {0, 1, 1},
+                                {0, 0, 0}
                             };
                             break;
 
                         case Direction.Right:
-                            blockPattern = new int[,]
+                            blockPattern = new[,]
                             {
-                                { 0, 0, 1 },
-                                { 0, 1, 1 },
-                                { 0, 1, 0 },
+                                {0, 0, 1},
+                                {0, 1, 1},
+                                {0, 1, 0}
                             };
                             break;
 
                         case Direction.Down:
-                            blockPattern = new int[,]
+                            blockPattern = new[,]
                             {
-                                { 0, 0, 0 },
-                                { 1, 1, 0 },
-                                { 0, 1, 1 },
+                                {0, 0, 0},
+                                {1, 1, 0},
+                                {0, 1, 1}
                             };
                             break;
 
                         case Direction.Left:
-                            blockPattern = new int[,]
+                            blockPattern = new[,]
                             {
-                                { 0, 1, 0 },
-                                { 1, 1, 0 },
-                                { 1, 0, 0 },
+                                {0, 1, 0},
+                                {1, 1, 0},
+                                {1, 0, 0}
                             };
                             break;
                         default:
                             throw new ArgumentException(nameof(direction));
                     }
+
                     break;
                 case TetriminoKind.ZigZagTrans:
                     switch (direction)
                     {
                         case Direction.Up:
-                            blockPattern = new int[,]
+                            blockPattern = new[,]
                             {
-                                { 0, 1, 1 },
-                                { 1, 1, 0 },
-                                { 0, 0, 0 },
+                                {0, 1, 1},
+                                {1, 1, 0},
+                                {0, 0, 0}
                             };
                             break;
 
                         case Direction.Right:
-                            blockPattern = new int[,]
+                            blockPattern = new[,]
                             {
-                                { 0, 1, 0 },
-                                { 0, 1, 1 },
-                                { 0, 0, 1 },
+                                {0, 1, 0},
+                                {0, 1, 1},
+                                {0, 0, 1}
                             };
                             break;
 
                         case Direction.Down:
-                            blockPattern = new int[,]
+                            blockPattern = new[,]
                             {
-                                { 0, 0, 0 },
-                                { 0, 1, 1 },
-                                { 1, 1, 0 },
+                                {0, 0, 0},
+                                {0, 1, 1},
+                                {1, 1, 0}
                             };
                             break;
 
                         case Direction.Left:
-                            blockPattern = new int[,]
+                            blockPattern = new[,]
                             {
-                                { 1, 0, 0 },
-                                { 1, 1, 0 },
-                                { 0, 1, 0 },
+                                {1, 0, 0},
+                                {1, 1, 0},
+                                {0, 1, 0}
                             };
                             break;
                         default:
                             throw new ArgumentException(nameof(direction));
                     }
+
                     break;
                 case TetriminoKind.TShaped:
                     switch (direction)
                     {
                         case Direction.Up:
-                            blockPattern = new int[,]
+                            blockPattern = new[,]
                             {
-                                { 0, 1, 0 },
-                                { 1, 1, 1 },
-                                { 0, 0, 0 },
+                                {0, 1, 0},
+                                {1, 1, 1},
+                                {0, 0, 0}
                             };
                             break;
 
                         case Direction.Right:
-                            blockPattern = new int[,]
+                            blockPattern = new[,]
                             {
-                                { 0, 1, 0 },
-                                { 0, 1, 1 },
-                                { 0, 1, 0 },
+                                {0, 1, 0},
+                                {0, 1, 1},
+                                {0, 1, 0}
                             };
                             break;
 
                         case Direction.Down:
-                            blockPattern = new int[,]
+                            blockPattern = new[,]
                             {
-                                { 0, 0, 0 },
-                                { 1, 1, 1 },
-                                { 0, 1, 0 },
+                                {0, 0, 0},
+                                {1, 1, 1},
+                                {0, 1, 0}
                             };
                             break;
 
                         case Direction.Left:
-                            blockPattern = new int[,]
+                            blockPattern = new[,]
                             {
-                                { 0, 1, 0 },
-                                { 1, 1, 0 },
-                                { 0, 1, 0 },
+                                {0, 1, 0},
+                                {1, 1, 0},
+                                {0, 1, 0}
                             };
                             break;
                         default:
                             throw new ArgumentException(nameof(direction));
                     }
+
                     break;
                 default:
                     throw new ArgumentException(nameof(kind));
@@ -299,18 +300,18 @@ namespace Tetriminify.Generator
             return blockPattern;
         }
 
-        public static Position GetPositionByFirstBlockPosition(Position firstBlockPosition, TetriminoKind kind, Direction facingDirection)
+        public static Position GetPositionByFirstBlockPosition(Position firstBlockPosition, TetriminoKind kind,
+            Direction facingDirection)
         {
-            int[,] blockPattern = CreateBlockPattern(kind, facingDirection);
+            var blockPattern = CreateBlockPattern(kind, facingDirection);
 
-            int firstBlockRow = 0;
-            int firstBlockCol = 0;
-            bool firstBlockFound = false;
+            var firstBlockRow = 0;
+            var firstBlockCol = 0;
+            var firstBlockFound = false;
 
-            for (int nRow = 0; nRow < blockPattern.GetLength(0); nRow++)
+            for (var nRow = 0; nRow < blockPattern.GetLength(0); nRow++)
             {
-                for (int nCol = 0; nCol < blockPattern.GetLength(1); nCol++)
-                {
+                for (var nCol = 0; nCol < blockPattern.GetLength(1); nCol++)
                     if (blockPattern[nRow, nCol] != 0)
                     {
                         firstBlockRow = nRow;
@@ -318,28 +319,25 @@ namespace Tetriminify.Generator
                         firstBlockFound = true;
                         break;
                     }
-                }
-                if (firstBlockFound)
-                {
-                    break;
-                }
+
+                if (firstBlockFound) break;
             }
 
             return new Position(firstBlockPosition.X - firstBlockCol, firstBlockPosition.Y - firstBlockRow);
         }
 
-        public static Position GetFirstBlockPositionByPosition(Position position, TetriminoKind kind, Direction facingDirection)
+        public static Position GetFirstBlockPositionByPosition(Position position, TetriminoKind kind,
+            Direction facingDirection)
         {
-            int[,] blockPattern = CreateBlockPattern(kind, facingDirection);
+            var blockPattern = CreateBlockPattern(kind, facingDirection);
 
-            int firstBlockRow = 0;
-            int firstBlockCol = 0;
-            bool firstBlockFound = false;
+            var firstBlockRow = 0;
+            var firstBlockCol = 0;
+            var firstBlockFound = false;
 
-            for (int nRow = 0; nRow < blockPattern.GetLength(0); nRow++)
+            for (var nRow = 0; nRow < blockPattern.GetLength(0); nRow++)
             {
-                for (int nCol = 0; nCol < blockPattern.GetLength(1); nCol++)
-                {
+                for (var nCol = 0; nCol < blockPattern.GetLength(1); nCol++)
                     if (blockPattern[nRow, nCol] != 0)
                     {
                         firstBlockRow = nRow;
@@ -347,11 +345,8 @@ namespace Tetriminify.Generator
                         firstBlockFound = true;
                         break;
                     }
-                }
-                if (firstBlockFound)
-                {
-                    break;
-                }
+
+                if (firstBlockFound) break;
             }
 
             return new Position(position.X + firstBlockCol, position.Y + firstBlockRow);

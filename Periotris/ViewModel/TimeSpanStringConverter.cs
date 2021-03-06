@@ -8,14 +8,8 @@ namespace Periotris.ViewModel
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null)
-            {
-                return "--:--";
-            }
-            if (value is TimeSpan realVal)
-            {
-                return string.Format("{0:D2}:{1:D2}", realVal.Minutes, realVal.Seconds);
-            }
+            if (value == null) return "--:--";
+            if (value is TimeSpan realVal) return $"{realVal.Minutes:D2}:{realVal.Seconds:D2}";
             throw new ArgumentException(nameof(value));
         }
 

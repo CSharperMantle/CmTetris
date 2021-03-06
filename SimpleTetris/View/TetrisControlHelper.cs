@@ -1,8 +1,8 @@
-﻿using SimpleTetris.Model;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using SimpleTetris.Model;
 
 namespace SimpleTetris.View
 {
@@ -10,7 +10,7 @@ namespace SimpleTetris.View
     {
         public static FrameworkElement BlockControlFactory(Block block, double scale)
         {
-            BlockControl newBlockControl = new BlockControl();
+            var newBlockControl = new BlockControl();
             newBlockControl.SetFill(GetBlockColorByTetriminoKind(block.FilledBy));
             newBlockControl.Height = BlockControl.OriginalHeight * scale;
             newBlockControl.Width = BlockControl.OriginalWidth * scale;

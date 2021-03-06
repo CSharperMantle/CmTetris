@@ -2,14 +2,14 @@
 {
     public class Block
     {
-        public TetriminoKind FilledBy { get; }
-        public Position Position { get; }
-
         public Block(TetriminoKind filledBy, Position position)
         {
             FilledBy = filledBy;
             Position = position;
         }
+
+        public TetriminoKind FilledBy { get; }
+        public Position Position { get; }
 
         public override string ToString()
         {

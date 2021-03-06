@@ -9,8 +9,7 @@
       d:DesignWidth="800" d:DesignHeight="600"
       HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
       Loaded="GamePage_Loaded" Unloaded="GamePage_Unloaded"
-      SizeChanged="GamePage_SizeChanged"
-      >
+      SizeChanged="GamePage_SizeChanged">
     <Page.Resources>
         <viewModel:TetrisViewModel x:Key="ViewModel" />
         <viewModel:BoolVisibilityConverter x:Key="VisibilityConverter" />
@@ -49,17 +48,17 @@
                        HorizontalAlignment="Center" Margin="35, 15, 0, 0"
                        Foreground="White"
                        FontFamily="Microsoft YaHei UI" FontSize="34" FontWeight="Bold"
-                       Visibility="{Binding Path=GameWon, Converter={StaticResource VisibilityConverter}}"/>
+                       Visibility="{Binding Path=GameWon, Converter={StaticResource VisibilityConverter}}" />
         </Grid>
 
         <StackPanel Grid.Row="0"
                     HorizontalAlignment="Right" Margin="0, 20, 30, 0">
             <TextBlock Text="{Binding Path=ElapsedTime, Converter={StaticResource TimeSpanConverter}}"
                        Style="{StaticResource GroupHeaderTextStyle}"
-                       Foreground="Yellow" TextAlignment="Center" FontFamily="Consolas"/>
+                       Foreground="Yellow" TextAlignment="Center" FontFamily="Consolas" />
             <TextBlock Text="{Binding Path=CurrentHighestScore, Converter={StaticResource TimeSpanConverter}}"
                        Style="{StaticResource GroupHeaderTextStyle}"
-                       Foreground="White" TextAlignment="Center" FontFamily="Consolas"/>
+                       Foreground="White" TextAlignment="Center" FontFamily="Consolas" />
         </StackPanel>
 
         <Border x:Name="PlayArea"
@@ -70,7 +69,7 @@
                 ItemsSource="{Binding Path=Sprites}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <Canvas Background="Black"/>
+                        <Canvas Background="Black" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
             </ItemsControl>
@@ -91,28 +90,31 @@
                         HorizontalAlignment="Center" Padding="3" Margin="5 0 5 0"
                         Background="DarkSlateGray" Foreground="Snow"
                         FontWeight="Bold" FontSize="30"
-                        Click="BeginButton_Click"/>
+                        Click="BeginButton_Click" />
                 <Button x:Name="BackButton"
                         Content="Back" IsEnabled="False"
                         HorizontalAlignment="Center" Padding="3" Margin="5 0 5 0"
                         Background="DarkSlateGray" Foreground="Snow"
                         FontWeight="Bold" FontSize="30"
-                        Click="BackButton_Click"/>
+                        Click="BackButton_Click" />
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Center" VerticalAlignment="Center">
                 <CheckBox x:Name="ColorsCheckBox"
                           Content="Colors"
-                          HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.TextAlignment="Center" Padding="4,0,10,0"
-                          IsChecked="{Binding Path=RenderColors, Mode=TwoWay}"/>
+                          HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.TextAlignment="Center"
+                          Padding="4,0,10,0"
+                          IsChecked="{Binding Path=RenderColors, Mode=TwoWay}" />
                 <CheckBox x:Name="GridAssistanceCheckBox"
                           Content="Assistance grid"
-                          HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.TextAlignment="Center" Padding="4,0,10,0"
-                          IsChecked="{Binding Path=RenderGridAssistance, Mode=TwoWay}"/>
+                          HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.TextAlignment="Center"
+                          Padding="4,0,10,0"
+                          IsChecked="{Binding Path=RenderGridAssistance, Mode=TwoWay}" />
             </StackPanel>
-            <TextBlock Text="This game is licensed under GNU General Public License version 3. Go to https://github.com/CSharperMantle/CmTetris.git for more information."
-                       HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
-                       Foreground="White" FontFamily="Microsoft YaHei UI" TextWrapping="Wrap"/>
+            <TextBlock
+                Text="This game is licensed under GNU General Public License version 3. Go to https://github.com/CSharperMantle/CmTetris.git for more information."
+                HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
+                Foreground="White" FontFamily="Microsoft YaHei UI" TextWrapping="Wrap" />
         </StackPanel>
 
         <TextBlock Grid.Row="1"
@@ -120,6 +122,6 @@
                    VerticalAlignment="Center" HorizontalAlignment="Stretch" TextAlignment="Center"
                    FontFamily="Microsoft YaHei UI" FontSize="60" FontWeight="Bold" FontStyle="Normal"
                    Foreground="Yellow" Background="DarkGray" Opacity="0.9"
-                   Visibility="{Binding Paused, Converter={StaticResource VisibilityConverter}}"/>
+                   Visibility="{Binding Paused, Converter={StaticResource VisibilityConverter}}" />
     </Grid>
 </Page>

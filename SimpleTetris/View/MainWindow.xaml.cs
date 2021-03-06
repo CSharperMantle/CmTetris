@@ -1,30 +1,26 @@
-﻿using SimpleTetris.Common;
-using SimpleTetris.ViewModel;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using SimpleTetris.Common;
+using SimpleTetris.ViewModel;
 
 namespace SimpleTetris.View
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///     Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly TetrisViewModel _viewModel = null;
+        private readonly TetrisViewModel _viewModel;
 
         public MainWindow()
         {
             InitializeComponent();
 
             if (Resources["ViewModel"] is TetrisViewModel viewModel)
-            {
                 _viewModel = viewModel;
-            }
             else
-            {
                 throw new Exception(nameof(viewModel));
-            }
         }
 
         private void MainWindow_KeyDown(object sender, KeyEventArgs e)
@@ -53,12 +49,14 @@ namespace SimpleTetris.View
             double targetHeight;
             if (newSize.Width > newSize.Height)
             {
-                targetWidth = newSize.Height * ((double)(TetrisConst.PlayAreaWidth + 1) / (double)(TetrisConst.PlayAreaHeight + 1));
+                targetWidth = newSize.Height *
+                              ((TetrisConst.PlayAreaWidth + 1) / (double) (TetrisConst.PlayAreaHeight + 1));
                 targetHeight = newSize.Height;
             }
             else
             {
-                targetHeight = newSize.Width * ((double)(TetrisConst.PlayAreaHeight + 1) / (double)(TetrisConst.PlayAreaWidth + 1));
+                targetHeight = newSize.Width *
+                               ((TetrisConst.PlayAreaHeight + 1) / (double) (TetrisConst.PlayAreaWidth + 1));
                 targetWidth = newSize.Width;
             }
             //targetWidth *= ((double)TetrisConst.PlayAreaWidth + 1) / ((double)TetrisConst.PlayAreaWidth);

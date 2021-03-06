@@ -4,7 +4,7 @@ using System.Windows.Media;
 namespace SimpleTetris.View
 {
     /// <summary>
-    /// Interaction logic for BlockControl.xaml
+    ///     Interaction logic for BlockControl.xaml
     /// </summary>
     public partial class BlockControl : UserControl
     {

@@ -7,10 +7,8 @@
         xmlns:viewModel="clr-namespace:Periotris.ViewModel"
         mc:Ignorable="d"
         Title="Periotris" Height="600" Width="800" Background="DarkSlateGray"
-        MinHeight="420" MinWidth="560"
-        >
+        MinHeight="420" MinWidth="560">
     <Frame x:Name="MainFrame"
            NavigationUIVisibility="Hidden"
-           HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-           />
+           HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
 </Window>

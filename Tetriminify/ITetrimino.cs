@@ -7,7 +7,7 @@ namespace Tetriminify
         TetriminoKind Kind { get; }
 
         Position Position { get; }
-        
+
         Direction FacingDirection { get; }
 
         IReadOnlyList<IBlock> Blocks { get; }

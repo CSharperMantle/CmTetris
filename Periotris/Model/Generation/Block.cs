@@ -2,14 +2,6 @@
 {
     internal class Block : IBlock
     {
-        public TetriminoKind FilledBy { get; set; }
-
-        public Position Position { get; set; }
-        
-        public int AtomicNumber { get; set; }
-
-        public int Identifier { get; set; }
-
         public Block(TetriminoKind filledBy, Position position)
             : this(filledBy, position, 0, 0)
         {
@@ -28,9 +20,16 @@
             Identifier = identifier;
         }
 
+        public int Identifier { get; set; }
+        public TetriminoKind FilledBy { get; set; }
+
+        public Position Position { get; set; }
+
+        public int AtomicNumber { get; set; }
+
         public override string ToString()
         {
-            return string.Format("<Block FilledBy:{0} Position:{1}>", FilledBy, Position);
+            return $"<Block FilledBy:{FilledBy} Position:{Position}>";
         }
     }
 }

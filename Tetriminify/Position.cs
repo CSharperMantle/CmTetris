@@ -31,12 +31,9 @@ namespace Tetriminify
 
         public override bool Equals(object obj)
         {
-            if ((obj == null) || !(obj is Position))
-            {
-                return false;
-            }
+            if (obj == null || !(obj is Position)) return false;
 
-            Position value = (Position)obj;
+            var value = (Position) obj;
             return Equals(this, value);
         }
 

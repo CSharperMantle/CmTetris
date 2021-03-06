@@ -3,7 +3,8 @@
 namespace Periotris.Model
 {
     /// <summary>
-    /// A subclass of <see cref="EventArgs"/> which is used when a <see cref="Block"/> changes, either in position or if being shown.
+    ///     A subclass of <see cref="EventArgs" /> which is used when a <see cref="Block" /> changes, either in position or if
+    ///     being shown.
     /// </summary>
     public class BlockChangedEventArgs : EventArgs
     {

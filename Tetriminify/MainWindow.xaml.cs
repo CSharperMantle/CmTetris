@@ -9,19 +9,18 @@ using Tetriminify.Sorter;
 namespace Tetriminify
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///     Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private List<Block> currentRow = new List<Block>();
+        private int currentColId;
+        private readonly List<Block> currentRow = new List<Block>();
 
-        private List<Block[]> currentTemplate = new List<Block[]>();
+        private int currentRowId;
+
+        private readonly List<Block[]> currentTemplate = new List<Block[]>();
 
         private List<Block[]> orderedResult = new List<Block[]>();
-
-        private int currentRowId = 0;
-
-        private int currentColId = 0;
 
         public MainWindow()
         {
@@ -42,7 +41,8 @@ namespace Tetriminify
                 default:
                     return;
             }
-            Block block = new Block(kind, new Position(currentColId, currentRowId));
+
+            var block = new Block(kind, new Position(currentColId, currentRowId));
             currentRow.Add(block);
             currentColId++;
             RefreshCurrentRowDisplay();
@@ -50,9 +50,8 @@ namespace Tetriminify
 
         private void RefreshCurrentRowDisplay()
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (Block block in currentRow)
-            {
+            var sb = new StringBuilder();
+            foreach (var block in currentRow)
                 switch (block.FilledBy)
                 {
                     case TetriminoKind.AvailableToFill:
@@ -64,7 +63,7 @@ namespace Tetriminify
                     default:
                         throw new ArgumentException(nameof(block.FilledBy));
                 }
-            }
+
             RowTextBlock.Text = sb.ToString();
         }
 
@@ -78,6 +77,7 @@ namespace Tetriminify
                 );
                 return;
             }
+
             currentTemplate.Add(currentRow.ToArray());
             currentRow.Clear();
             currentColId = 0;
@@ -88,11 +88,10 @@ namespace Tetriminify
 
         private void RefreshCurrentTemplateDisplay()
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (Block[] blocks in currentTemplate)
+            var sb = new StringBuilder();
+            foreach (var blocks in currentTemplate)
             {
-                foreach (Block block in blocks)
-                {
+                foreach (var block in blocks)
                     switch (block.FilledBy)
                     {
                         case TetriminoKind.AvailableToFill:
@@ -104,10 +103,10 @@ namespace Tetriminify
                         default:
                             throw new ArgumentException(nameof(block.FilledBy));
                     }
-                }
+
                 sb.AppendLine();
-                
             }
+
             TemplateTextBlock.Text = sb.ToString();
         }
 
@@ -128,26 +127,21 @@ namespace Tetriminify
                 return;
             }
 
-            IReadOnlyList<ITetrimino> tetriminos = PatternGenerator.GetPattern(template);
-            
+            var tetriminos = PatternGenerator.GetPattern(template);
+
             if (tetriminos.Count == 0)
-            {
                 MessageBox.Show("Unable to find a solution.",
                     "Warning",
                     MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.OK
                 );
-            }
             foreach (Tetrimino tetrimino in tetriminos)
-            {
-                foreach (Block block in tetrimino.Blocks)
-                {
-                    template[block.Position.Y, block.Position.X].FilledBy = block.FilledBy;
-                }
-            }
+            foreach (Block block in tetrimino.Blocks)
+                template[block.Position.Y, block.Position.X].FilledBy = block.FilledBy;
             RefreshCurrentResultDisplay(template);
 
-            IReadOnlyList<ITetrimino> orderedTetriminos = PatternSorter.GetSortedTetriminos(tetriminos, template.GetLength(1), template.GetLength(0));
-            int?[,] order = new int?[template.GetLength(0), template.GetLength(1)];
+            var orderedTetriminos =
+                PatternSorter.GetSortedTetriminos(tetriminos, template.GetLength(1), template.GetLength(0));
+            var order = new int?[template.GetLength(0), template.GetLength(1)];
             RefreshCurrentOrderedDisplay(orderedTetriminos, order);
 
             currentTemplate.Clear();
@@ -160,12 +154,12 @@ namespace Tetriminify
 
         private void RefreshCurrentResultDisplay(Block[,] result)
         {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < result.GetLength(0); i++)
-		    {
-                for (int j = 0; j < result.GetLength(1); j++)
+            var sb = new StringBuilder();
+            for (var i = 0; i < result.GetLength(0); i++)
+            {
+                for (var j = 0; j < result.GetLength(1); j++)
                 {
-                    Block block = result[i, j];
+                    var block = result[i, j];
                     switch (block.FilledBy)
                     {
                         case TetriminoKind.Linear:
@@ -199,59 +193,52 @@ namespace Tetriminify
                             throw new ArgumentException(nameof(block.FilledBy));
                     }
                 }
+
                 sb.AppendLine();
             }
+
             ResultTextBlock.Text = sb.ToString();
         }
 
         private void RefreshCurrentOrderedDisplay(IReadOnlyList<ITetrimino> tetriminos, int?[,] order)
         {
-            int n = 0;
+            var n = 0;
 
-            foreach (ITetrimino tetrimino in tetriminos)
+            foreach (var tetrimino in tetriminos)
             {
-                foreach (IBlock block in tetrimino.Blocks)
-                {
-                    order[block.Position.Y, block.Position.X] = n;
-                }
+                foreach (var block in tetrimino.Blocks) order[block.Position.Y, block.Position.X] = n;
                 n++;
             }
 
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < order.GetLength(0); i++)
+            var sb = new StringBuilder();
+            for (var i = 0; i < order.GetLength(0); i++)
             {
-                for (int j = 0; j < order.GetLength(1); j++)
+                for (var j = 0; j < order.GetLength(1); j++)
                 {
-                    int? nth = order[i, j];
+                    var nth = order[i, j];
                     if (!nth.HasValue)
-                    {
                         sb.Append("  ");
-                    }
                     else
-                    {
                         sb.AppendFormat("{0} ", nth.Value);
-                    }
                 }
+
                 sb.AppendLine();
             }
+
             OrderedTextBlock.Text = sb.ToString();
         }
-        
+
         private static T[,] To2D<T>(T[][] source)
         {
             try
             {
-                int firstDim = source.Length;
-                int secondDim = source.GroupBy(row => row.Length).Single().Key;
+                var firstDim = source.Length;
+                var secondDim = source.GroupBy(row => row.Length).Single().Key;
 
                 var result = new T[firstDim, secondDim];
-                for (int i = 0; i < firstDim; i++)
-                {
-                    for (int j = 0; j < secondDim; j++)
-                    {
-                        result[i, j] = source[i][j];
-                    }
-                }
+                for (var i = 0; i < firstDim; i++)
+                for (var j = 0; j < secondDim; j++)
+                    result[i, j] = source[i][j];
                 return result;
             }
             catch (InvalidOperationException ex)

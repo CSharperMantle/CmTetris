@@ -31,12 +31,9 @@ namespace Periotris.Model
 
         public override bool Equals(object obj)
         {
-            if ((obj == null) || !(obj is Position))
-            {
-                return false;
-            }
+            if (!(obj is Position)) return false;
 
-            Position value = (Position)obj;
+            var value = (Position) obj;
             return Equals(this, value);
         }
 
@@ -57,7 +54,7 @@ namespace Periotris.Model
 
         public override string ToString()
         {
-            return string.Format("<Position X:{0} Y:{1}>", X, Y);
+            return $"<Position X:{X} Y:{Y}>";
         }
     }
 }

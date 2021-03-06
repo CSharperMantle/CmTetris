@@ -2,15 +2,15 @@
 {
     internal class Block : IBlock
     {
-        public TetriminoKind FilledBy { get; set; }
-
-        public Position Position { get; set; }
-
         public Block(TetriminoKind filledBy, Position position)
         {
             FilledBy = filledBy;
             Position = position;
         }
+
+        public TetriminoKind FilledBy { get; set; }
+
+        public Position Position { get; set; }
 
         public override string ToString()
         {
