@@ -12,11 +12,5 @@ namespace Periotris.View
         {
             InitializeComponent();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            ((MainWindow) Application.Current.MainWindow)
-                .NavigateTo("View/GamePage.xaml");
-        }
     }
 }

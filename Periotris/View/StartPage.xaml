@@ -7,11 +7,31 @@
       mc:Ignorable="d"
       d:DesignWidth="800" d:DesignHeight="600"
       Title="StartPage">
-
+    <Page.Resources>
+        <Style x:Key="GroupHeaderTextStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Microsoft YaHei UI" />
+            <Setter Property="TextTrimming" Value="WordEllipsis" />
+            <Setter Property="TextWrapping" Value="NoWrap" />
+            <Setter Property="Foreground" Value="Bisque" />
+            <Setter Property="Typography.StylisticSet20" Value="True" />
+            <Setter Property="Typography.DiscretionaryLigatures" Value="True" />
+            <Setter Property="Typography.CaseSensitiveForms" Value="True" />
+            <Setter Property="FontSize" Value="26.667" />
+            <Setter Property="LineStackingStrategy" Value="BlockLineHeight" />
+            <Setter Property="FontWeight" Value="Light" />
+            <Setter Property="LineHeight" Value="30" />
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <TranslateTransform X="-1" Y="6" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
     <Grid>
-        <Button
-            HorizontalAlignment="Center" VerticalAlignment="Center"
-            Content="Click to nav"
-            Click="Button_Click" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
     </Grid>
 </Page>

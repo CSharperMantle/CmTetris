@@ -479,22 +479,22 @@ namespace Periotris.Model.Generation
         /// <summary>
         ///     Get a list of <see cref="Block" />s well positioned according to the offset.
         /// </summary>
-        /// <returns>A <see cref="IReadOnlyList{Block}" /> which contains properly offseted blocks</returns>
-        public static IReadOnlyList<Block> CreateOffsetedBlocks(TetriminoKind kind, Position offset,
+        /// <returns>A <see cref="IReadOnlyList{Block}" /> which contains properly offset blocks</returns>
+        public static IReadOnlyList<Block> CreateOffsetBlocks(TetriminoKind kind, Position offset,
             Direction direction = Direction.Up)
         {
             var mask = CreateBlocksMask(kind, direction);
 
-            var offsetedBlocks = new List<Block>(4);
+            var offsetBlocks = new List<Block>(4);
             for (var nRow = 0; nRow < mask.GetLength(0); nRow++)
             for (var nCol = 0; nCol < mask.GetLength(1); nCol++)
             {
                 var identifier = mask[nRow, nCol];
                 if (identifier != 0)
-                    offsetedBlocks.Add(new Block(kind, new Position(nCol + offset.X, nRow + offset.Y), 0, identifier));
+                    offsetBlocks.Add(new Block(kind, new Position(nCol + offset.X, nRow + offset.Y), 0, identifier));
             }
 
-            return offsetedBlocks;
+            return offsetBlocks;
         }
 
         /// <summary>
@@ -536,7 +536,7 @@ namespace Periotris.Model.Generation
                             blockMask = LinearDownMask;
                             break;
                         default:
-                            throw new ArgumentException(nameof(direction));
+                            throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
                     }
 
                     break;
@@ -559,7 +559,7 @@ namespace Periotris.Model.Generation
                             blockMask = CubicMaskLeft;
                             break;
                         default:
-                            throw new ArgumentException(nameof(direction));
+                            throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
                     }
 
                     break;
@@ -582,7 +582,7 @@ namespace Periotris.Model.Generation
                             blockMask = LCisLeftMask;
                             break;
                         default:
-                            throw new ArgumentException(nameof(direction));
+                            throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
                     }
 
                     break;
@@ -605,7 +605,7 @@ namespace Periotris.Model.Generation
                             blockMask = LTransLeftMask;
                             break;
                         default:
-                            throw new ArgumentException(nameof(direction));
+                            throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
                     }
 
                     break;
@@ -628,7 +628,7 @@ namespace Periotris.Model.Generation
                             blockMask = ZCisLeftMask;
                             break;
                         default:
-                            throw new ArgumentException(nameof(direction));
+                            throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
                     }
 
                     break;
@@ -651,7 +651,7 @@ namespace Periotris.Model.Generation
                             blockMask = ZTransLeftMask;
                             break;
                         default:
-                            throw new ArgumentException(nameof(direction));
+                            throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
                     }
 
                     break;
@@ -674,7 +674,7 @@ namespace Periotris.Model.Generation
                             blockMask = TLeftMask;
                             break;
                         default:
-                            throw new ArgumentException(nameof(direction));
+                            throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
                     }
 
                     break;
@@ -704,7 +704,7 @@ namespace Periotris.Model.Generation
                         case Direction.Down:
                             return (3, 2);
                         default:
-                            throw new ArgumentException(nameof(facingDirection));
+                            throw new ArgumentOutOfRangeException(nameof(facingDirection), facingDirection, null);
                     }
                 case TetriminoKind.Cubic:
                     return (1, 1);
@@ -720,7 +720,7 @@ namespace Periotris.Model.Generation
                         case Direction.Down:
                             return (2, 1);
                         default:
-                            throw new ArgumentException(nameof(facingDirection));
+                            throw new ArgumentOutOfRangeException(nameof(facingDirection), facingDirection, null);
                     }
                 case TetriminoKind.LShapedTrans:
                     switch (facingDirection)
@@ -734,7 +734,7 @@ namespace Periotris.Model.Generation
                         case Direction.Down:
                             return (2, 1);
                         default:
-                            throw new ArgumentException(nameof(facingDirection));
+                            throw new ArgumentOutOfRangeException(nameof(facingDirection), facingDirection, null);
                     }
                 case TetriminoKind.ZigZagCis:
                     switch (facingDirection)
@@ -748,7 +748,7 @@ namespace Periotris.Model.Generation
                         case Direction.Down:
                             return (2, 2);
                         default:
-                            throw new ArgumentException(nameof(facingDirection));
+                            throw new ArgumentOutOfRangeException(nameof(facingDirection), facingDirection, null);
                     }
                 case TetriminoKind.ZigZagTrans:
                     switch (facingDirection)
@@ -762,7 +762,7 @@ namespace Periotris.Model.Generation
                         case Direction.Down:
                             return (2, 1);
                         default:
-                            throw new ArgumentException(nameof(facingDirection));
+                            throw new ArgumentOutOfRangeException(nameof(facingDirection), facingDirection, null);
                     }
                 case TetriminoKind.TShaped:
                     switch (facingDirection)
@@ -776,7 +776,7 @@ namespace Periotris.Model.Generation
                         case Direction.Down:
                             return (2, 1);
                         default:
-                            throw new ArgumentException(nameof(facingDirection));
+                            throw new ArgumentOutOfRangeException(nameof(facingDirection), facingDirection, null);
                     }
                 default:
                     throw new ArgumentException(nameof(kind));

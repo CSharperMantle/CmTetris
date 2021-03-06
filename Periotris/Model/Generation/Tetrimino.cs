@@ -16,7 +16,7 @@ namespace Periotris.Model.Generation
             Position = position;
             FacingDirection = facingDirection;
             FirstBlockPosition = firstBlockPosition;
-            RealBlocks = GeneratorHelper.CreateOffsetedBlocks(kind, Position, facingDirection);
+            RealBlocks = GeneratorHelper.CreateOffsetBlocks(kind, Position, facingDirection);
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Periotris.Model.Generation
                 position = new Position(column, position.Y);
             }
 
-            var newBlocks = GeneratorHelper.CreateOffsetedBlocks(Kind, position, FacingDirection);
+            var newBlocks = GeneratorHelper.CreateOffsetBlocks(Kind, position, FacingDirection);
             if (newBlocks.Any(collisionChecker)) return false;
             GeneratorHelper.MapAtomicNumberForNewBlocks(RealBlocks, newBlocks);
 
@@ -78,7 +78,7 @@ namespace Periotris.Model.Generation
             foreach (var adjust in adjustPattern)
             {
                 var newPos = new Position(Position.X + adjust, Position.Y);
-                var newBlocks = GeneratorHelper.CreateOffsetedBlocks(Kind, newPos, (Direction) direction);
+                var newBlocks = GeneratorHelper.CreateOffsetBlocks(Kind, newPos, (Direction) direction);
 
                 if (!newBlocks.Any(collisionChecker))
                 {

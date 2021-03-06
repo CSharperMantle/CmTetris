@@ -11,8 +11,8 @@ namespace Periotris.View
         public MainWindow()
         {
             InitializeComponent();
-
-            NavigateTo("View/GamePage.xaml");
+            
+            NavigationHelper.NavigateTo(PageType.GamePage);
         }
 
         public void NavigateTo(string relativeUri)
