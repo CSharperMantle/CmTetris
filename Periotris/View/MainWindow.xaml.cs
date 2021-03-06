@@ -15,10 +15,10 @@ namespace Periotris.View
         {
             InitializeComponent();
 
-            Navigate("View/GamePage.xaml");
+            NavigateTo("View/GamePage.xaml");
         }
 
-        public void Navigate(string relativeUri)
+        public void NavigateTo(string relativeUri)
         {
             MainFrame.Navigate(new Uri(relativeUri, UriKind.Relative));
         }

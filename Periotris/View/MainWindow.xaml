@@ -10,6 +10,7 @@
         MinHeight="420" MinWidth="560"
         >
     <Frame x:Name="MainFrame"
+           NavigationUIVisibility="Hidden"
            HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
            />
 </Window>

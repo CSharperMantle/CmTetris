@@ -8,7 +8,7 @@
       mc:Ignorable="d"
       d:DesignWidth="800" d:DesignHeight="600"
       HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-      KeyDown="GamePage_KeyDown"
+      Loaded="GamePage_Loaded" Unloaded="GamePage_Unloaded"
       SizeChanged="GamePage_SizeChanged"
       >
     <Page.Resources>
@@ -39,7 +39,7 @@
             <RowDefinition Height="80" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid>
+        <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
@@ -83,12 +83,22 @@
                        VerticalAlignment="Center" HorizontalAlignment="Center"
                        Opacity="1" Foreground="Yellow"
                        FontWeight="Bold" FontSize="70" FontFamily="Microsoft YaHei" />
-            <Button x:Name="BeginButton"
-                    Content="Start"
-                    HorizontalAlignment="Center" Padding="3"
-                    Background="DarkSlateGray" Foreground="Snow"
-                    FontWeight="Bold" FontSize="30"
-                    Click="BeginButton_Click"/>
+            <StackPanel
+                HorizontalAlignment="Center"
+                Orientation="Horizontal">
+                <Button x:Name="BeginButton"
+                        Content="Start"
+                        HorizontalAlignment="Center" Padding="3" Margin="5 0 5 0"
+                        Background="DarkSlateGray" Foreground="Snow"
+                        FontWeight="Bold" FontSize="30"
+                        Click="BeginButton_Click"/>
+                <Button x:Name="BackButton"
+                        Content="Back" IsEnabled="False"
+                        HorizontalAlignment="Center" Padding="3" Margin="5 0 5 0"
+                        Background="DarkSlateGray" Foreground="Snow"
+                        FontWeight="Bold" FontSize="30"
+                        Click="BackButton_Click"/>
+            </StackPanel>
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Center" VerticalAlignment="Center">
                 <CheckBox x:Name="ColorsCheckBox"

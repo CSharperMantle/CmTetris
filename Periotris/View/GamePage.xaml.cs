@@ -1,19 +1,9 @@
 ﻿using Periotris.Common;
 using Periotris.ViewModel;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Periotris.View
 {
@@ -76,6 +66,22 @@ namespace Periotris.View
             PlayArea.Width = targetWidth;
             PlayArea.Height = targetHeight;
             _viewModel.PlayAreaSize = new Size(targetWidth, targetHeight);
+        }
+
+        private void GamePage_Loaded(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.KeyDown += GamePage_KeyDown;
+        }
+
+        private void GamePage_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.KeyDown -= GamePage_KeyDown;
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)Application.Current.MainWindow)
+                .NavigateTo("View/StartPage.xaml");
         }
     }
 }
