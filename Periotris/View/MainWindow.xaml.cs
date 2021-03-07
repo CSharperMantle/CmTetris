@@ -12,7 +12,7 @@ namespace Periotris.View
         {
             InitializeComponent();
             
-            NavigationHelper.NavigateTo(PageType.GamePage);
+            NavigationHelper.NavigateTo(PageType.StartPage);
         }
 
         public void NavigateTo(string relativeUri)

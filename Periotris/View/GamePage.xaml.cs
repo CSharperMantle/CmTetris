@@ -76,8 +76,7 @@ namespace Periotris.View
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            ((MainWindow) Application.Current.MainWindow)
-                .NavigateTo("View/StartPage.xaml");
+            NavigationHelper.NavigateTo(PageType.StartPage);
         }
     }
 }

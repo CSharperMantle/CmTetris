@@ -6,8 +6,15 @@
 
         public const int PlayAreaHeight = 11;
 
-        public const double GameUpdateIntervalSeconds = 1.5;
+        public const double OriginalGameUpdateIntervalSeconds = 1.5;
+
+        /// <summary>
+        /// Current update interval for the game timer.
+        /// </summary>
+        public static double GameUpdateIntervalSeconds = OriginalGameUpdateIntervalSeconds;
 
         public const double TimeDisplayUpdateIntervalSeconds = 0.1;
+
+        public const double TimeDecreaseDeltaSeconds = 0.025;
     }
 }

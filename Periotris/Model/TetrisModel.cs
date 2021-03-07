@@ -98,6 +98,7 @@ namespace Periotris.Model
             }
 
             _pendingTetriminos.Clear();
+            TetrisConst.GameUpdateIntervalSeconds = TetrisConst.OriginalGameUpdateIntervalSeconds;
             OnGameEnd();
         }
 
@@ -243,6 +244,7 @@ namespace Periotris.Model
         /// </summary>
         private void FreezeActiveTetrimino()
         {
+            TetrisConst.GameUpdateIntervalSeconds -= TetrisConst.TimeDecreaseDeltaSeconds;
             foreach (var block in _activeTetrimino.Blocks) _frozenBlocks.Add(block);
         }
 

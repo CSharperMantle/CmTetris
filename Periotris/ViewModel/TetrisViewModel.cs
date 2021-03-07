@@ -218,6 +218,8 @@ namespace Periotris.ViewModel
             }
 
             if (!Paused) _model.Update();
+            // Update interval
+            _gameTimer.Interval = TimeSpan.FromSeconds(TetrisConst.GameUpdateIntervalSeconds);
         }
 
         private void TimeDisplayTimerTickEventHandler(object sender, EventArgs e)

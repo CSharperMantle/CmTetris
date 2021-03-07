@@ -26,7 +26,7 @@ namespace Periotris.Model.Generation
 
             var tetriminos = TetriminoSorter.GetSortedTetriminos(
                 GetPossibleTetriminoPattern(template, rand), dim1Len, dim0Len);
-
+            
             Parallel.ForEach(tetriminos,
                 tetrimino =>
                 {
@@ -43,7 +43,7 @@ namespace Periotris.Model.Generation
                             block.AtomicNumber, block.Identifier
                         ));
                     tetrimino.RealBlocks = newBlocks;
-                    tetrimino.Position = GeneratorHelper.GetInitialPositionByKind(tetrimino.Kind);
+                    tetrimino.Position = newPosition;
 
                     // Randomly rotate the current Tetrimino.
                     var rotationCount = rand.Next(0, Enum.GetValues(typeof(Direction)).Length);

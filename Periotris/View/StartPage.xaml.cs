@@ -12,5 +12,10 @@ namespace Periotris.View
         {
             InitializeComponent();
         }
+
+        private void NormalGameButton_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationHelper.NavigateTo(PageType.GamePage);
+        }
     }
 }

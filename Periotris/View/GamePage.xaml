@@ -92,7 +92,7 @@
                         FontWeight="Bold" FontSize="30"
                         Click="BeginButton_Click" />
                 <Button x:Name="BackButton"
-                        Content="Back" IsEnabled="False"
+                        Content="Back"
                         HorizontalAlignment="Center" Padding="3" Margin="5 0 5 0"
                         Background="DarkSlateGray" Foreground="Snow"
                         FontWeight="Bold" FontSize="30"
@@ -111,10 +111,6 @@
                           Padding="4,0,10,0"
                           IsChecked="{Binding Path=RenderGridAssistance, Mode=TwoWay}" />
             </StackPanel>
-            <TextBlock
-                Text="This game is licensed under GNU General Public License version 3. Go to https://github.com/CSharperMantle/CmTetris.git for more information."
-                HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
-                Foreground="White" FontFamily="Microsoft YaHei UI" TextWrapping="Wrap" />
         </StackPanel>
 
         <TextBlock Grid.Row="1"
