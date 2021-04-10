@@ -421,28 +421,28 @@ namespace Periotris.Model.Generation
             {0, 1, 0}
         };
 
-        public static readonly int[,] TUpMask =
+        public static readonly int[,] TeeUpMask =
         {
             {0, 1, 0},
             {2, 3, 4},
             {0, 0, 0}
         };
 
-        public static readonly int[,] TRightMask =
+        public static readonly int[,] TeeRightMask =
         {
             {0, 2, 0},
             {0, 3, 1},
             {0, 4, 0}
         };
 
-        public static readonly int[,] TDownMask =
+        public static readonly int[,] TeeDownMask =
         {
             {0, 0, 0},
             {4, 3, 2},
             {0, 1, 0}
         };
 
-        public static readonly int[,] TLeftMask =
+        public static readonly int[,] TeeLeftMask =
         {
             {0, 4, 0},
             {1, 3, 0},
@@ -451,7 +451,7 @@ namespace Periotris.Model.Generation
 
         public static Position GetInitialPositionByKind(TetriminoKind kind)
         {
-            var length = 0;
+            int length;
             switch (kind)
             {
                 case TetriminoKind.Linear:
@@ -464,7 +464,7 @@ namespace Periotris.Model.Generation
                 case TetriminoKind.LShapedTrans:
                 case TetriminoKind.ZigZagTrans:
                 case TetriminoKind.ZigZagCis:
-                case TetriminoKind.TShaped:
+                case TetriminoKind.TeeShaped:
                     length = 3;
                     break;
                 default:
@@ -655,23 +655,23 @@ namespace Periotris.Model.Generation
                     }
 
                     break;
-                case TetriminoKind.TShaped:
+                case TetriminoKind.TeeShaped:
                     switch (direction)
                     {
                         case Direction.Up:
-                            blockMask = TUpMask;
+                            blockMask = TeeUpMask;
                             break;
 
                         case Direction.Right:
-                            blockMask = TRightMask;
+                            blockMask = TeeRightMask;
                             break;
 
                         case Direction.Down:
-                            blockMask = TDownMask;
+                            blockMask = TeeDownMask;
                             break;
 
                         case Direction.Left:
-                            blockMask = TLeftMask;
+                            blockMask = TeeLeftMask;
                             break;
                         default:
                             throw new ArgumentOutOfRangeException(nameof(direction), direction, null);
@@ -764,7 +764,7 @@ namespace Periotris.Model.Generation
                         default:
                             throw new ArgumentOutOfRangeException(nameof(facingDirection), facingDirection, null);
                     }
-                case TetriminoKind.TShaped:
+                case TetriminoKind.TeeShaped:
                     switch (facingDirection)
                     {
                         case Direction.Left:

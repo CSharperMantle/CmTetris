@@ -87,28 +87,28 @@
                 Orientation="Horizontal">
                 <Button x:Name="BeginButton"
                         Content="Start"
-                        HorizontalAlignment="Center" Padding="3" Margin="5 0 5 0"
-                        Background="DarkSlateGray" Foreground="Snow"
-                        FontWeight="Bold" FontSize="30"
+                        HorizontalAlignment="Center"
+                        FontSize="25"
+                        Style="{DynamicResource MahApps.Styles.Button}"
                         Click="BeginButton_Click" />
                 <Button x:Name="BackButton"
                         Content="Back"
-                        HorizontalAlignment="Center" Padding="3" Margin="5 0 5 0"
-                        Background="DarkSlateGray" Foreground="Snow"
-                        FontWeight="Bold" FontSize="30"
+                        HorizontalAlignment="Center"
+                        FontSize="25"
+                        Style="{DynamicResource MahApps.Styles.Button}"
                         Click="BackButton_Click" />
             </StackPanel>
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Center" VerticalAlignment="Center">
                 <CheckBox x:Name="ColorsCheckBox"
                           Content="Colors"
-                          HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.TextAlignment="Center"
-                          Padding="4,0,10,0"
+                          HorizontalAlignment="Center" VerticalAlignment="Center"
+                          Style="{DynamicResource MahApps.Styles.CheckBox.Win10}"
                           IsChecked="{Binding Path=RenderColors, Mode=TwoWay}" />
                 <CheckBox x:Name="GridAssistanceCheckBox"
                           Content="Assistance grid"
-                          HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.TextAlignment="Center"
-                          Padding="4,0,10,0"
+                          HorizontalAlignment="Center" VerticalAlignment="Center"
+                          Style="{DynamicResource MahApps.Styles.CheckBox.Win10}"
                           IsChecked="{Binding Path=RenderGridAssistance, Mode=TwoWay}" />
             </StackPanel>
         </StackPanel>

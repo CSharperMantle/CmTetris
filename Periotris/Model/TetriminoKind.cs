@@ -63,19 +63,10 @@ namespace Periotris.Model
         ///     <para>-+--</para>
         ///     <para>+++-</para>
         /// </summary>
-        TShaped,
+        TeeShaped,
 
         AvailableToFill,
 
         UnavailableToFill
-    }
-
-    public static class TetriminoKindHelper
-    {
-        public static TetriminoKind GetRandomTetriminoKind(Random random)
-        {
-            var randResult = random.Next(0, 7);
-            return (TetriminoKind) randResult;
-        }
     }
 }

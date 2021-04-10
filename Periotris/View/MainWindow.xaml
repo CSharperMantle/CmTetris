@@ -1,14 +1,15 @@
-﻿<Window x:Class="Periotris.View.MainWindow"
+﻿<mah:MetroWindow x:Class="Periotris.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Periotris.View"
         xmlns:viewModel="clr-namespace:Periotris.ViewModel"
+        xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
-        Title="Periotris" Height="600" Width="800" Background="DarkSlateGray"
+        Title="Periotris" Height="600" Width="800"
         MinHeight="420" MinWidth="560">
     <Frame x:Name="MainFrame"
            NavigationUIVisibility="Hidden"
            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
-</Window>
+</mah:MetroWindow>

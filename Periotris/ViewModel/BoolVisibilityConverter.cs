@@ -9,7 +9,7 @@ namespace Periotris.ViewModel
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is bool && (bool) value) return Visibility.Visible;
+            if (value is bool b && b) return Visibility.Visible;
 
             return Visibility.Hidden;
         }
