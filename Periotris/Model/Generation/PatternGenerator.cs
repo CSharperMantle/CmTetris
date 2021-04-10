@@ -26,7 +26,7 @@ namespace Periotris.Model.Generation
 
             var tetriminos = TetriminoSorter.GetSortedTetriminos(
                 GetPossibleTetriminoPattern(template, rand), dim1Len, dim0Len);
-            
+
             Parallel.ForEach(tetriminos,
                 tetrimino =>
                 {
@@ -105,8 +105,8 @@ namespace Periotris.Model.Generation
             {
                 // Step 1.
                 // First we need to find the position of the first block in the workspace
-                var firstBlockRow = 0;
-                var firstBlockCol = 0;
+                int firstBlockRow;
+                int firstBlockCol;
                 (firstBlockCol, firstBlockRow) = GetFirstAvailableBlockCoordination(workspace);
                 if (!(firstBlockCol >= 0 && firstBlockRow >= 0))
                     // There are no more blocks to fill. Returning.
@@ -114,7 +114,7 @@ namespace Periotris.Model.Generation
 
                 // Step 2.
                 // Now we find an empty block. Generate a new Tetrimino using randomized stack of TetriminoKind.
-                Stack<KindDirectionsPair> currentTetriminoKindDirectionsPairStack = null;
+                Stack<KindDirectionsPair> currentTetriminoKindDirectionsPairStack;
                 if (!rewindingRequired)
                 {
                     // This could mean this is the first run or the last iteration has succeeded in placing a block.
@@ -124,7 +124,7 @@ namespace Periotris.Model.Generation
                         new KindDirectionsPair(TetriminoKind.Linear, rand),
                         new KindDirectionsPair(TetriminoKind.LShapedCis, rand),
                         new KindDirectionsPair(TetriminoKind.LShapedTrans, rand),
-                        new KindDirectionsPair(TetriminoKind.TShaped, rand),
+                        new KindDirectionsPair(TetriminoKind.TeeShaped, rand),
                         new KindDirectionsPair(TetriminoKind.ZigZagCis, rand),
                         new KindDirectionsPair(TetriminoKind.ZigZagTrans, rand)
                     }.OrderBy(x => rand.Next()));

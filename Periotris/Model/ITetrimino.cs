@@ -30,7 +30,7 @@ namespace Periotris.Model
         ///     The <see cref="ITetrimino" /> will not be changed if the operation fails.
         /// </summary>
         /// <param name="collisionChecker">
-        ///     A <see cref="Func{Block, bool}" /> which returns <see cref="true" /> when the block will
+        ///     A <see cref="Func{Block, Boolean}" /> which returns true when the block will
         ///     collide
         /// </param>
         /// <returns>Whether the <see cref="TryRotate" /> step succeeds</returns>

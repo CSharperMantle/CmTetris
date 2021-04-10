@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Periotris.Model
+﻿namespace Periotris.Model
 {
     /// <summary>
     ///     Kinds of Tetrimino.

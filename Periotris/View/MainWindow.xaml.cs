@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Windows;
 using MahApps.Metro.Controls;
 
 namespace Periotris.View
@@ -12,7 +11,7 @@ namespace Periotris.View
         public MainWindow()
         {
             InitializeComponent();
-            
+
             NavigationHelper.NavigateTo(PageType.StartPage);
         }
 

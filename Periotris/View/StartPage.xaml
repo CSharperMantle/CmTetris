@@ -9,31 +9,29 @@
       Title="StartPage">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="2*"/>
-            <RowDefinition Height="3*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="1"
                     VerticalAlignment="Center">
             <TextBlock
                 Text="Periotris"
                 HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                FontSize="60" TextAlignment="Center" Foreground="White" FontFamily="Microsoft YaHei UI"
-                />
+                FontSize="60" TextAlignment="Center" Foreground="White" FontFamily="Microsoft YaHei UI" />
         </StackPanel>
-        <StackPanel Grid.Row="2"
-                    >
+        <StackPanel Grid.Row="2">
             <Button x:Name="NormalGameButton"
                     Content="Normal Game"
                     HorizontalAlignment="Center"
                     FontSize="25"
                     Style="{DynamicResource MahApps.Styles.Button}"
-                    Click="NormalGameButton_Click"/>
+                    Click="NormalGameButton_Click" />
         </StackPanel>
         <TextBlock Grid.Row="3"
-                Text="This game is licensed under GNU General Public License version 3. Go to https://github.com/CSharperMantle/CmTetris.git for more information."
-                HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
-                Foreground="White" FontFamily="Microsoft YaHei UI" TextWrapping="Wrap" />
+                   Text="This game is licensed under GNU General Public License version 3. Go to https://github.com/CSharperMantle/CmTetris.git for more information."
+                   HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
+                   Foreground="White" FontFamily="Microsoft YaHei UI" TextWrapping="Wrap" />
     </Grid>
 </Page>

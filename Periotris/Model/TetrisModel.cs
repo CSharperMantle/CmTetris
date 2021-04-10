@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Periotris.Common;
+using Periotris.Customization;
 using Periotris.Model.Generation;
 
 namespace Periotris.Model
@@ -15,7 +16,7 @@ namespace Periotris.Model
         private readonly List<IBlock> _frozenBlocks = new List<IBlock>();
 
         /// <summary>
-        ///     Leaderboard and scoreboard.
+        ///     Leader-board and scoreboard.
         /// </summary>
         private readonly HistoryData _historyData;
 
@@ -24,13 +25,10 @@ namespace Periotris.Model
         /// </summary>
         private readonly Stack<ITetrimino> _pendingTetriminos = new Stack<ITetrimino>();
 
-        /// <summary>
-        ///     Random number generator used to generate new <see cref="NextTetriminoKind" />.
-        /// </summary>
         private readonly Random _random = new Random();
 
         /// <summary>
-        ///     Stopwatch for recording play time and scoreboarding.
+        ///     Stopwatch for recording play time and score-boarding.
         /// </summary>
         private readonly Stopwatch _stopwatch = new Stopwatch();
 

@@ -4,7 +4,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 
-namespace Periotris.Model
+namespace Periotris.Customization
 {
     [Serializable]
     [DataContract]
