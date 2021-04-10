@@ -30,8 +30,10 @@
                     Click="NormalGameButton_Click" />
         </StackPanel>
         <TextBlock Grid.Row="3"
-                   Text="This game is licensed under GNU General Public License version 3. Go to https://github.com/CSharperMantle/CmTetris.git for more information."
+                   Text=""
                    HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
-                   Foreground="White" FontFamily="Microsoft YaHei UI" TextWrapping="Wrap" />
+                   Foreground="White" FontFamily="Microsoft YaHei UI" TextWrapping="Wrap">
+            Copyright (c) 2020-2021 Rong "Mantle" Bao. Licensed under GNU General Public License version 3.
+        </TextBlock>
     </Grid>
 </Page>
