@@ -1,6 +1,4 @@
-﻿using Periotris.Model.Generation;
-
-namespace Periotris.Model.Sorting
+﻿namespace Periotris.Model.Generation
 {
     internal class MemoizedBlock : Block
     {

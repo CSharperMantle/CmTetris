@@ -76,7 +76,7 @@
         </Border>
         <StackPanel Grid.Row="1"
                     HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                    Opacity="0.9" Background="DarkGray"
+                    Opacity="0.9" Background="DarkSlateGray"
                     Visibility="{Binding Path=GameOver, Converter={StaticResource VisibilityConverter}}">
             <TextBlock Text="Game End"
                        VerticalAlignment="Center" HorizontalAlignment="Center"
@@ -87,15 +87,13 @@
                 Orientation="Horizontal">
                 <Button x:Name="BeginButton"
                         Content="Start"
-                        HorizontalAlignment="Center"
-                        FontSize="25"
-                        Style="{DynamicResource MahApps.Styles.Button}"
+                        HorizontalAlignment="Center" Width="100" Margin="0 0 5 0"
+                        Style="{DynamicResource MahApps.Styles.Button.Flat}"
                         Click="BeginButton_Click" />
                 <Button x:Name="BackButton"
                         Content="Back"
-                        HorizontalAlignment="Center"
-                        FontSize="25"
-                        Style="{DynamicResource MahApps.Styles.Button}"
+                        HorizontalAlignment="Center" Width="100" Margin="5 0 0 0"
+                        Style="{DynamicResource MahApps.Styles.Button.Flat}"
                         Click="BackButton_Click" />
             </StackPanel>
             <StackPanel Orientation="Horizontal"

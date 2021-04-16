@@ -245,12 +245,12 @@ namespace Periotris.Model.Generation
         /// <remarks>
         ///     The 1, 2, 3, 4 numbers are called 'identifiers' which is used to identify the
         ///     blocks in the same <see cref="TetriminoKind" /> with different directions.
-        ///     These are used to guarantee the consistence for <see cref="IBlock.AtomicNumber" />
+        ///     These are used to guarantee the consistence for <see cref="Block.AtomicNumber" />
         ///     in
-        ///     <see cref="ITetrimino.TryMove" />
+        ///     <see cref="Tetrimino.TryMove" />
         ///     and
         ///     <see
-        ///         cref="ITetrimino.TryRotate" />
+        ///         cref="Tetrimino.TryRotate" />
         ///     .
         /// </remarks>
         public static readonly int[,] LinearLeftMask =
@@ -498,7 +498,7 @@ namespace Periotris.Model.Generation
         }
 
         /// <summary>
-        ///     Fill new blocks with the proper <see cref="IBlock.AtomicNumber" /> according to
+        ///     Fill new blocks with the proper <see cref="Block.AtomicNumber" /> according to
         ///     the <see cref="Block.Identifier" />.
         /// </summary>
         /// <param name="oldBlocks">The old blocks</param>

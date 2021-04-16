@@ -87,8 +87,8 @@
   <PropertyGroup />
   <PropertyGroup />
   <ItemGroup>
-    <Reference Include="ControlzEx, Version=4.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
-      <HintPath>..\packages\ControlzEx.4.4.0\lib\net45\ControlzEx.dll</HintPath>
+    <Reference Include="ControlzEx, Version=5.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
+      <HintPath>..\packages\ControlzEx.5.0.0\lib\net452\ControlzEx.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.Metro, Version=2.0.0.0, Culture=neutral, PublicKeyToken=51482d6f650b2b3f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.2.4.4\lib\net46\MahApps.Metro.dll</HintPath>
@@ -190,7 +190,7 @@
       <HintPath>..\packages\MathNet.Numerics.Signed.4.15.0\lib\net461\MathNet.Numerics.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.19\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.31\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
     <Reference Include="NCDK, Version=1.6.1.0, Culture=neutral, PublicKeyToken=7b3355892b3327a8, processorArchitecture=MSIL">
       <HintPath>..\packages\NCDK.1.6.1\lib\netstandard2.0\NCDK.dll</HintPath>
@@ -228,21 +228,20 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Common\TetrisConst.cs" />
+    <Compile Include="Customization\CustomizationManager.cs" />
     <Compile Include="Customization\HistoryData.cs" />
-    <Compile Include="Model\Sorting\DependencyBuilder.cs" />
-    <Compile Include="Model\Generation\Block.cs" />
+    <Compile Include="Model\Generation\DependencyBuilder.cs" />
     <Compile Include="Model\Direction.cs" />
     <Compile Include="Model\Generation\PatternGenerator.cs" />
-    <Compile Include="Model\IBlock.cs" />
-    <Compile Include="Model\ITetrimino.cs" />
-    <Compile Include="Model\Sorting\MemoizedBlock.cs" />
-    <Compile Include="Model\Sorting\TetriminoSorter.cs" />
+    <Compile Include="Model\Block.cs" />
+    <Compile Include="Model\Tetrimino.cs" />
+    <Compile Include="Model\Generation\MemoizedBlock.cs" />
+    <Compile Include="Model\Generation\TetriminoSorter.cs" />
     <Compile Include="Model\Position.cs" />
-    <Compile Include="Model\Generation\Tetrimino.cs" />
     <Compile Include="Model\TetriminoChangedEventArgs.cs" />
     <Compile Include="Model\Generation\GeneratorHelper.cs" />
     <Compile Include="Model\TetriminoKind.cs" />
-    <Compile Include="Model\Sorting\TetriminoNode.cs" />
+    <Compile Include="Model\Generation\TetriminoNode.cs" />
     <Compile Include="Model\TetrisModel.cs" />
     <Compile Include="ViewModel\BoolVisibilityConverter.cs" />
     <Compile Include="ViewModel\TetrisViewModel.cs" />
@@ -329,7 +328,9 @@
   <ItemGroup>
     <Resource Include="Icon.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Model\Sorting\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\NCDK.1.6.1\build\NCDK.targets" Condition="Exists('..\packages\NCDK.1.6.1\build\NCDK.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

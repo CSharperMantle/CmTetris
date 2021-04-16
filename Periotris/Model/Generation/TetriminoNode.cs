@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using Periotris.Model.Generation;
 
-namespace Periotris.Model.Sorting
+namespace Periotris.Model.Generation
 {
     internal class TetriminoNode : Tetrimino
     {

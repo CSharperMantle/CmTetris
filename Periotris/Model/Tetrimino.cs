@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Periotris.Model.Generation;
 
-namespace Periotris.Model.Generation
+namespace Periotris.Model
 {
     /// <summary>
-    ///     Represent an extended Tetrimino.
+    ///     Represent a basic tetrimino with basic features.
     /// </summary>
-    internal class Tetrimino : ITetrimino
+    public class Tetrimino
     {
         protected Tetrimino(TetriminoKind kind, Position position, Position firstBlockPosition,
             Direction facingDirection)
@@ -16,7 +17,7 @@ namespace Periotris.Model.Generation
             Position = position;
             FacingDirection = facingDirection;
             FirstBlockPosition = firstBlockPosition;
-            RealBlocks = GeneratorHelper.CreateOffsetBlocks(kind, Position, facingDirection);
+            Blocks = GeneratorHelper.CreateOffsetBlocks(kind, Position, facingDirection);
         }
 
         /// <summary>
@@ -30,16 +31,24 @@ namespace Periotris.Model.Generation
         /// </summary>
         public Position FirstBlockPosition { get; }
 
-        public Direction FacingDirection { get; private set; }
+        public Direction FacingDirection { get; internal set; }
 
-        public IReadOnlyList<Block> RealBlocks { get; set; }
         public TetriminoKind Kind { get; }
 
-        public Position Position { get; set; }
+        public Position Position { get; internal set; }
 
-        public IReadOnlyList<IBlock> Blocks => RealBlocks;
+        public IReadOnlyList<Block> Blocks { get; internal set; }
 
-        public bool TryMove(MoveDirection direction, Func<IBlock, bool> collisionChecker)
+        /// <summary>
+        ///     Move a <see cref="Tetrimino" /> towards a <see cref="MoveDirection" /> if permits.
+        ///     The <see cref="Tetrimino" /> will not be changed if the operation fails.
+        /// </summary>
+        /// <param name="collisionChecker">
+        ///     A <see cref="Func{Block, Boolean}" /> which returns true.
+        ///     when the block will collide
+        /// </param>
+        /// <returns>Whether the <see cref="TryMove(MoveDirection, Func{Block, bool})" /> step succeeds</returns>
+        public bool TryMove(MoveDirection direction, Func<Block, bool> collisionChecker)
         {
             var position = Position;
             if (direction == MoveDirection.Down)
@@ -56,14 +65,23 @@ namespace Periotris.Model.Generation
 
             var newBlocks = GeneratorHelper.CreateOffsetBlocks(Kind, position, FacingDirection);
             if (newBlocks.Any(collisionChecker)) return false;
-            GeneratorHelper.MapAtomicNumberForNewBlocks(RealBlocks, newBlocks);
+            GeneratorHelper.MapAtomicNumberForNewBlocks(Blocks, newBlocks);
 
             Position = position;
-            RealBlocks = newBlocks;
+            Blocks = newBlocks;
             return true;
         }
 
-        public bool TryRotate(RotationDirection rotationDirection, Func<IBlock, bool> collisionChecker)
+        /// <summary>
+        ///     Rotate a <see cref="Tetrimino" /> towards a <see cref="RotationDirection" /> if permits.
+        ///     The <see cref="Tetrimino" /> will not be changed if the operation fails.
+        /// </summary>
+        /// <param name="collisionChecker">
+        ///     A <see cref="Func{Block, Boolean}" /> which returns true when the block will
+        ///     collide
+        /// </param>
+        /// <returns>Whether the <see cref="TryRotate" /> step succeeds</returns>
+        public bool TryRotate(RotationDirection rotationDirection, Func<Block, bool> collisionChecker)
         {
             var count = Enum.GetValues(typeof(Direction)).Length;
             var delta = rotationDirection == RotationDirection.Right ? 1 : -1;
@@ -82,11 +100,11 @@ namespace Periotris.Model.Generation
 
                 if (!newBlocks.Any(collisionChecker))
                 {
-                    GeneratorHelper.MapAtomicNumberForNewBlocks(RealBlocks, newBlocks);
+                    GeneratorHelper.MapAtomicNumberForNewBlocks(Blocks, newBlocks);
 
                     FacingDirection = (Direction) direction;
                     Position = newPos;
-                    RealBlocks = newBlocks;
+                    Blocks = newBlocks;
                     return true;
                 }
             }

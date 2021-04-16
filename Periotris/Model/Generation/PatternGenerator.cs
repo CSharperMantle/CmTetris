@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Periotris.Model.Sorting;
 
 namespace Periotris.Model.Generation
 {
     internal static class PatternGenerator
     {
         /// <summary>
-        ///     Get a list of playable and encapsulated <see cref="ITetrimino" /> in the pattern of the
+        ///     Get a list of playable and encapsulated <see cref="Tetrimino" /> in the pattern of the
         ///     periodic table.
         /// </summary>
-        public static IReadOnlyList<ITetrimino> GetPatternForPeriodicTable(Random rand)
+        public static IReadOnlyList<Tetrimino> GetPatternForPeriodicTable(Random rand)
         {
             var dim0Len = GeneratorHelper.PeriodicTableTemplate.GetLength(0);
             var dim1Len = GeneratorHelper.PeriodicTableTemplate.GetLength(1);
@@ -35,14 +34,17 @@ namespace Periotris.Model.Generation
                     var newPosition = GeneratorHelper.GetInitialPositionByKind(tetrimino.Kind);
                     var deltaX = newPosition.X - originalPosition.X;
                     var deltaY = newPosition.Y - originalPosition.Y;
-                    var newBlocks = new List<Block>(tetrimino.RealBlocks.Count);
-                    foreach (var block in tetrimino.RealBlocks)
-                        newBlocks.Add(new Block(
-                            block.FilledBy,
-                            new Position(block.Position.X + deltaX, block.Position.Y + deltaY),
-                            block.AtomicNumber, block.Identifier
-                        ));
-                    tetrimino.RealBlocks = newBlocks;
+                    var newBlocks = new List<Block>(tetrimino.Blocks.Count);
+                    newBlocks
+                        .AddRange(
+                            tetrimino.Blocks.Select(
+                                block => new Block(block.FilledBy,
+                                    new Position(block.Position.X + deltaX, block.Position.Y + deltaY),
+                                    block.AtomicNumber,
+                                    block.Identifier)
+                            )
+                        );
+                    tetrimino.Blocks = newBlocks;
                     tetrimino.Position = newPosition;
 
                     // Randomly rotate the current Tetrimino.
@@ -138,7 +140,7 @@ namespace Periotris.Model.Generation
                     currentTetriminoKindDirectionsPairStack = pendingTetriminoKinds.Pop();
                     // We still have chances...
                     var lastTetrimino = settledTetrimino.Pop();
-                    foreach (IBlock block in lastTetrimino.RealBlocks)
+                    foreach (var block in lastTetrimino.Blocks)
                         workspace[block.Position.Y, block.Position.X].FilledBy = TetriminoKind.AvailableToFill;
                 }
 
@@ -155,12 +157,12 @@ namespace Periotris.Model.Generation
                             new Position(firstBlockCol, firstBlockRow),
                             direction
                         );
-                        if (!tetrimino.RealBlocks.Any(CheckBlockCollision))
+                        if (!tetrimino.Blocks.Any(CheckBlockCollision))
                         {
                             // Now that we found a solution. Push these to the stack and go to the next iteration.
                             settledTetrimino.Push(tetrimino);
                             pendingTetriminoKinds.Push(currentTetriminoKindDirectionsPairStack);
-                            foreach (var block in tetrimino.RealBlocks)
+                            foreach (var block in tetrimino.Blocks)
                             {
                                 block.AtomicNumber = workspace[block.Position.Y, block.Position.X].AtomicNumber;
                                 workspace[block.Position.Y, block.Position.X].FilledBy = block.FilledBy;
@@ -186,7 +188,7 @@ namespace Periotris.Model.Generation
             }
 
             // True if the block will collide.
-            bool CheckBlockCollision(IBlock block)
+            bool CheckBlockCollision(Block block)
             {
                 var nRow = block.Position.Y;
                 var nCol = block.Position.X;

@@ -13,7 +13,7 @@ namespace Periotris.Model
         /// <summary>
         ///     "Frozen" or inactive blocks. They can not be moved by user.
         /// </summary>
-        private readonly List<IBlock> _frozenBlocks = new List<IBlock>();
+        private readonly List<Block> _frozenBlocks = new List<Block>();
 
         /// <summary>
         ///     Leader-board and scoreboard.
@@ -23,7 +23,7 @@ namespace Periotris.Model
         /// <summary>
         ///     Tetriminos that are waiting to be inserted to the playing field.
         /// </summary>
-        private readonly Stack<ITetrimino> _pendingTetriminos = new Stack<ITetrimino>();
+        private readonly Stack<Tetrimino> _pendingTetriminos = new Stack<Tetrimino>();
 
         private readonly Random _random = new Random();
 
@@ -33,7 +33,7 @@ namespace Periotris.Model
         private readonly Stopwatch _stopwatch = new Stopwatch();
 
         /// <summary>
-        ///     The active and only user-controllable <see cref="ITetrimino" /> on the field.
+        ///     The active and only user-controllable <see cref="Tetrimino" /> on the field.
         /// </summary>
         /// <remarks>
         ///     <para>
@@ -42,12 +42,12 @@ namespace Periotris.Model
         ///         and <see cref="RotateActiveTetrimino(RotationDirection)" />
         ///     </para>
         ///     <para>
-        ///         This is the only <see cref="ITetrimino" /> exists. After a <see cref="ITetrimino" /> is hit,
-        ///         it will be "frozen" and the <see cref="ITetrimino.Blocks" /> will be transferred to
+        ///         This is the only <see cref="Tetrimino" /> exists. After a <see cref="Tetrimino" /> is hit,
+        ///         it will be "frozen" and the <see cref="Tetrimino.Blocks" /> will be transferred to
         ///         <see cref="_frozenBlocks" />.
         ///     </para>
         /// </remarks>
-        private ITetrimino _activeTetrimino;
+        private Tetrimino _activeTetrimino;
 
         /// <summary>
         ///     Construct a new <see cref="TetrisModel" /> whose game is initially ended.
@@ -128,7 +128,7 @@ namespace Periotris.Model
         }
 
         /// <summary>
-        ///     Move <see cref="_activeTetrimino" />, freeze and pop out a new <see cref="ITetrimino" /> if necessary.
+        ///     Move <see cref="_activeTetrimino" />, freeze and pop out a new <see cref="Tetrimino" /> if necessary.
         /// </summary>
         /// <param name="direction">The direction to move to</param>
         public void MoveActiveTetrimino(MoveDirection direction)
@@ -220,7 +220,7 @@ namespace Periotris.Model
         }
 
         /// <summary>
-        ///     Refresh all <see cref="IBlock" />s in <see cref="_activeTetrimino" /> and <see cref="_frozenBlocks" />.
+        ///     Refresh all <see cref="Block" />s in <see cref="_activeTetrimino" /> and <see cref="_frozenBlocks" />.
         /// </summary>
         /// <remarks>
         ///     Dim all blocks and then re-fire them.
@@ -247,12 +247,12 @@ namespace Periotris.Model
         }
 
         /// <summary>
-        ///     Internal method which checks whether a <see cref="IBlock" /> would collide
-        ///     with other <see cref="IBlock" />s in <see cref="_frozenBlocks" /> or
+        ///     Internal method which checks whether a <see cref="Block" /> would collide
+        ///     with other <see cref="Block" />s in <see cref="_frozenBlocks" /> or
         ///     with the borders of the game field.
         /// </summary>
         /// <returns>Whether a block will collide or not</returns>
-        private bool CheckBlockCollision(IBlock block)
+        private bool CheckBlockCollision(Block block)
         {
             // Left or right border collision
             if (block.Position.X < 0 || block.Position.X >= TetrisConst.PlayAreaWidth) return true;
@@ -264,7 +264,7 @@ namespace Periotris.Model
         }
 
         /// <summary>
-        ///     Internal method which pops a new <see cref="ITetrimino" /> from the given stack and replaces
+        ///     Internal method which pops a new <see cref="Tetrimino" /> from the given stack and replaces
         ///     <see cref="_activeTetrimino" /> with the newly-spawned one.
         /// </summary>
         /// <remarks>
@@ -282,7 +282,7 @@ namespace Periotris.Model
 
         /// <summary>
         ///     Internal method used to trigger <see cref="BlockChanged" /> event on
-        ///     every <see cref="IBlock" /> in <see cref="_activeTetrimino" />.
+        ///     every <see cref="Block" /> in <see cref="_activeTetrimino" />.
         /// </summary>
         private void UpdateActiveTetrimino(bool disappeared)
         {
@@ -292,11 +292,11 @@ namespace Periotris.Model
         }
 
         /// <summary>
-        ///     An event fired when a <see cref="IBlock" /> needs to be updated.
+        ///     An event fired when a <see cref="Block" /> needs to be updated.
         /// </summary>
         public event EventHandler<BlockChangedEventArgs> BlockChanged;
 
-        private void OnBlockChanged(IBlock block, bool disappeared)
+        private void OnBlockChanged(Block block, bool disappeared)
         {
             var blockChanged = BlockChanged;
             blockChanged?.Invoke(this, new BlockChangedEventArgs(block, disappeared));

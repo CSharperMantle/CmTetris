@@ -1,20 +1,20 @@
 ﻿using System.Collections.Generic;
-using Periotris.Model.Generation;
+using System.Linq;
 
-namespace Periotris.Model.Sorting
+namespace Periotris.Model.Generation
 {
     /// <summary>
     ///     Tetrimino-tetrimino dependency relationship builder.
     /// </summary>
     internal static class DependencyBuilder
     {
-        public static IReadOnlyList<TetriminoNode> GetTetriminoDependencyGraph(IReadOnlyList<ITetrimino> tetriminos,
+        public static IReadOnlyList<TetriminoNode> GetTetriminoDependencyGraph(IReadOnlyList<Tetrimino> tetriminos,
             int playAreaWidth, int playAreaHeight)
         {
             // Build block map
             var tetriminoNodes = new List<TetriminoNode>(tetriminos.Count);
             var memoizedMap = new MemoizedBlock[playAreaHeight, playAreaWidth];
-            foreach (Tetrimino tetrimino in tetriminos)
+            foreach (var tetrimino in tetriminos)
             {
                 var tetriminoNode = new TetriminoNode(tetrimino.Kind,
                     tetrimino.Position,
@@ -22,7 +22,7 @@ namespace Periotris.Model.Sorting
                         tetrimino.FacingDirection),
                     tetrimino.FacingDirection
                 );
-                tetriminoNode.RealBlocks = tetriminoNode.MemoizedBlocks =
+                tetriminoNode.Blocks = tetriminoNode.MemoizedBlocks =
                     GetMemoizedBlocksForTetriminoNode(tetriminoNode, tetrimino);
 
                 foreach (var block in tetriminoNode.MemoizedBlocks)
@@ -40,34 +40,25 @@ namespace Periotris.Model.Sorting
                 // block's owner.
                 var dependedBlockRow = block.Position.Y + 1;
                 var dependedBlockCol = block.Position.X;
-                if (TryGetOccupiedTetriminoNode(
-                        memoizedMap,
-                        dependedBlockRow, dependedBlockCol,
-                        playAreaWidth, playAreaHeight,
-                        out var dependOn
-                    )
-                    && dependOn != tetriminoNode)
-                {
-                    dependOn.DependedBy.Add(tetriminoNode);
-                    tetriminoNode.Depending.Add(dependOn);
-                }
+                if (!TryGetOccupiedTetriminoNode(
+                    memoizedMap,
+                    dependedBlockRow, dependedBlockCol,
+                    playAreaWidth, playAreaHeight,
+                    out var dependOn
+                ) || dependOn == tetriminoNode) continue;
+                dependOn.DependedBy.Add(tetriminoNode);
+                tetriminoNode.Depending.Add(dependOn);
             }
 
             return tetriminoNodes;
         }
 
         private static IReadOnlyList<MemoizedBlock> GetMemoizedBlocksForTetriminoNode(TetriminoNode node,
-            ITetrimino tetrimino)
+            Tetrimino tetrimino)
         {
-            var memoizedBlocks = new List<MemoizedBlock>();
-            foreach (Block block in tetrimino.Blocks)
-            {
-                var newBlock = new MemoizedBlock(block.FilledBy, block.Position, node, block.AtomicNumber,
-                    block.Identifier);
-                memoizedBlocks.Add(newBlock);
-            }
-
-            return memoizedBlocks;
+            return tetrimino.Blocks.Select(
+                block => new MemoizedBlock(block.FilledBy, block.Position, node, block.AtomicNumber, block.Identifier)
+                ).ToList();
         }
 
         private static bool TryGetOccupiedTetriminoNode(MemoizedBlock[,] map,

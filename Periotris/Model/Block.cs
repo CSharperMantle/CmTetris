@@ -1,6 +1,9 @@
-﻿namespace Periotris.Model.Generation
+﻿namespace Periotris.Model
 {
-    internal class Block : IBlock
+    /// <summary>
+    ///     Represent a single block in an <see cref="Tetrimino" />.
+    /// </summary>
+    public class Block
     {
         public Block(TetriminoKind filledBy, Position position)
             : this(filledBy, position, 0, 0)
@@ -20,12 +23,21 @@
             Identifier = identifier;
         }
 
-        public int Identifier { get; set; }
-        public TetriminoKind FilledBy { get; set; }
+        public int Identifier { get; internal set; }
 
-        public Position Position { get; set; }
+        public TetriminoKind FilledBy { get; internal set; }
 
-        public int AtomicNumber { get; set; }
+        public Position Position { get; internal set; }
+
+
+        /// <summary>
+        ///     The atomic number of the element this block representing.
+        /// </summary>
+        /// <remarks>
+        ///     As for grouping headers the number is negative of the grouping id.
+        ///     i.e. group 1 header block has an AtomicNumber of -1.
+        /// </remarks>
+        public int AtomicNumber { get; internal set; }
 
         public override string ToString()
         {

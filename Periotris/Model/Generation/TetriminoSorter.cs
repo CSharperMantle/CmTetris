@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Periotris.Model.Generation;
 
-namespace Periotris.Model.Sorting
+namespace Periotris.Model.Generation
 {
     /// <summary>
     ///     Topological sorting performer.
     /// </summary>
     internal static class TetriminoSorter
     {
-        public static IReadOnlyList<Tetrimino> GetSortedTetriminos(IReadOnlyList<ITetrimino> tetriminos,
+        public static IReadOnlyList<Tetrimino> GetSortedTetriminos(IReadOnlyList<Tetrimino> tetriminos,
             int playAreaWidth, int playAreaHeight)
         {
             var graph = DependencyBuilder.GetTetriminoDependencyGraph(
