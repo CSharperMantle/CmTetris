@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using NCDK;
+using Periotris.Common;
 using Periotris.Model;
 
 namespace Periotris.View
@@ -12,8 +12,17 @@ namespace Periotris.View
         public static FrameworkElement AnnotatedBlockControlFactory(Block block, bool renderColors, double scale)
         {
             var newBlockControl = new AnnotatedBlockControl();
-            newBlockControl.SetFill(GetBlockColorByAtomicNumber(block.AtomicNumber, renderColors));
-            newBlockControl.SetElementName(GetElementNameByAtomicNumber(block.AtomicNumber));
+            int atomicNumber = block.AtomicNumber;
+
+            newBlockControl.SetFill(GetBlockColorByAtomicNumber(atomicNumber, renderColors));
+
+            if (atomicNumber > 0)
+                // Is an element.
+                newBlockControl.SetElementName(AtomInfoSingleton.Instance.GetElementSymbolByAtomicNumber(atomicNumber));
+            else
+                // Is a group header.
+                newBlockControl.SetElementName((-atomicNumber).ToString());
+            
             newBlockControl.Height = AnnotatedBlockControl.OriginalHeight * scale;
             newBlockControl.Width = AnnotatedBlockControl.OriginalWidth * scale;
             SetCanvasLocation(newBlockControl,
@@ -79,14 +88,6 @@ namespace Periotris.View
             if (atomicNumber == 1) return new SolidColorBrush(Colors.White);
             if (atomicNumber == 57 || atomicNumber == 89) return new SolidColorBrush(Colors.LightGreen);
             return new SolidColorBrush(Colors.Green);
-        }
-
-        public static string GetElementNameByAtomicNumber(int atomicNumber)
-        {
-            // Is an atomic number.
-            if (atomicNumber > 0) return ChemicalElement.Of(atomicNumber).Symbol;
-            // Is a group number.
-            return (-atomicNumber).ToString();
         }
     }
 }

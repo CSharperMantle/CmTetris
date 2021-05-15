@@ -16,5 +16,7 @@
         ///     Current update interval for the game timer.
         /// </summary>
         public static double GameUpdateIntervalSeconds = OriginalGameUpdateIntervalSeconds;
+
+        public const string PeriodicTableJsonFileName = "pack://application:,,,/Assets/PeriodicTable.json";
     }
 }
