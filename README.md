@@ -65,7 +65,7 @@ this program.  If not, see https://github.com/CSharperMantle/CmTetris/blob/main/
 ```
 ## Dependencies
 
-### `dotnet/source-build`: A repository to track efforts to produce a source tarball of the .NET Core SDK and all its components
+### [dotnet/source-build](https://github.com/dotnet/source-build)
 ```plain-text
 The MIT License (MIT)
 
@@ -92,7 +92,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-### `MahApps/MahApps.Metro`: A framework that allows developers to cobble together a better UI
+### [MahApps/MahApps.Metro](https://github.com/MahApps/MahApps.Metro)
 ```plain-text
 MIT License
 
@@ -117,7 +117,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-### `JamesNK/Newtonsoft.Json`: Json.NET is a popular high-performance JSON framework for .NET
+### [JamesNK/Newtonsoft.Json](https://github.com/JamesNK/Newtonsoft.Json)
 ```plain-text
 The MIT License (MIT)
 
@@ -140,3 +140,7 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
+
+### [Bowserinator/Periodic-Table-JSON](https://github.com/Bowserinator/Periodic-Table-JSON)
+
+[Creative Commons Attribution-ShareAlike 3.0 Unported](https://creativecommons.org/licenses/by-sa/3.0)

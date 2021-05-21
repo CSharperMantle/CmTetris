@@ -786,8 +786,7 @@ namespace Periotris.Model.Generation
         public static Position GetPositionByFirstBlockPosition(Position firstBlockPosition, TetriminoKind kind,
             Direction facingDirection)
         {
-            int firstBlockRow;
-            int firstBlockCol;
+            int firstBlockRow, firstBlockCol;
 
             (firstBlockRow, firstBlockCol) = GetFirstBlockPosFromMask(kind, facingDirection);
 
@@ -797,8 +796,7 @@ namespace Periotris.Model.Generation
         public static Position GetFirstBlockPositionByPosition(Position position, TetriminoKind kind,
             Direction facingDirection)
         {
-            int firstBlockRow;
-            int firstBlockCol;
+            int firstBlockRow, firstBlockCol;
 
             (firstBlockRow, firstBlockCol) = GetFirstBlockPosFromMask(kind, facingDirection);
 
