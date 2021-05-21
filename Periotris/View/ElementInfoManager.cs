@@ -1,0 +1,88 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Windows;
+using Newtonsoft.Json.Linq;
+using Periotris.Common;
+
+namespace Periotris.View
+{
+    /// <summary>
+    ///     Support a way to obtain <see cref="ElementInfo" /> from a pre-defined JSON file.
+    /// </summary>
+    public sealed class ElementInfoManager
+    {
+        // ReSharper disable once InconsistentNaming
+        private static readonly Lazy<ElementInfoManager> instance
+            = new Lazy<ElementInfoManager>(() => new ElementInfoManager());
+
+        private readonly Dictionary<int, ElementInfo> _cacheElementInfo
+            = new Dictionary<int, ElementInfo>();
+
+        private JObject _periodicTableRoot;
+
+        private ElementInfoManager()
+        {
+            ReloadPeriodicTable();
+        }
+
+        /// <summary>
+        ///     Get the instance of <see cref="ElementInfoManager" />.
+        /// </summary>
+        public static ElementInfoManager Instance => instance.Value;
+
+        /// <summary>
+        ///     Obtain a <see cref="ElementInfo" /> by atomic number.
+        /// </summary>
+        /// <param name="atomicNumber">The element to obtain.</param>
+        /// <returns><see cref="ElementInfo" /> about the element.</returns>
+        /// <remarks>
+        ///     This method includes a cache mechanism.
+        /// </remarks>
+        public ElementInfo ByAtomicNumber(int atomicNumber)
+        {
+            if (_cacheElementInfo.ContainsKey(atomicNumber))
+                return _cacheElementInfo[atomicNumber];
+
+            var elementInfo = (from element in _periodicTableRoot["elements"]
+                where (int) element["number"] == atomicNumber
+                select new ElementInfo
+                {
+                    Name = (string) element["name"],
+                    Symbol = (string) element["symbol"],
+                    Number = atomicNumber,
+                    AtomicMass = (double) element["atomic_mass"],
+                    ElectronConfigSemantic = (string) element["electron_configuration_semantic"]
+                }).First();
+            _cacheElementInfo.Add(atomicNumber, elementInfo);
+
+            return elementInfo;
+        }
+
+        /// <summary>
+        ///     Reload the periodic table from a given path.
+        /// </summary>
+        /// <param name="pathOrUri">Path to periodic table in JSON format.</param>
+        public void ReloadPeriodicTable(string pathOrUri = TetrisConst.PeriodicTableJsonFileName,
+            UriKind uriKind = UriKind.RelativeOrAbsolute)
+        {
+            // Purge cache.
+            _cacheElementInfo.Clear();
+
+            // Read.
+            var uri = new Uri(pathOrUri, uriKind);
+
+            var resource = Application.GetResourceStream(uri);
+            if (resource == null)
+                throw new Exception(nameof(resource));
+
+            using (var resourceStream = resource.Stream)
+            using (var reader = new StreamReader(resourceStream))
+            {
+                var content = reader.ReadToEnd();
+                _periodicTableRoot = JObject.Parse(content);
+            }
+        }
+    }
+}

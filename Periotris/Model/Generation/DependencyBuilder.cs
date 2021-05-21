@@ -58,7 +58,7 @@ namespace Periotris.Model.Generation
         {
             return tetrimino.Blocks.Select(
                 block => new MemoizedBlock(block.FilledBy, block.Position, node, block.AtomicNumber, block.Identifier)
-                ).ToList();
+            ).ToList();
         }
 
         private static bool TryGetOccupiedTetriminoNode(MemoizedBlock[,] map,

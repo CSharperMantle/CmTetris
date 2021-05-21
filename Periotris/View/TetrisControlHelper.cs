@@ -2,7 +2,6 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using Periotris.Common;
 using Periotris.Model;
 
 namespace Periotris.View
@@ -12,17 +11,14 @@ namespace Periotris.View
         public static FrameworkElement AnnotatedBlockControlFactory(Block block, bool renderColors, double scale)
         {
             var newBlockControl = new AnnotatedBlockControl();
-            int atomicNumber = block.AtomicNumber;
+            var atomicNumber = block.AtomicNumber;
 
             newBlockControl.SetFill(GetBlockColorByAtomicNumber(atomicNumber, renderColors));
 
-            if (atomicNumber > 0)
-                // Is an element.
-                newBlockControl.SetElementName(AtomInfoSingleton.Instance.GetElementSymbolByAtomicNumber(atomicNumber));
-            else
-                // Is a group header.
-                newBlockControl.SetElementName((-atomicNumber).ToString());
-            
+            newBlockControl.SetElementName(atomicNumber > 0
+                ? ElementInfoManager.Instance.ByAtomicNumber(atomicNumber).Symbol
+                : (-atomicNumber).ToString());
+
             newBlockControl.Height = AnnotatedBlockControl.OriginalHeight * scale;
             newBlockControl.Width = AnnotatedBlockControl.OriginalWidth * scale;
             SetCanvasLocation(newBlockControl,

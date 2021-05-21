@@ -222,9 +222,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Common\AtomInfoSingleton.cs" />
+    <Compile Include="View\ElementInfo.cs" />
+    <Compile Include="View\ElementInfoManager.cs" />
     <Compile Include="Common\TetrisConst.cs" />
-    <Compile Include="Customization\CustomizationManager.cs" />
     <Compile Include="Customization\HistoryData.cs" />
     <Compile Include="Model\Generation\DependencyBuilder.cs" />
     <Compile Include="Model\Direction.cs" />
