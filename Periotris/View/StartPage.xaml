@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Periotris.View"
+                 xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
       mc:Ignorable="d"
       d:DesignWidth="800" d:DesignHeight="600"
       Title="StartPage">
@@ -29,11 +30,17 @@
                     Style="{DynamicResource MahApps.Styles.Button}"
                     Click="NormalGameButton_Click" />
         </StackPanel>
-        <TextBlock Grid.Row="3"
-                   Text=""
-                   HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Center"
-                   Foreground="White" FontFamily="Microsoft YaHei UI" TextWrapping="Wrap">
-            Copyright (c) 2020-2021 Rong "Mantle" Bao. Licensed under GNU General Public License version 3.
-        </TextBlock>
+        <StackPanel Grid.Row="3">
+            <Button x:Name="AboutButton"
+                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Style="{DynamicResource MahApps.Styles.Button.Circle}"
+                    Click="AboutButton_Click">
+                <iconPacks:PackIconModern Width="25"
+                                          Height="25"
+                                          Margin="5 5 5 5"
+                                          VerticalAlignment="Center" HorizontalAlignment="Center"
+                                          Kind="Information"/>
+            </Button>
+        </StackPanel>
     </Grid>
 </Page>

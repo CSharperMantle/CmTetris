@@ -14,10 +14,7 @@ namespace Periotris.View
             var atomicNumber = block.AtomicNumber;
 
             newBlockControl.SetFill(GetBlockColorByAtomicNumber(atomicNumber, renderColors));
-
-            newBlockControl.SetElementName(atomicNumber > 0
-                ? ElementInfoManager.Instance.ByAtomicNumber(atomicNumber).Symbol
-                : (-atomicNumber).ToString());
+            newBlockControl.SetElement(ElementInfoManager.Instance.ByAtomicNumber(atomicNumber));
 
             newBlockControl.Height = AnnotatedBlockControl.OriginalHeight * scale;
             newBlockControl.Width = AnnotatedBlockControl.OriginalWidth * scale;

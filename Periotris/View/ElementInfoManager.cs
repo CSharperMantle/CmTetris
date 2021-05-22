@@ -39,22 +39,39 @@ namespace Periotris.View
         /// <returns><see cref="ElementInfo" /> about the element.</returns>
         /// <remarks>
         ///     This method includes a cache mechanism.
+        ///     If <see cref="atomicNumber"/> is non-positive then it will return
+        /// a new <see cref="ElementInfo"/> with only <see cref="ElementInfo.Number"/>
+        /// and <see cref="ElementInfo.Symbol"/> set to their adjusted group
+        /// number.
         /// </remarks>
         public ElementInfo ByAtomicNumber(int atomicNumber)
         {
             if (_cacheElementInfo.ContainsKey(atomicNumber))
                 return _cacheElementInfo[atomicNumber];
 
-            var elementInfo = (from element in _periodicTableRoot["elements"]
-                where (int) element["number"] == atomicNumber
-                select new ElementInfo
+            ElementInfo elementInfo;
+
+            if (atomicNumber <= 0)
+            {
+                elementInfo = new ElementInfo
                 {
-                    Name = (string) element["name"],
-                    Symbol = (string) element["symbol"],
-                    Number = atomicNumber,
-                    AtomicMass = (double) element["atomic_mass"],
-                    ElectronConfigSemantic = (string) element["electron_configuration_semantic"]
-                }).First();
+                    Number = -atomicNumber,
+                    Symbol = (-atomicNumber).ToString()
+                };
+            }
+            else
+            {
+                elementInfo = (from element in _periodicTableRoot["elements"]
+                                   where (int)element["number"] == atomicNumber
+                                   select new ElementInfo
+                                   {
+                                       Name = (string)element["name"],
+                                       Symbol = (string)element["symbol"],
+                                       Number = atomicNumber,
+                                       AtomicMass = (double)element["atomic_mass"],
+                                       ElectronConfigSemantic = (string)element["electron_configuration_semantic"]
+                                   }).First();
+            }
             _cacheElementInfo.Add(atomicNumber, elementInfo);
 
             return elementInfo;

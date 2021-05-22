@@ -22,6 +22,16 @@ namespace Periotris.View
             MainFrame.Navigate(new Uri(relativeUri, UriKind.Relative));
         }
 
+        public void SwitchAboutFlyout()
+        {
+            AboutFlyout.IsOpen = !AboutFlyout.IsOpen;
+        }
+
+        public bool GetAboutFlyoutOpenness()
+        {
+            return AboutFlyout.IsOpen;
+        }
+
         private void LaunchGitHubRepo(object sender, RoutedEventArgs eventArgs)
         {
             Process.Start("https://github.com/CSharperMantle/CmTetris");
