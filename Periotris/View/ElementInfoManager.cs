@@ -39,10 +39,10 @@ namespace Periotris.View
         /// <returns><see cref="ElementInfo" /> about the element.</returns>
         /// <remarks>
         ///     This method includes a cache mechanism.
-        ///     If <see cref="atomicNumber"/> is non-positive then it will return
-        /// a new <see cref="ElementInfo"/> with only <see cref="ElementInfo.Number"/>
-        /// and <see cref="ElementInfo.Symbol"/> set to their adjusted group
-        /// number.
+        ///     If <see cref="atomicNumber" /> is non-positive then it will return
+        ///     a new <see cref="ElementInfo" /> with only <see cref="ElementInfo.Number" />
+        ///     and <see cref="ElementInfo.Symbol" /> set to their adjusted group
+        ///     number.
         /// </remarks>
         public ElementInfo ByAtomicNumber(int atomicNumber)
         {
@@ -52,26 +52,22 @@ namespace Periotris.View
             ElementInfo elementInfo;
 
             if (atomicNumber <= 0)
-            {
                 elementInfo = new ElementInfo
                 {
                     Number = -atomicNumber,
                     Symbol = (-atomicNumber).ToString()
                 };
-            }
             else
-            {
                 elementInfo = (from element in _periodicTableRoot["elements"]
-                                   where (int)element["number"] == atomicNumber
-                                   select new ElementInfo
-                                   {
-                                       Name = (string)element["name"],
-                                       Symbol = (string)element["symbol"],
-                                       Number = atomicNumber,
-                                       AtomicMass = (double)element["atomic_mass"],
-                                       ElectronConfigSemantic = (string)element["electron_configuration_semantic"]
-                                   }).First();
-            }
+                    where (int) element["number"] == atomicNumber
+                    select new ElementInfo
+                    {
+                        Name = (string) element["name"],
+                        Symbol = (string) element["symbol"],
+                        Number = atomicNumber,
+                        AtomicMass = (double) element["atomic_mass"],
+                        ElectronConfigSemantic = (string) element["electron_configuration_semantic"]
+                    }).First();
             _cacheElementInfo.Add(atomicNumber, elementInfo);
 
             return elementInfo;
@@ -81,6 +77,7 @@ namespace Periotris.View
         ///     Reload the periodic table from a given path.
         /// </summary>
         /// <param name="pathOrUri">Path to periodic table in JSON format.</param>
+        /// <param name="uriKind">Kind of the path.</param>
         public void ReloadPeriodicTable(string pathOrUri = TetrisConst.PeriodicTableJsonFileName,
             UriKind uriKind = UriKind.RelativeOrAbsolute)
         {

@@ -13,15 +13,15 @@ namespace Periotris.View
 
         public static int OriginalWidth = 1;
 
-        public ElementInfo Element { get; private set; }
-
         public AnnotatedBlockControl()
         {
             InitializeComponent();
         }
 
+        public ElementInfo Element { get; private set; }
+
         /// <summary>
-        /// Set the background color.
+        ///     Set the background color.
         /// </summary>
         /// <param name="brush">The color brush.</param>
         public void SetFill(Brush brush)
@@ -30,9 +30,9 @@ namespace Periotris.View
         }
 
         /// <summary>
-        /// Set the element to display on this <see cref="AnnotatedBlockControl"/>.
+        ///     Set the element to display on this <see cref="AnnotatedBlockControl" />.
         /// </summary>
-        /// <param name="info">The <see cref="ElementInfo"/> to set.</param>
+        /// <param name="info">The <see cref="ElementInfo" /> to set.</param>
         public void SetElement(ElementInfo info)
         {
             Element = info;

@@ -47,6 +47,7 @@ namespace Periotris.Model
         ///     A <see cref="Func{Block, Boolean}" /> which returns true.
         ///     when the block will collide
         /// </param>
+        /// <param name="direction">Direction to move</param>
         /// <returns>Whether the <see cref="TryMove(MoveDirection, Func{Block, bool})" /> step succeeds</returns>
         public bool TryMove(MoveDirection direction, Func<Block, bool> collisionChecker)
         {
@@ -80,6 +81,7 @@ namespace Periotris.Model
         ///     A <see cref="Func{Block, Boolean}" /> which returns true when the block will
         ///     collide
         /// </param>
+        /// <param name="rotationDirection">Direction to rotate</param>
         /// <returns>Whether the <see cref="TryRotate" /> step succeeds</returns>
         public bool TryRotate(RotationDirection rotationDirection, Func<Block, bool> collisionChecker)
         {

@@ -4,7 +4,6 @@
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:local="clr-namespace:Periotris.View"
-                 xmlns:viewModel="clr-namespace:Periotris.ViewModel"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
                  xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
                  mc:Ignorable="d"
@@ -35,9 +34,11 @@
             <mah:Flyout x:Name="AboutFlyout" Header="About"
                         Position="Right" Width="250">
                 <TextBlock Text=""
-                   Margin="10 10 10 10"
-                   Foreground="White"
-                   FontFamily="Microsoft YaHei UI" TextWrapping="Wrap">Copyright (c) 2020-2021 Rong "Mantle" Bao. Licensed under GNU General Public License version 3.</TextBlock>
+                           Margin="10 10 10 10"
+                           Foreground="White"
+                           FontFamily="Microsoft YaHei UI" TextWrapping="Wrap">
+                    Copyright (c) 2020-2021 Rong "Mantle" Bao. Licensed under GNU General Public License version 3.
+                </TextBlock>
             </mah:Flyout>
         </mah:FlyoutsControl>
     </mah:MetroWindow.Flyouts>

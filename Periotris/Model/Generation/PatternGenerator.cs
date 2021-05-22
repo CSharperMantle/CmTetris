@@ -68,6 +68,7 @@ namespace Periotris.Model.Generation
         ///         opposite meaning.
         ///     </para>
         /// </param>
+        /// <param name="rand">A random number generator</param>
         /// <returns>
         ///     When this method returns, contains a <see cref="IReadOnlyList{T}" /> of <see cref="Tetrimino" />s of settled
         ///     (placed) tetriminos, or
