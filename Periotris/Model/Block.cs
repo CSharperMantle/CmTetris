@@ -1,4 +1,6 @@
-﻿namespace Periotris.Model
+﻿using Periotris.Common;
+
+namespace Periotris.Model
 {
     /// <summary>
     ///     Represent a single block in an <see cref="Tetrimino" />.

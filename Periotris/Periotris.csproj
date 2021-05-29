@@ -229,7 +229,7 @@
     <Compile Include="Model\Tetrimino.cs" />
     <Compile Include="Model\Generation\MemoizedBlock.cs" />
     <Compile Include="Model\Generation\TetriminoSorter.cs" />
-    <Compile Include="Model\Position.cs" />
+    <Compile Include="Common\Position.cs" />
     <Compile Include="Model\TetriminoChangedEventArgs.cs" />
     <Compile Include="Model\Generation\GeneratorHelper.cs" />
     <Compile Include="Model\TetriminoKind.cs" />

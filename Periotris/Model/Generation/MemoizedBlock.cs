@@ -1,4 +1,6 @@
-﻿namespace Periotris.Model.Generation
+﻿using Periotris.Common;
+
+namespace Periotris.Model.Generation
 {
     internal class MemoizedBlock : Block
     {
