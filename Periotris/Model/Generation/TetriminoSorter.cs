@@ -9,7 +9,7 @@ namespace Periotris.Model.Generation
     /// </summary>
     internal static class TetriminoSorter
     {
-        public static IReadOnlyList<Tetrimino> GetSortedTetriminos(IReadOnlyList<Tetrimino> tetriminos,
+        public static IReadOnlyList<Tetrimino> Sort(IReadOnlyList<Tetrimino> tetriminos,
             int playAreaWidth, int playAreaHeight)
         {
             var graph = DependencyBuilder.GetTetriminoDependencyGraph(

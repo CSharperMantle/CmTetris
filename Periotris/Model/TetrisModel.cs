@@ -117,7 +117,7 @@ namespace Periotris.Model
             }
 
             // Fill in tetriminos
-            var generatedTetriminos = PatternGenerator.GetPatternForPeriodicTable(_random).Reverse();
+            var generatedTetriminos = PatternGenerator.GetPlayablePattern(_random).Reverse();
             foreach (var tetrimino in generatedTetriminos) _pendingTetriminos.Push(tetrimino);
 
             // Ready to start a new game

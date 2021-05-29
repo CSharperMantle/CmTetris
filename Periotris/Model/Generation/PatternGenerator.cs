@@ -12,7 +12,7 @@ namespace Periotris.Model.Generation
         ///     Get a list of playable and encapsulated <see cref="Tetrimino" /> in the pattern of the
         ///     periodic table.
         /// </summary>
-        public static IReadOnlyList<Tetrimino> GetPatternForPeriodicTable(Random rand)
+        public static IReadOnlyList<Tetrimino> GetPlayablePattern(Random rand)
         {
             var dim0Len = GeneratorHelper.PeriodicTableTemplate.GetLength(0);
             var dim1Len = GeneratorHelper.PeriodicTableTemplate.GetLength(1);
@@ -24,7 +24,7 @@ namespace Periotris.Model.Generation
                     GeneratorHelper.PeriodicTableTemplate[i, j].AtomicNumber
                 );
 
-            var tetriminos = TetriminoSorter.GetSortedTetriminos(
+            var tetriminos = TetriminoSorter.Sort(
                 GetPossibleTetriminoPattern(template, rand), dim1Len, dim0Len);
 
             Parallel.ForEach(tetriminos,
