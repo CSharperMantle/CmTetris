@@ -27,6 +27,7 @@ namespace Periotris.View
         private void GamePage_KeyDown(object sender, KeyEventArgs e)
         {
             _viewModel.OnKeyDown(e.Key);
+            e.Handled = true;
         }
 
         private void GamePage_SizeChanged(object sender, SizeChangedEventArgs e)
