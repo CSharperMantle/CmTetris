@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Periotris.Customization.Element;
 using Periotris.Model;
 
 namespace Periotris.View

@@ -26,7 +26,7 @@ namespace Periotris.Model.Generation
 
             var tetriminos = TetriminoSorter.Sort(
                 GetPossibleTetriminoPattern(template, rand), dim1Len, dim0Len);
-
+            /*
             Parallel.ForEach(tetriminos,
                 tetrimino =>
                 {
@@ -51,7 +51,7 @@ namespace Periotris.Model.Generation
                     // Randomly rotate the current Tetrimino.
                     var rotationCount = rand.Next(0, Enum.GetValues(typeof(Direction)).Length);
                     for (var i = 0; i < rotationCount; i++) tetrimino.TryRotate(RotationDirection.Right, _ => false);
-                });
+                });*/
             return tetriminos;
         }
 

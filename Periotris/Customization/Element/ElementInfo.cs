@@ -1,4 +1,4 @@
-﻿namespace Periotris.View
+﻿namespace Periotris.Customization.Element
 {
     /// <summary>
     ///     Represent an element with its detailed information and facts.

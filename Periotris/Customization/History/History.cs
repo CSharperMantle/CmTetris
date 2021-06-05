@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
+using Newtonsoft.Json;
+using Periotris.Common;
 
-namespace Periotris.Customization
+namespace Periotris.Customization.History
 {
     [Serializable]
     [DataContract]
-    public class HistoryData
+    public class History
     {
-        public static readonly string DataFilePath = "history.json";
-
-        private HistoryData()
+        private History()
         {
             PlayRecords = new List<TimeSpan>();
             FastestRecord = null;
@@ -45,26 +44,30 @@ namespace Periotris.Customization
             return false;
         }
 
-        public static void WriteToFile(HistoryData data)
+        public static void WriteToFile(History history)
         {
-            Stream outStream =
-                !File.Exists(DataFilePath) ? File.Create(DataFilePath) : File.OpenWrite(DataFilePath);
+            var jsonSerializer = new JsonSerializer();
 
-            var serializer = new DataContractJsonSerializer(typeof(HistoryData));
-            serializer.WriteObject(outStream, data);
-            outStream.Dispose();
+            using (var outStream =
+                !File.Exists(TetrisConst.HistoryFilePath) ? File.Create(TetrisConst.HistoryFilePath) : File.OpenWrite(TetrisConst.HistoryFilePath))
+            using (var sw = new StreamWriter(outStream))
+            using (var writer = new JsonTextWriter(sw))
+            {
+                jsonSerializer.Serialize(writer, history);
+            }
         }
 
-        public static HistoryData ReadFromFile()
+        public static History ReadFromFile()
         {
-            if (!File.Exists(DataFilePath)) return new HistoryData();
+            if (!File.Exists(TetrisConst.HistoryFilePath)) return new History();
 
-            using (Stream inStream = File.OpenRead(DataFilePath))
+            var jsonSerializer = new JsonSerializer();
+
+            using (var inStream = File.OpenRead(TetrisConst.HistoryFilePath))
+            using (var sr = new StreamReader(inStream))
+            using (var reader = new JsonTextReader(sr))
             {
-                return
-                    new DataContractJsonSerializer(typeof(HistoryData))
-                            .ReadObject(inStream)
-                        as HistoryData;
+                return jsonSerializer.Deserialize<History>(reader);
             }
         }
     }

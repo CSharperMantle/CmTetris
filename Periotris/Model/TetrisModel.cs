@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Periotris.Common;
-using Periotris.Customization;
+using Periotris.Customization.History;
 using Periotris.Model.Generation;
 
 namespace Periotris.Model
@@ -18,7 +18,7 @@ namespace Periotris.Model
         /// <summary>
         ///     Leader-board and scoreboard.
         /// </summary>
-        private readonly HistoryData _historyData;
+        private readonly History _history;
 
         /// <summary>
         ///     Tetriminos that are waiting to be inserted to the playing field.
@@ -54,7 +54,7 @@ namespace Periotris.Model
         /// </summary>
         public TetrisModel()
         {
-            _historyData = HistoryData.ReadFromFile();
+            _history = History.ReadFromFile();
             EndGame(false);
         }
 
@@ -79,7 +79,7 @@ namespace Periotris.Model
         /// </summary>
         public bool NewHighScore { get; private set; }
 
-        public TimeSpan? CurrentHighestScore => _historyData.FastestRecord;
+        public TimeSpan? CurrentHighestScore => _history.FastestRecord;
 
         /// <summary>
         ///     End the current game.
@@ -91,8 +91,8 @@ namespace Periotris.Model
             _stopwatch.Stop();
             if (victory)
             {
-                NewHighScore = _historyData.AddNewScore(_stopwatch.Elapsed);
-                HistoryData.WriteToFile(_historyData);
+                NewHighScore = _history.AddNewScore(_stopwatch.Elapsed);
+                History.WriteToFile(_history);
             }
 
             _pendingTetriminos.Clear();

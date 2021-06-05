@@ -6,7 +6,7 @@ using System.Windows;
 using Newtonsoft.Json.Linq;
 using Periotris.Common;
 
-namespace Periotris.View
+namespace Periotris.Customization.Element
 {
     /// <summary>
     ///     Support a way to obtain <see cref="ElementInfo" /> from a pre-defined JSON file.

@@ -1,5 +1,6 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Media;
+using Periotris.Customization.Element;
 
 namespace Periotris.View
 {

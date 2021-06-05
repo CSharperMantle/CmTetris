@@ -18,5 +18,7 @@
         ///     Current update interval for the game timer.
         /// </summary>
         public static double GameUpdateIntervalSeconds = OriginalGameUpdateIntervalSeconds;
+
+        public static readonly string HistoryFilePath = "history.json";
     }
 }
