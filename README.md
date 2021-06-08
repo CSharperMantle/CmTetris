@@ -2,49 +2,13 @@
 
 CSharperMantle's Tetris Collection: a series of Tetris-related projects written by CSharperMantle
 
-More information can be found in the [official wiki](https://github.com/CSharperMantle/CmTetris/wiki).
-
-## Contents
-
-### `SimpleTetris`
-Simple Tetris game. Built with MVVM designing patterns and requires no other packages other than .NET Framework.
-
-#### Controls
-* `A`: Move left
-* `D`: Move right
-* `S`: Move down
-* `Space`: Rotate
-* `Esc`: Pause
-
-### `Tetriminify`
-A tool to generate tetromino tiling patterns and tetrimino falling orders for arbitrary given templates.
-
-![GUI of Tetriminify 1.1.0.0](https://user-images.githubusercontent.com/32665105/108998874-7dc6df00-76dc-11eb-88d0-78ec5dee8abf.png)
-
-*Figure: GUI of Tetriminify 1.1.0.0 with a generated tiling pattern (lower right) and falling orders (lower left) on display. A: Empty block. U: Unavailable block. L, C, I: L-shaped tetrimino, cubic tetrimino, linear tetrimino*
-
-### `Periotris`
-A Tetris game based on the theme of the Periodic Table of Elements.
-
 ![Screenshot of Periotris](https://user-images.githubusercontent.com/32665105/108997960-37bd4b80-76db-11eb-8554-237beb8d5d3e.png)
 
-*Figure: In-game screenshot of Periotris 1.5.2.1 with 'Colors' and 'Assistance grid' options enabled*
+## Documentation
+Please refer to the [wiki/Introduction](https://github.com/CSharperMantle/CmTetris/wiki/Introduction).
 
-#### Features
-* Purely original and accurate periodic table of elements
-* Puzzles are algorithm-guaranteed solvable
-* New map each time
-* Leaderboards
-* Colorful and colorless mode switchable
-* Switchable assist grid
-
-#### Controls
-* `A` || `Left arrow`: Move left
-* `D` || `Right arrow`: Move right
-* `S` || `Down arrow`: Move down
-* `W` || `Up arrow`: Rotate
-* `Space`: Instant drop to the lowest
-* `Esc`: Pause
+## Installation
+[wiki/Installation-&-Set-up](https://github.com/CSharperMantle/CmTetris/wiki/Installation-&-Set-up) contains details about how to compile, install and run CmTetris projects on your Windows OS.
 
 ## License
 
