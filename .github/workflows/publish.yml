@@ -6,9 +6,6 @@ on:
 jobs:
   publish:
     runs-on: windows-2019
-    
-    needs:
-      - build
       
     steps:
       - uses: actions/checkout@v2
