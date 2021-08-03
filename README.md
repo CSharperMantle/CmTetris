@@ -2,6 +2,8 @@
 
 CSharperMantle's Tetris Collection: a series of Tetris-related projects written by CSharperMantle
 
+**Update:** Currently only `Periotris` in this repository is under maintenance. For its .NET 5 porting, please refer to **[CSharperMantle/Periotris.Net](https://github.com/CSharperMantle/Periotris.Net)**. For its React w/ TypeScript porting, please go to **[CSharperMantle/periotrisjs](https://github.com/CSharperMantle/periotrisjs)**.
+
 ![Screenshot of Periotris](https://user-images.githubusercontent.com/32665105/108997960-37bd4b80-76db-11eb-8554-237beb8d5d3e.png)
 
 ## Documentation
